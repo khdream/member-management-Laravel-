@@ -32,8 +32,8 @@
                     <td>13</td>
                     <td>e</td>
                     <td>w</td>
-                    <td><button>編集</button></td>
-                    <td><button>消去</button></td>
+                    <td><button type="button" class="btn btn-outline-primary">編集</button></td>
+                    <td><button type="button" class="btn btn-outline-danger">消去</button></td>
                 </tr>
                 <tr>
                     <th scope="row">2</th>

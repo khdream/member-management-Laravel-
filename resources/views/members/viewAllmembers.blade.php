@@ -43,7 +43,7 @@
                     <td class="align-middle">e</td>
                     <td class="align-middle">w</td>
                     <td class="align-middle"><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">編集</button></td>
-                    <td class="align-middle"><button type="button" class="btn btn-outline-danger">消去</button></td>
+                    <td class="align-middle"><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteMemberModal">消去</button></td>
                 </tr>
                 <tr>
                     <th scope="row">2</th>

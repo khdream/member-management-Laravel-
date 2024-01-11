@@ -60,7 +60,7 @@
                     <td class="align-middle">sasdasd</td>
                     <td class="align-middle">sasd</td>
                     <td class="align-middle">aasdasd</td>
-                    <td class="align-middle"><button type="button" class="btn btn-outline-danger">消去</button></td>
+                    <td class="align-middle"><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteMemberModal">消去</button></td>
                 </tr>
                 <tr>
                     <th class="align-middle" scope="row">E-112</th>
@@ -68,7 +68,7 @@
                     <td class="align-middle">sasdasd</td>
                     <td class="align-middle">sasd</td>
                     <td class="align-middle">aasdasd</td>
-                    <td class="align-middle"><button type="button" class="btn btn-outline-danger">消去</button></td>
+                    <td class="align-middle"><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteMemberModal">消去</button></td>
                 </tr>
             </tbody>
         </table>

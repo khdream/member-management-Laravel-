@@ -23,3 +23,20 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/manageGoods', [App\Http\Controllers\ManageGoodsController::class, 'index'])->name('managegoods');
 Route::get('/orderRequire', [App\Http\Controllers\orderManagementController::class, 'index'])->name('orderRequire');
 Route::get('/ordermanagement', [App\Http\Controllers\orderManagementController::class, 'ordermanagement'])->name('orderManagement');
+Route::get('/destinationsManagement', [App\Http\Controllers\destinationsManagementController::class, 'index'])->name('ordeshippingDestinations');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

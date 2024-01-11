@@ -6,7 +6,7 @@
         <div class="col-12 mb-3">
             <div class="row mb-3 border-bottom">
                 <div class="col-6">
-                    <div class="float-end"><h3>発送依頼</h3></div>
+                    <div class="float-end"><h3>受注詳細</h3></div>
                 </div>
             </div>
             <div class="row">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="col-3">
                     <div>
-                        <button type="button" class="btn btn-primary w-75 float-end">更新する</button>
+                        <button type="button" class="btn btn-warning w-75 float-end">更新する</button>
                     </div>
                 </div>
             </div>
@@ -66,18 +66,12 @@
         <table class="table table-hover text-center">
             <thead class="table-dark align-middle">
                 <tr>
-                    <th rowspan="3">管理ID</th>
-                    <th rowspan="3">本のタイトル</th>
+                    <th rowspan="2">管理ID</th>
+                    <th rowspan="2">本のタイトル</th>
                     <th colspan="4">配送先</th>
-                    <th rowspan="3">出荷計</th>
-                    <th rowspan="3">在庫</th>
-                    <th rowspan="3">出荷後在庫</th>
-                </tr>
-                <tr>
-                    <th>11</th>
-                    <th>13</th>
-                    <th>14</th>
-                    <th>15</th>
+                    <th rowspan="2">出荷計</th>
+                    <th rowspan="2">在庫</th>
+                    <th rowspan="2">出荷後在庫</th>
                 </tr>
                 <tr>
                     <th>北千里</th>
@@ -125,7 +119,7 @@
         <div class="row mt-3">
             <div class="col-9"></div>
             <div class="col-3">
-                <button type="button" class="btn btn-primary  float-end w-75" data-bs-toggle="modal" data-bs-target="#confirmInputedData">更新する</button>
+                <button type="button" class="btn btn-warning float-end w-75">更新する</button>
             </div>
         </div>
     </div>

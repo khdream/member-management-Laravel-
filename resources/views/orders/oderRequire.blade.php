@@ -4,63 +4,118 @@
 <div class="container-full mx-5">
     <div class="row justify-content-center">
         <div class="col-12 mb-3">
-            <div class="row">
+            <div class="row mb-3 border-bottom">
                 <div class="col-6">
-                    <div class="float-end"><h3>会員一覧</h3></div>
+                    <div class="float-end"><h3>発送依頼</h3></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
                 </div>
                 <div class="col-6">
-                    <div class="float-end"><button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">新規登録</button></div>
+                    <div class="mb-3 row">
+                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">会員</label>
+                        <div class="col-sm-8">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>client-1</option>
+                                <option value="1">client-2</option>
+                                <option value="2">client-3</option>
+                                <option value="3">client-4</option>
+                                <option value="3">client-5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">発送日</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="date">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4 pe-3">
+                <div class="col-3"></div>
+                <div class="col-6 d-flex justify-content-between">
+                    <div class="w-75 row">
+                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">CSVで一括登録</label>
+                        <div class="col-sm-8">
+                            <button type="button" class="btn btn-primary px-5">CSVアップロード</button>
+                        </div>
+                    </div>
+                    <div class="w-25 row">
+                        <button type="button" class="btn btn-primary w-100">依頼用CSVダウンロード</button>
+                    </div>
                 </div>
             </div>
         </div>
         <table class="table table-hover text-center">
-            <thead class="table-dark">
+            <thead class="table-dark align-middle">
                 <tr>
-                    <th class="py-3" scope="col">#</th>
-                    <th class="py-3" scope="col">法人名</th>
-                    <th class="py-3" scope="col">担当者氏名</th>
-                    <th class="py-3" scope="col">担当者ふりがな</th>
-                    <th class="py-3" scope="col">メールアドレス</th>
-                    <th class="py-3" scope="col">電話番号</th>
-                    <th class="py-3" scope="col">郵便番号</th>
-                    <th class="py-3" scope="col">住所</th>
-                    <th class="py-3" scope="col">番地</th>
-                    <th class="py-3" scope="col">ビル名</th>
-                    <th class="py-3" scope="col">編集</th>
-                    <th class="py-3" scope="col">消去</th>
+                    <th class="py-3" rowspan="3" scope="col">管理ID</th>
+                    <th class="py-3" rowspan="3" scope="col">本のタイトル</th>
+                    <th class="py-3" colspan="4" scope="col">配送先ID /ラベル</th>
+                    <th class="py-3" rowspan="3" scope="col">出荷計</th>
+                    <th class="py-3" rowspan="3" scope="col">現在の在庫</th>
+                    <th class="py-3" rowspan="3" scope="col">出荷後在庫</th>
+                </tr>
+                <tr>
+                    <th>11</th>
+                    <th>13</th>
+                    <th>14</th>
+                    <th>15</th>
+                </tr>
+                <tr>
+                    <th>北千里</th>
+                    <th>北千里</th>
+                    <th>北千里</th>
+                    <th>北千里</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th class="align-middle" scope="row">1</th>
-                    <td class="align-middle">a</td>
-                    <td class="align-middle">s</td>
-                    <td class="align-middle">s</td>
-                    <td class="align-middle">personal.codemaker@gmail.com</td>
-                    <td class="align-middle">123</td>
-                    <td class="align-middle">1111-1111111</td>
-                    <td class="align-middle">13</td>
-                    <td class="align-middle">e</td>
-                    <td class="align-middle">w</td>
-                    <td class="align-middle"><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">編集</button></td>
-                    <td class="align-middle"><button type="button" class="btn btn-outline-danger">消去</button></td>
+                    <th class="align-middle" scope="row">E-111</th>
+                    <td class="align-middle">aasdasd</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">222</td>
+                    <td class="align-middle">555</td>
+                    <td class="align-middle">333</td>
                 </tr>
                 <tr>
-                    <th scope="row">2</th>
-                    <td>a</td>
-                    <td>s</td>
-                    <td>s</td>
-                    <td>personal.codemaker@gmail.com</td>
-                    <td>123</td>
-                    <td>1111-1111111</td>
-                    <td>13</td>
-                    <td>e</td>
-                    <td>w</td>
-                    <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">編集</button></td>
-                    <td><button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteMemberModal">消去</button></td>
+                    <th class="align-middle" scope="row">E-111</th>
+                    <td class="align-middle">aasdasd</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">222</td>
+                    <td class="align-middle">555</td>
+                    <td class="align-middle">333</td>
+                </tr>
+                <tr>
+                    <th class="align-middle" scope="row">E-111</th>
+                    <td class="align-middle">aasdasd</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">11</td>
+                    <td class="align-middle">222</td>
+                    <td class="align-middle">555</td>
+                    <td class="align-middle">333</td>
                 </tr>
             </tbody>
         </table>
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-4"></div>
+                    <div class="col-4"><button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#confirmInputedData">依頼する</button></div>
+                    <div class="col-4"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -142,19 +197,19 @@
         </div>
     </div>
 
-    <div class="modal fade" id="deleteMemberModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmInputedData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-danger" id="staticBackdropLabel">消す</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">本当に提出してもよろしいですか？</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    これは削除してもよろしいでしょうか？
+                    内容を確認してください。
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary text-white" data-bs-dismiss="modal">取り消す</button>
-                    <button type="button" class="btn btn-danger text-white">確認</button>
+                    <button type="button" class="btn" data-bs-dismiss="modal">取り消す</button>
+                    <button type="button" class="btn btn-primary text-white">確認</button>
                 </div>
             </div>
         </div>

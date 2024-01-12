@@ -23,8 +23,8 @@
                 @if (Auth::user() && Auth::user()->name)
                     <div class="flex-fill d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
                         <div class="col-md-3 mb-md-0">
-                            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-                            <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+                            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none d-lg-block d-sm-none">
+                                イシダ印刷 在庫管理
                             </a>
                         </div>
 
@@ -38,17 +38,23 @@
                                         data-mdb-toggle="dropdown"
                                         aria-expanded="false"
                                     >
-                                    　会員情報
+                                    会員情報
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="#">会員一覧</a></li>
-                                        <li><a class="dropdown-item" href="#">受注管理</a></li>
-                                        <li><a class="dropdown-item" href="#">商品管理</a></li>
+                                        @if (Auth::user() && Auth::user()->user_role == 1)
+                                            <li><a class="dropdown-item" href="/members">会員一覧</a></li>
+                                        @endif
+                                        @if (Auth::user() && (Auth::user()->user_role == 1 || Auth::user()->user_role == 2))
+                                            <li><a href="/orders" class="dropdown-item" href="#">受注管理</a></li>
+                                        @endif
+                                        @if (Auth::user() && Auth::user()->user_role == 1)
+                                            <li><a href="/goods" class="dropdown-item">商品管理</a></li>
+                                        @endif
                                     </ul>
                                 </div>
                             </li>
-                            <li><a href="#" class="nav-link px-2">発送先管理</a></li>
-                            <li><a href="#" class="nav-link px-2">発送を依頼する</a></li>
+                            <li><a href="/destination" class="nav-link px-2">発送先管理</a></li>
+                            <li><a href="/orderRequest" class="nav-link px-2">発送を依頼する</a></li>
                             <li><a href="#" class="nav-link px-2">過去の依頼履歴</a></li>
                         </ul>
                     </div>

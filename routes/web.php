@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\destinationManagementController;
+use App\Http\Controllers\goodsManagementController;
+use App\Http\Controllers\memberManagementController;
+use App\Http\Controllers\orderManagementController;
+use App\Http\Controllers\orderRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,24 +24,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/manageGoods', [App\Http\Controllers\ManageGoodsController::class, 'index'])->name('managegoods');
-Route::get('/orderRequire', [App\Http\Controllers\orderManagementController::class, 'index'])->name('orderRequire');
-Route::get('/ordermanagement', [App\Http\Controllers\orderManagementController::class, 'ordermanagement'])->name('orderManagement');
-Route::get('/destinationsManagement', [App\Http\Controllers\destinationsManagementController::class, 'index'])->name('ordeshippingDestinations');
+Route::post('/members/newmember', [App\Http\Controllers\manageMembersController::class, 'createNewMember'])->name('newMember');
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('/destination', destinationManagementController::class);
+Route::resource('/goods', goodsManagementController::class);
+Route::resource('/members', goodsManagementController::class);
+Route::resource('/orders', goodsManagementController::class);
+Route::resource('/orders', orderManagementController::class);
+Route::resource('/orderRequest', orderRequestController::class);

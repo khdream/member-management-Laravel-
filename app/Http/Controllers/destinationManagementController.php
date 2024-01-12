@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class orderManagementController extends Controller
+class destinationManagementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class orderManagementController extends Controller
      * Create a new controller instance.
      *
      * @return void
-    */
-
+     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -23,7 +22,7 @@ class orderManagementController extends Controller
     
     public function index()
     {
-        return view('orders/orderManagement');
+        return view('destinations/shippingDestinationsManagement');
     }
 
     /**

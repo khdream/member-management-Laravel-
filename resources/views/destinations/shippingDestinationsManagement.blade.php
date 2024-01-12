@@ -5,94 +5,101 @@
     <div class="row justify-content-center">
         <div class="col-12 mb-4">
             <div class="row border-bottom">
-                <div class="col-6">
-                    <div class="float-end"><h3>発送先一覧</h3></div>
+                <div class="col-5"></div>
+                <div class="col-3">
+                    <div><h3>発送先一覧</h3></div>
                 </div>
+                <div class="col-4"></div>
             </div>
         </div>
         <div class="col-12">
-            <div class="row">
-                <div class="col-2"></div>
-                <div class="col-2">
+            <div class="row mb-2">
+                <div class="col-xl-2 col-sm-8">
                     <div class="row">
-                        <label>クライアントで絞り込み</label>
-                        <input class="form-control">
+                        <div class="col-sm-12">
+                            <label>クライアントで絞り込み</label>
+                            <input class="form-control">
+                        </div>
                     </div>
                 </div>
-                <div class="col-1"></div>
-                <div class="col-5 align-self-end"><button type="button" class="btn btn-warning w-25 float-end align-self-end" data-bs-toggle="modal" data-bs-target="#confirmInputedData">発送先の新規登録</button></div>
-                <div class="col-2"></div>
+                <div class="col-xl-10 col-sm-4 align-self-end"><button type="button" class="btn btn-warning float-end align-self-end mx-xl-2" data-bs-toggle="modal" data-bs-target="#newAndEditModal">発送先の新規登録</button></div>
             </div>
             <div class="row mb-1">
-                <div class="col-2"></div>
-                <div class="col-2 p-2">
+                <div class="col-xl-2 col-sm-12">
                     <div class="row">
-                        <label>発送先名で絞り込む</label>
-                        <input class="form-control m-2">
-                    </div>
-                    <div class="row">
-                        <label>表示件数を変更する</label>
-                        <input class="form-control m-2">
-                    </div>
-                </div>
-                <div class="col-1"></div>
-                <div class="col-5 p-2">
-                    <div class="row p-2">
-                        <div class="col-md-6">
-                            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                                <div class="col-12 p-4 d-flex flex-column position-static">
-                                    <strong class="d-inline-block mb-2 text-primary">発送先用の管理ラベルをここに表示</strong>
-                                    <p class="mb-0">郵便番号を表示 000-0000</p>
-                                    <p class="mb-0">Tokyo 5番地 apartment</p>
-                                    <p class="card-text mb-auto">電話番号を表示 1234567890</p>
-                                </div>
-                            </div>
+                        <div class="col-xl-12 col-sm-8">
+                            <label>発送先名で絞り込む</label>
+                            <input class="form-control my-2">
                         </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditModal">編集</button></div>
-                                <div class="col-6"><button type="button" class="btn btn-danger w-75 float-end" data-bs-toggle="modal" data-bs-target="#confirmInputedData">削除</button></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row p-2">
-                        <div class="col-md-6">
-                            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                                <div class="col-12 p-4 d-flex flex-column position-static">
-                                    <strong class="d-inline-block mb-2 text-primary">発送先用の管理ラベルをここに表示</strong>
-                                    <p class="mb-0">郵便番号を表示 000-0000</p>
-                                    <p class="mb-0">Tokyo 5番地 apartment</p>
-                                    <p class="card-text mb-auto">電話番号を表示 1234567890</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditModal">編集</button></div>
-                                <div class="col-6"><button type="button" class="btn btn-danger w-75 float-end" data-bs-toggle="modal" data-bs-target="#confirmInputedData">削除</button></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row p-2">
-                        <div class="col-md-6">
-                            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                                <div class="col-12 p-4 d-flex flex-column position-static">
-                                    <strong class="d-inline-block mb-2 text-primary">発送先用の管理ラベルをここに表示</strong>
-                                    <p class="mb-0">郵便番号を表示 000-0000</p>
-                                    <p class="mb-0">Tokyo 5番地 apartment</p>
-                                    <p class="card-text mb-auto">電話番号を表示 1234567890</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditModal">編集</button></div>
-                                <div class="col-6"><button type="button" class="btn btn-danger w-75 float-end" data-bs-toggle="modal" data-bs-target="#confirmInputedData">削除</button></div>
-                            </div>
+                        <div class="col-xl-12 col-sm-4">
+                            <label>表示件数を変更する</label>
+                            <select class="form-select my-2" aria-label="Default select example">
+                                <option selected>10</option>
+                                <option value="1">20</option>
+                                <option value="2">30</option>
+                                <option value="3">40</option>
+                                <option value="3">50</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="col-2"></div>
+                <div class="col-xl-2 col-sm-0"></div>
+                <div class="col-xl-8 col-sm-12">
+                    <div class="row p-2 border-bottom border-top">
+                        <div class="col-md-6">
+                            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                <div class="col-12 p-4 d-flex flex-column position-static">
+                                    <strong class="d-inline-block mb-2 text-primary">発送先用の管理ラベルをここに表示</strong>
+                                    <p class="mb-0">郵便番号を表示 000-0000</p>
+                                    <p class="mb-0">Tokyo 5番地 apartment</p>
+                                    <p class="card-text mb-auto">電話番号を表示 1234567890</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditModal">編集</button></div>
+                                <div class="col-6"><button type="button" class="btn btn-danger w-75 float-end" data-bs-toggle="modal" data-bs-target="#confirmInputedData">削除</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-2 border-bottom border-top">
+                        <div class="col-md-6">
+                            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                <div class="col-12 p-4 d-flex flex-column position-static">
+                                    <strong class="d-inline-block mb-2 text-primary">発送先用の管理ラベルをここに表示</strong>
+                                    <p class="mb-0">郵便番号を表示 000-0000</p>
+                                    <p class="mb-0">Tokyo 5番地 apartment</p>
+                                    <p class="card-text mb-auto">電話番号を表示 1234567890</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditModal">編集</button></div>
+                                <div class="col-6"><button type="button" class="btn btn-danger w-75 float-end" data-bs-toggle="modal" data-bs-target="#confirmInputedData">削除</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-2 border-bottom border-top">
+                        <div class="col-md-6">
+                            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                <div class="col-12 p-4 d-flex flex-column position-static">
+                                    <strong class="d-inline-block mb-2 text-primary">発送先用の管理ラベルをここに表示</strong>
+                                    <p class="mb-0">郵便番号を表示 000-0000</p>
+                                    <p class="mb-0">Tokyo 5番地 apartment</p>
+                                    <p class="card-text mb-auto">電話番号を表示 1234567890</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditModal">編集</button></div>
+                                <div class="col-6"><button type="button" class="btn btn-danger w-75 float-end" data-bs-toggle="modal" data-bs-target="#confirmInputedData">削除</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col-4"></div>

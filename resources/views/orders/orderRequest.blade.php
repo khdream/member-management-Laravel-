@@ -10,11 +10,9 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-3">
-                </div>
-                <div class="col-6">
+                <div class="col-8">
                     <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">会員</label>
+                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label text-end">会員</label>
                         <div class="col-sm-8">
                             <select class="form-select" aria-label="Default select example">
                                 <option selected>client-1</option>
@@ -26,87 +24,97 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">発送日</label>
-                        <div class="col-sm-8">
+                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label text-end">発送日</label>
+                        <div class="col-sm-4">
                             <input class="form-control" type="date">
                         </div>
+                        <div class="col-sm-4"></div>
                     </div>
                 </div>
             </div>
-            <div class="row mb-4 pe-3">
-                <div class="col-3"></div>
-                <div class="col-6 d-flex justify-content-between">
-                    <div class="w-75 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">CSVで一括登録</label>
-                        <div class="col-sm-8">
-                            <button type="button" class="btn btn-primary px-5">CSVアップロード</button>
+            <div class="row mb-1 pe-3">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-lg-8 col-sm-8">
+                            <div class="row">
+                                <label for="exampleFormControlInput1" class="col-sm-4 col-form-label text-end">CSVで一括登録</label>
+                                <div class="col-sm-8">
+                                    <button type="button" class="btn btn-primary px-lg-5">CSVアップロード</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="w-25 row">
-                        <button type="button" class="btn btn-primary w-100">依頼用CSVダウンロード</button>
+                        <div class="col-lg-4 col-sm-4">
+                            <div class="row">
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-primary float-end">依頼用CSVダウンロード</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <table class="table table-hover text-center">
-            <thead class="table-dark align-middle">
-                <tr>
-                    <th class="py-3" rowspan="3" scope="col">管理ID</th>
-                    <th class="py-3" rowspan="3" scope="col">本のタイトル</th>
-                    <th class="py-3" colspan="4" scope="col">配送先ID /ラベル</th>
-                    <th class="py-3" rowspan="3" scope="col">出荷計</th>
-                    <th class="py-3" rowspan="3" scope="col">現在の在庫</th>
-                    <th class="py-3" rowspan="3" scope="col">出荷後在庫</th>
-                </tr>
-                <tr>
-                    <th>11</th>
-                    <th>13</th>
-                    <th>14</th>
-                    <th>15</th>
-                </tr>
-                <tr>
-                    <th>北千里</th>
-                    <th>北千里</th>
-                    <th>北千里</th>
-                    <th>北千里</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th class="align-middle" scope="row">E-111</th>
-                    <td class="align-middle">aasdasd</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">222</td>
-                    <td class="align-middle">555</td>
-                    <td class="align-middle">333</td>
-                </tr>
-                <tr>
-                    <th class="align-middle" scope="row">E-111</th>
-                    <td class="align-middle">aasdasd</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">222</td>
-                    <td class="align-middle">555</td>
-                    <td class="align-middle">333</td>
-                </tr>
-                <tr>
-                    <th class="align-middle" scope="row">E-111</th>
-                    <td class="align-middle">aasdasd</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">11</td>
-                    <td class="align-middle">222</td>
-                    <td class="align-middle">555</td>
-                    <td class="align-middle">333</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="col-12 table-responsive">
+            <table class="table table-hover text-center table-responsive-width">
+                <thead class="table-dark align-middle">
+                    <tr>
+                        <th class="py-3" rowspan="3" scope="col">管理ID</th>
+                        <th class="py-3" rowspan="3" scope="col">本のタイトル</th>
+                        <th class="py-3" colspan="4" scope="col">配送先ID /ラベル</th>
+                        <th class="py-3" rowspan="3" scope="col">出荷計</th>
+                        <th class="py-3" rowspan="3" scope="col">現在の在庫</th>
+                        <th class="py-3" rowspan="3" scope="col">出荷後在庫</th>
+                    </tr>
+                    <tr>
+                        <th>11</th>
+                        <th>13</th>
+                        <th>14</th>
+                        <th>15</th>
+                    </tr>
+                    <tr>
+                        <th>北千里</th>
+                        <th>北千里</th>
+                        <th>北千里</th>
+                        <th>北千里</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="align-middle" scope="row">E-111</th>
+                        <td class="align-middle">aasdasd</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">222</td>
+                        <td class="align-middle">555</td>
+                        <td class="align-middle">333</td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle" scope="row">E-111</th>
+                        <td class="align-middle">aasdasd</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">222</td>
+                        <td class="align-middle">555</td>
+                        <td class="align-middle">333</td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle" scope="row">E-111</th>
+                        <td class="align-middle">aasdasd</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">11</td>
+                        <td class="align-middle">222</td>
+                        <td class="align-middle">555</td>
+                        <td class="align-middle">333</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="row mt-3">
             <div class="col-12">
                 <div class="row">

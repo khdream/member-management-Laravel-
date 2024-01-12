@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class orderManagementController extends Controller
+class goodsManagementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,10 +20,10 @@ class orderManagementController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
-        return view('orders/orderManagement');
+        return view('goods/manageGoods');
     }
 
     /**

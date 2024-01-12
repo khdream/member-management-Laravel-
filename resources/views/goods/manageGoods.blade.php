@@ -5,14 +5,16 @@
     <div class="row justify-content-center">
         <div class="col-12 mb-3">
             <div class="row mb-3 border-bottom">
-                <div class="col-6">
-                    <div class="float-end"><h3>商品登録 / 編集</h3></div>
+                <div class="col-5"></div>
+                <div class="col-4">
+                    <div class=""><h3>商品登録 / 編集</h3></div>
                 </div>
+                <div class="col-3"></div>
             </div>
             <div class="row">
-                <div class="col-3">
+                <div class="col-xl-3 col-sm-0">
                 </div>
-                <div class="col-6">
+                <div class="col-xl-6 col-sm-12 responsive-font-size">
                     <div class="mb-3 row">
                         <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">会員を選択</label>
                         <div class="col-sm-8">
@@ -26,60 +28,62 @@
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">IDまたはタイトルで絞り込む</label>
-                        <div class="col-sm-8">
+                        <label for="exampleFormControlInput1" class="col-4 col-form-label">IDまたはタイトルで絞り込む</label>
+                        <div class="col-8">
                             <input class="form-control" type="text" placeholder="" aria-label="default input example">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row mb-4">
+            <div class="row mb-xl-4 mb-sm-1">
                 <div class="col-9">
                     <div class="float-end">
-                        <button type="button" class="btn">csvをダウンロード</button>
-                        <button type="button" class="btn btn-primary">CSVで登録・更新</button>
+                        <button type="button" class="btn btn-responsive">csvをダウンロード</button>
+                        <button type="button" class="btn btn-primary btn-responsive">CSVで登録・更新</button>
                     </div>
                 </div>
             </div>
         </div>
-        <table class="table table-hover text-center">
-            <thead class="table-dark">
-                <tr>
-                    <th class="py-3" scope="col">管理ID</th>
-                    <th class="py-3" scope="col">本のタイトル</th>
-                    <th class="py-3" scope="col">在庫数</th>
-                    <th class="py-3" scope="col">現在の注文数</th>
-                    <th class="py-3" scope="col">発送可能在庫数</th>
-                    <th class="py-3" scope="col">消去</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th class="align-middle" scope="row">E-111</th>
-                    <td class="align-middle">aasdasd</td>
-                    <td class="align-middle">sasdasd</td>
-                    <td class="align-middle">sasd</td>
-                    <td class="align-middle">aasdasd</td>
-                    <td class="align-middle"><button type="button" class="btn btn-outline-danger">消去</button></td>
-                </tr>
-                <tr>
-                    <th class="align-middle" scope="row">E-112</th>
-                    <td class="align-middle">aasdasd</td>
-                    <td class="align-middle">sasdasd</td>
-                    <td class="align-middle">sasd</td>
-                    <td class="align-middle">aasdasd</td>
-                    <td class="align-middle"><button type="button" class="btn btn-outline-danger">消去</button></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="row table-responsive">
+            <table class="table table-hover text-center table-responsive-width">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="py-3" scope="col">管理ID</th>
+                        <th class="py-3" scope="col">本のタイトル</th>
+                        <th class="py-3" scope="col">在庫数</th>
+                        <th class="py-3" scope="col">現在の注文数</th>
+                        <th class="py-3" scope="col">発送可能在庫数</th>
+                        <th class="py-3" scope="col">消去</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="align-middle" scope="row">E-111</th>
+                        <td class="align-middle">aasdasd</td>
+                        <td class="align-middle">sasdasd</td>
+                        <td class="align-middle">sasd</td>
+                        <td class="align-middle">aasdasd</td>
+                        <td class="align-middle"><button type="button" class="btn btn-outline-danger btn-responsive" data-bs-toggle="modal" data-bs-target="#deleteMemberModal">消去</button></td>
+                    </tr>
+                    <tr>
+                        <th class="align-middle" scope="row">E-112</th>
+                        <td class="align-middle">aasdasd</td>
+                        <td class="align-middle">sasdasd</td>
+                        <td class="align-middle">sasd</td>
+                        <td class="align-middle">aasdasd</td>
+                        <td class="align-middle"><button type="button" class="btn btn-outline-danger btn-responsive" data-bs-toggle="modal" data-bs-target="#deleteMemberModal">消去</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div class="row">
             <div class="col-12">
-                <div class="float-end"><button type="button" class="btn text-primary">行を追加する</button></div>
+                <div class="float-end"><button type="button" class="btn text-primary btn-responsive">行を追加する</button></div>
             </div>
             <div class="col-12">
                 <div class="row">
                     <div class="col-4"></div>
-                    <div class="col-4"><button type="button" class="btn btn-primary w-100">更新する</button></div>
+                    <div class="col-4"><button type="button" class="btn btn-primary w-100 btn-responsive">更新する</button></div>
                     <div class="col-4"></div>
                 </div>
             </div>

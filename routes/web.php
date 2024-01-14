@@ -24,11 +24,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::post('/members/newmember', [App\Http\Controllers\manageMembersController::class, 'createNewMember'])->name('newMember');
+// Route::post('/members/newmember', [App\Http\Controllers\manageMembersController::class, 'createNewMember'])->name('newMember');
 
-Route::resource('/destination', destinationManagementController::class);
-Route::resource('/goods', goodsManagementController::class);
-Route::resource('/members', goodsManagementController::class);
-Route::resource('/orders', goodsManagementController::class);
+Route::resource('/members', memberManagementController::class);
 Route::resource('/orders', orderManagementController::class);
+Route::resource('/goods', goodsManagementController::class);
+Route::resource('/destination', destinationManagementController::class);
 Route::resource('/orderRequest', orderRequestController::class);

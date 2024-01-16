@@ -13,6 +13,8 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css')}}">
 </head>
@@ -29,33 +31,22 @@
                         </div>
 
                         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                            <li>
-                                <div class="dropdown">
-                                    <button
-                                        class="btn dropdown-toggle"
-                                        type="button"
-                                        id="dropdownMenuButton"
-                                        data-mdb-toggle="dropdown"
-                                        aria-expanded="false"
-                                    >
-                                    会員情報
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        @if (Auth::user() && Auth::user()->user_role == 1)
-                                            <li><a class="dropdown-item" href="/members">会員一覧</a></li>
-                                        @endif
-                                        @if (Auth::user() && (Auth::user()->user_role == 1 || Auth::user()->user_role == 2))
-                                            <li><a href="/orders" class="dropdown-item" href="#">受注管理</a></li>
-                                        @endif
-                                        @if (Auth::user() && Auth::user()->user_role == 1)
-                                            <li><a href="/goods" class="dropdown-item">商品管理</a></li>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </li>
-                            <li><a href="/destination" class="nav-link px-2">発送先管理</a></li>
-                            <li><a href="/orderRequest" class="nav-link px-2">発送を依頼する</a></li>
-                            <li><a href="#" class="nav-link px-2">過去の依頼履歴</a></li>
+                            @if (Auth::user() && Auth::user()->user_role == 1)
+                                <li><a href="/orders" class="nav-link px-2" href="#">受注管理</a></li>
+                                <li><a href="/goods" class="nav-link px-2">商品管理</a></li>
+                                <li><a class="nav-link px-2" href="/members">会員管理</a></li>
+                                <li><a href="/destination" class="nav-link px-2">発送先管理</a></li>
+                                @endif
+                            @if (Auth::user() && Auth::user()->user_role == 2)
+                                <li><a href="/orders" class="nav-link px-2" href="#">受注一覧</a></li>
+                                <li><a href="/destination" class="nav-link px-2">発送先一覧</a></li>
+                            @endif
+                            @if (Auth::user() && Auth::user()->user_role == 3)
+                                <li><a href="/orderRequest" class="nav-link px-2">依頼一覧</a></li>
+                                <li><a href="/destination" class="nav-link px-2">発送先管理</a></li>
+                                <li><a class="nav-link px-2" href="/members">会員情報編集</a></li>
+                            @endif
+                            {{-- <li><a href="#" class="nav-link px-2">過去の依頼履歴</a></li> --}}
                         </ul>
                     </div>
                 @endif
@@ -101,7 +92,7 @@
             @yield('content')
         </main>
     </div>
-
+    <script src="{{ asset('assets/js/members.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

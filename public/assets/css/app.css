@@ -11,6 +11,13 @@
     min-width: 1280px;
 }
 
+small {
+    font-size: 11px;
+}
+
+.toast {
+    max-width: 250px !important;
+}
 /* @media screen and (max-width: 1155px) {
     thead {
         font-size: 11px;

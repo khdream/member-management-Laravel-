@@ -21,6 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'company_name',
+        'furigana_name',
+        'phone_number',
+        'post_code_prefix',
+        'post_code_subfix',
+        'location',
+        'street_adress',
+        'building_name',
     ];
 
     /**
@@ -42,4 +50,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function UserGood() {
+        return $this->hasMany(UserGood::class);
+    }
 }

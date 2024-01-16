@@ -23,7 +23,7 @@ class goodsManagementController extends Controller
 
     public function index()
     {
-        return view('goods/manageGoods');
+        return view('goods/viewAllGoodsForMembers');
     }
 
     /**

@@ -23,7 +23,7 @@ class orderManagementController extends Controller
     
     public function index()
     {
-        return view('orders/orderManagement');
+        return view('orders/viewOders');
     }
 
     /**

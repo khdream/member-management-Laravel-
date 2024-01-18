@@ -54,4 +54,9 @@ class User extends Authenticatable
     public function UserGood() {
         return $this->hasMany(UserGood::class);
     }
+
+    public function goods()
+    {
+        return $this->belongsToMany(Good::class, 'user_goods', 'user_id', 'good_id');
+    }
 }

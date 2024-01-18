@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-10 col-sm-4 align-self-end"><button type="button" class="btn btn-warning float-end align-self-end mx-xl-2" data-bs-toggle="modal" data-bs-target="#newAndEditModal">発送先の新規登録</button></div>
+                <div class="col-xl-10 col-sm-4 align-self-end"><button type="button" id="addDestinationButton" class="btn btn-warning float-end align-self-end mx-xl-2" data-bs-toggle="modal" data-bs-target="#newAndEditDestinationModal">発送先の新規登録</button></div>
             </div>
             <div class="row mb-1">
                 <div class="col-xl-2 col-sm-12">
@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditModal">編集</button></div>
+                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditDestinationModal">編集</button></div>
                                 <div class="col-6"><button type="button" class="btn btn-danger w-75 float-end" data-bs-toggle="modal" data-bs-target="#confirmInputedData">削除</button></div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditModal">編集</button></div>
+                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditDestinationModal">編集</button></div>
                                 <div class="col-6"><button type="button" class="btn btn-danger w-75 float-end" data-bs-toggle="modal" data-bs-target="#confirmInputedData">削除</button></div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="row">
-                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditModal">編集</button></div>
+                                <div class="col-6"><button type="button" class="btn btn-primary w-75 float-end" data-bs-toggle="modal" data-bs-target="#newAndEditDestinationModal">編集</button></div>
                                 <div class="col-6"><button type="button" class="btn btn-danger w-75 float-end" data-bs-toggle="modal" data-bs-target="#confirmInputedData">削除</button></div>
                             </div>
                         </div>
@@ -104,57 +104,109 @@
             <div class="row mt-3">
                 <div class="col-4"></div>
                 <div class="col-4">
-                    <button type="button" class="btn btn-primary w-75" data-bs-toggle="modal" data-bs-target="#confirmInputedData">更新する</button>
+                    {{-- <button type="button" id="newDestinationButton" class="btn btn-primary w-75" data-bs-toggle="modal" data-bs-target="#newAndEditDestinationModal">更新する</button> --}}
                 </div>
                 <div class="col-4"></div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="newAndEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="newAndEditDestinationModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">発送先登録 / 編集</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">発送先名</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="発送先名" aria-label="default input example">
+                <form id="newDestinationForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">発送先登録 / 編集</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3 row">
+                            <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">依頼ID</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" placeholder="依頼ID" name="clientId" id="clientId" value="">
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-8">
+                                        <small class="text-danger" id="clientId_Error"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">発送先名</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="destinationName" name="destinationName" type="text" placeholder="発送先名" aria-label="default input example">
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-8">
+                                        <small class="text-danger" id="destinationName_Error"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">郵便番号</label>
+                            <div class="col-sm-8 d-flex justify-content-between">
+                                <div class="w-25">
+                                    <input class="form-control" id="post_code_prefix" value="09" name="post_code_prefix" readonly type="text" placeholder="000">
+                                </div>
+                                -
+                                <div class="w-50">
+                                    <input class="form-control" id="post_code_suffix" name="post_code_suffix" type="text" placeholder="0000">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-8">
+                                        <small class="text-danger" id="post_code_suffix_Error"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">住所</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" id="adressName" name="adressName" placeholder="shikoku" aria-label="default input example">
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-8">
+                                        <small class="text-danger" id="adressName_Error"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">番地</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" id="locationName" name="locationName" placeholder="112" aria-label="default input example">
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-8">
+                                        <small class="text-danger" id="locationName_Error"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">ビル名</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" type="text" placeholder="123ビル名" aria-label="default input example">
+                            </div>
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">郵便番号</label>
-                        <div class="col-sm-8 d-flex justify-content-between">
-                            <div class="w-25"><input class="form-control" readonly type="text" placeholder="000"></div>
-                            -
-                            <div class="w-50"><input class="form-control" type="text" placeholder="0000"></div>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">住所</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="shikoku" aria-label="default input example">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">番地</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="112" aria-label="default input example">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">ビル名</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="123ビル名" aria-label="default input example">
-                        </div>
-                    </div>
-                </div>
+                </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取り消す</button>
-                    <button type="button" class="btn btn-primary">確認</button>
+                    <button type="button" id="cancelAddButton" class="btn btn-secondary" data-bs-dismiss="modal">取り消す</button>
+                    <button type="button" id="addAndEditDestinationConfirmButton" class="btn btn-primary">確認</button>
                 </div>
             </div>
         </div>

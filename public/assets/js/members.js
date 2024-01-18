@@ -243,11 +243,16 @@ $(document).ready(function () {
                 var errorElement = $("#" + fieldName + "_Error");
                 errorElement.text(errorMessage);
                 errorElement.show();
-                setTimeout(function () {
-                    errorElement.hide();
-                }, 5000);
             }
         }
+        setTimeout(function () {
+            for (var fieldName in errors) {
+                if (errors.hasOwnProperty(fieldName)) {
+                    var errorElement = $("#" + fieldName + "_Error");
+                    errorElement.hide();
+                }
+            }
+        }, 5000);
     }
 
     // Handle form submission

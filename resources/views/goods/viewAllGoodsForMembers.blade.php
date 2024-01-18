@@ -27,10 +27,10 @@
                                     <div class="row">
                                         {{-- <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">絞り込み</label> --}}
                                         <div class="col-sm-8">
-                                            <input class="form-control w-100" id="search_field" name="filter" type="text" placeholder="絞り込み">
+                                            <input class="form-control w-100" id="search_users_field" name="filter" type="text" placeholder="絞り込み">
                                         </div>
                                         <div class="col-sm-4">
-                                            <a href="/goods" type="button" id="searchButton" class="btn btn-outline-primary w-lg-50 w-sm-100">検索</a>
+                                            <a href="/goods" type="button" id="searchUsersButton" class="btn btn-outline-primary w-lg-50 w-sm-100">検索</a>
                                         </div>
                                     </div>
                                 </div>
@@ -54,29 +54,19 @@
                     </tr>
                 </thead>
                 <tbody id="goodTableBody">
-                    <tr>
-                        <th class="align-middle" scope="row">aaa</th>
-                        <td class="align-middle">bbb</td>
-                        <td class="align-middle">ccc</td>
-                        <td class="align-middle"><a href="/goods">商品情報編集</a></td>
-                    </tr>
-                    <tr>
-                        <th class="align-middle" scope="row">aaa</th>
-                        <td class="align-middle">bbb</td>
-                        <td class="align-middle">ccc</td>
-                        <td class="align-middle"><a href="/goods">商品情報編集</a></td>
-                    </tr>
-                    <tr>
-                        <th class="align-middle" scope="row">aaa</th>
-                        <td class="align-middle">bbb</td>
-                        <td class="align-middle">ccc</td>
-                        <td class="align-middle"><a href="/goods">商品情報編集</a></td>
-                    </tr>
+                    @foreach ($members as $member)
+                        <tr>
+                            <th class="align-middle" scope="row">{{$member->id}}</th>
+                            <td class="align-middle">{{$member->company_name}}</td>
+                            <td class="align-middle">{{$member->name}}</td>
+                            <td class="align-middle"><a href="/goods/{{$member->id}}">商品情報編集</a></td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
     </div>
     <div class="d-flex justify-content-center">
-        {{-- {{ $goods->links() }} --}}
+        {{ $members->links() }}
     </div>
 @endsection

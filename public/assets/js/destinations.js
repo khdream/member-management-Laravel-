@@ -31,13 +31,14 @@ $(document).ready(function () {
         isCreate = false;
         $("#clientId").val("");
         $("#destinationName").val("");
-        $("#adressName").val("");
+        $("#destinationBuildingName").val("");
+        $("#streetAddressName").val("");
         $("#locationName").val("");
         $("#post_code_suffix").val("");
 
         $("#clientId_Error").text("");
         $("#destinationName_Error").text("");
-        $("#adressName_Error").text("");
+        $("#streetAddressName_Error").text("");
         $("#locationName_Error").text("");
         $("#post_code_suffix_Error").text("");
     });
@@ -47,7 +48,7 @@ $(document).ready(function () {
         if (Object.keys(errors).length > 0) {
             validationHandle(errors);
         } else {
-            if (isCreate) {
+            if (isNew) {
                 $.ajax({
                     url: `/members/${memberId}`,
                     method: "PUT",
@@ -80,14 +81,10 @@ $(document).ready(function () {
                         ),
                     },
                     success: function (res, status) {
-                        console.log(res.users);
-                        if (status == "success" && res.message == "success") {
-                            $("#cancelButton").click();
-                            // location.reload();
-                            location.href = "/destination";
-                        } else {
-                            console.log("error");
-                        }
+                        alert(res);
+                        $("#cancelAddDestinationButton").click();
+                        // location.reload();
+                        // location.href = "/destination";
                     },
                     error: function (xhr, status, error) {
                         console.log("error");
@@ -134,8 +131,8 @@ $(document).ready(function () {
         // Get input field values
         var clientId = $("#clientId").val();
         var destinationName = $("#destinationName").val();
-        var adressName = $("#adressName").val();
         var locationName = $("#locationName").val();
+        var streetAddressName = $("#streetAddressName").val();
         var post_code_suffix = $("#post_code_suffix").val();
 
         // Initialize an errors object
@@ -152,11 +149,11 @@ $(document).ready(function () {
         } else if (post_code_suffix.length !== 4) {
             errors.post_code_suffix = "郵便番号を正確に入力してください。";
         }
-        if (adressName.trim() === "") {
-            errors.adressName = "住所項目フィールドは必須です。";
+        if (streetAddressName.trim() === "") {
+            errors.streetAddressName = "番地項目フィールドは必須です。";
         }
         if (locationName.trim() === "") {
-            errors.locationName = "番地項目フィールドは必須です。";
+            errors.locationName = "住所項目フィールドは必須です。";
         }
         return errors;
     }

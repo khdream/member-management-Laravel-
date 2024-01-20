@@ -55,6 +55,10 @@ class User extends Authenticatable
         return $this->hasMany(UserGood::class);
     }
 
+    public function user_destinations() {
+        return $this->hasMany(UserDestination::class);
+    }
+
     public function goods()
     {
         return $this->belongsToMany(Good::class, 'user_goods', 'user_id', 'good_id');
@@ -62,6 +66,11 @@ class User extends Authenticatable
 
     public function destinations()
     {
-        return $this->belongsToMany(Destination::class, 'user_destination');
+        return $this->belongsToMany(Destination::class, 'user_destinations', 'user_id', 'destination_id');
+    }
+
+    public function destinationpagenumber(): HasOne
+    {
+        return $this->hasOne(Destinationpagenumber::class);
     }
 }

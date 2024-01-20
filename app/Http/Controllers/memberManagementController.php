@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\Destinationpagenumber;
+use Auth;
 
 class memberManagementController extends Controller
 {
@@ -34,10 +36,10 @@ class memberManagementController extends Controller
                 ->where('name', 'like', '%'. $item. '%')
                 ->orWhere('email', 'like', '%'. $item. '%')
                 ->orWhere('company_name', 'like', '%'. $item. '%')
-                ->paginate(2);
+                ->paginate(5);
             return view('members/viewAllmembers')->with("members", $members);
         }else {
-            $members = User::where('user_role', 3)->paginate(2);
+            $members = User::where('user_role', 3)->paginate(5);
             return view('members/viewAllmembers')->with("members", $members);
         }
     }
@@ -82,7 +84,13 @@ class memberManagementController extends Controller
             'building_name' => $building_name,
         );
         try {
-            User::create($formData);
+            $user = User::create($formData);
+            $user_id = $user->id;
+            $num = array(
+                'user_id'=> $user_id,
+                'rowNumber'=> 10 
+            );
+            Destinationpagenumber::create($num);
             return response()->json(['message' => 'success']);
         } catch (\Exception $e) {
             return response()->json(['error' => 'error']);
@@ -108,7 +116,7 @@ class memberManagementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $company_name = $request->input('company_name');
         $name = $request->input('name');
@@ -134,7 +142,6 @@ class memberManagementController extends Controller
             'street_adress' => $street_adress,
             'building_name' => $building_name,
         );
-
         try {
             $user = User::find($id);
             $user->company_name = $formData['company_name'];
@@ -205,5 +212,9 @@ class memberManagementController extends Controller
             'street_adress' => ['required','string', 'max:255'],
             'building_name' => ['nullable', 'string', 'max:255'],
         ], $this->messages());
+    }
+
+    public function editMemberInfor(Request $request) {
+        return view('members.newMember');
     }
 }

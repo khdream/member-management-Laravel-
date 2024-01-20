@@ -16,5 +16,5 @@ class UserDestination extends Model
         'destinationManageLabel',
     ];
 
-    protected $table = 'user_destination';
+    protected $table = 'user_destinations';
 }

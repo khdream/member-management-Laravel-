@@ -28,6 +28,9 @@ Auth::routes();
 
 Route::get('/goods/download/{id}', [goodsManagementController::class, 'download'])->name('goodsDownload');
 Route::post('/goods/upload/{id}', [goodsManagementController::class, 'upload'])->name('goodsupload');
+Route::get('/destination/changeRowNumber/{id}', [destinationManagementController::class, 'changeRowNumber'])->name('changeRowNumber');
+Route::get('/edit-member-infor', [memberManagementController::class, 'editMemberInfor'])->name('editMemberInfor');
+
 Route::resource('/members', memberManagementController::class);
 Route::resource('/orders', orderManagementController::class);
 Route::resource('/goods', goodsManagementController::class);

@@ -71,7 +71,7 @@
                             <td class="align-middle p-1">{{$good->goodsInventory}}</td>
                             <td class="align-middle p-1">???</td>
                             <td class="align-middle p-1">???</td>
-                            <td class="align-middle p-1"><button type="button" userIdValue = "{{$userId}}" goodsIdValue = "{{$good->good_id}}" class="btn btn-outline-danger btn-responsive p-1 deleteGoodsForUserButton" data-bs-toggle="modal" data-bs-target="#deleteGoodsModal">削除</button></td>
+                            <td class="align-middle p-1"><button type="button" userIdValue = "{{$userId}}" goodsIdValue="{{$good->id}}" class="btn btn-outline-danger btn-responsive p-1 deleteGoodsForUserButton" data-bs-toggle="modal" data-bs-target="#deleteGoodsModal">削除</button></td>
                         </tr>
                     @endforeach
                 </tbody>

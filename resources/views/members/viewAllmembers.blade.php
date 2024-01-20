@@ -205,7 +205,7 @@
                             <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">郵便番号</label>
                             <div class="col-sm-8 d-flex justify-content-between">
                                 <div class="w-25">
-                                    <input class="form-control" id="post_code_prefix" value="09" name="post_code_prefix" readonly type="text" placeholder="000">
+                                    <input class="form-control" id="post_code_prefix" value="09" name="post_code_prefix" type="text" placeholder="000">
                                 </div>
                                 -
                                 <div class="w-50">

@@ -123,9 +123,11 @@ class goodsManagementController extends Controller
      */
     public function destroy(string $id, Request $request)
     {
+        $user_id = $request->input('userIdValue');
+        $good_id = $request->input('goodsIdValue');
         try {
-            $user_goods = UserGood::where('user_id', $request->input('userIdValue'))
-                                    ->where('good_id', $request->input('goodsIdValue'))
+            $user_goods = UserGood::where('user_id', $user_id)
+                                    ->where('good_id', $good_id)
                                     ->first();
             $user_goods->delete();
             return response()->json(['message' => 'success']);

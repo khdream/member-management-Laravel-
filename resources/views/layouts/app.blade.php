@@ -44,7 +44,7 @@
                             @if (Auth::user() && Auth::user()->user_role == 3)
                                 <li><a href="/orderRequest" class="nav-link px-2">依頼一覧</a></li>
                                 <li><a href="/destination" class="nav-link px-2">発送先管理</a></li>
-                                <li><a class="nav-link px-2" href="/members">会員情報編集</a></li>
+                                <li><a class="nav-link px-2" href="/edit-member-infor">会員情報編集</a></li>
                             @endif
                             {{-- <li><a href="#" class="nav-link px-2">過去の依頼履歴</a></li> --}}
                         </ul>
@@ -59,11 +59,11 @@
                                 </li>
                             @endif
 
-                            @if (Route::has('register'))
+                            {{-- @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link btn btn-primary" href="{{ route('register') }}">{{ __('登録する') }}</a>
                                 </li>
-                            @endif
+                            @endif --}}
                         @else
                             <li class="nav-item">
                                 <a class="nav-link btn me-2" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>

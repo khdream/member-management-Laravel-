@@ -140,12 +140,12 @@ $(document).ready(function () {
         $("#post_code_prefix").val(
             $("#post_code_" + id)
                 .text()
-                .slice(0, 3)
+                .slice(0, 2)
         );
         $("#post_code_suffix").val(
             $("#post_code_" + id)
                 .text()
-                .slice(4, 8)
+                .slice(3, 8)
         );
         $("#location").val($("#location_" + id).text());
         $("#street_adress").val($("#street_adress_" + id).text());
@@ -175,6 +175,35 @@ $(document).ready(function () {
         //         console.log("error");
         //     },
         // });
+    });
+    /* =================================================== */
+
+    $("#userPersonalInforEditButton").click(function () {
+        var userId = $("#memberIdInput").val();
+        $.ajax({
+            url: `/members/${userId}`,
+            method: "PUT",
+            data: $("#userPersonalInForForm").serialize(),
+            headers: {
+                "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
+            },
+            success: function (res, status) {
+                if (status == "success" && res.message == "success") {
+                    // $("#toastmember").addClass("text-bg-success");
+                    $("#memberToast").show();
+                    $("#toastValueContent").text("正しく更新されました！");
+                    setTimeout(function () {
+                        $("#memberToast").fadeOut(1000);
+                    }, 2000);
+                    // location.reload();
+                } else {
+                    console.log("error");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("error");
+            },
+        });
     });
 
     function validateForm() {

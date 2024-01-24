@@ -140,12 +140,12 @@ $(document).ready(function () {
         $("#post_code_prefix").val(
             $("#post_code_" + id)
                 .text()
-                .slice(0, 2)
+                .slice(0, 3)
         );
         $("#post_code_suffix").val(
             $("#post_code_" + id)
                 .text()
-                .slice(3, 8)
+                .slice(4, 8)
         );
         $("#location").val($("#location_" + id).text());
         $("#street_adress").val($("#street_adress_" + id).text());

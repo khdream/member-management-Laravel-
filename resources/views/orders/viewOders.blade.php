@@ -26,33 +26,36 @@
             <table class="table table-hover text-center table-responsive-width">
                 <thead class="table-dark align-middle">
                     <tr>
-                        <th>管理ID</th>
+                        <th>受注ID</th>
                         <th>クライアント名</th>
                         <th>ステータス</th>
                         <th>詳細はこちら</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th class="align-middle" scope="row">E-111</th>
-                        <td class="align-middle">aasdasd</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle"><a href="/orders">詳細はこちら</a></td>
-                    </tr>
-                    <tr>
-                        <th class="align-middle" scope="row">E-111</th>
-                        <td class="align-middle">aasdasd</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle"><a href="/orders">詳細はこちら</a></td>
-                    </tr>
-                    <tr>
-                        <th class="align-middle" scope="row">E-111</th>
-                        <td class="align-middle">aasdasd</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle"><a href="/orders">詳細はこちら</a></td>
-                    </tr>
+                    @foreach ($datas as $data)
+                        @if ($data->orders)
+                            @foreach ($data->orders as $order)
+                                <tr>
+                                    <th class="align-middle">{{ $order->order_name }}</th>
+                                    <td class="align-middle">{{ $data->name }}</td>
+                                    <td class="align-middle">{{ $order->status }}</td>
+                                    <td class="align-middle">
+                                        <a href="/orders/{{$data->id}}/{{$order->id}}">詳細はこちら</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6 d-flex justify-content-center">
+                {{ $datas->links() }}
+            </div>
+            <div class="col-3"></div>
         </div>
     </div>
 </div>

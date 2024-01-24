@@ -30,4 +30,9 @@ class Good extends Model
     {
         return $this->belongsToMany(User::class, 'user_goods', 'good_id', 'user_id');
     }
+    
+    // public function manage_order(): BelongsTo
+    // {
+    //     return $this->belongsTo(ManageOrder::class);
+    // }
 }

@@ -149,14 +149,6 @@ $(document).ready(function () {
     $("#showRowNumber").change(function () {
         var selectedOption = $(this).find(":selected");
         var rowNumber = selectedOption.val();
-        // let userLink = `/destination/changeRowNumber/${rowNumber}`;
-        // $("#showRowNumberLink").attr("href", userLink);
-        // var event = new MouseEvent("click", {
-        //     bubbles: true,
-        //     cancelable: true,
-        //     view: window,
-        // });
-        // document.getElementById("showRowNumberLink").dispatchEvent(event);
         $.ajax({
             url: `/destination/changeRowNumber/${rowNumber}`,
             method: "GET",
@@ -221,6 +213,4 @@ $(document).ready(function () {
             }
         }, 5000);
     }
-
-    // Handle form submission
 });

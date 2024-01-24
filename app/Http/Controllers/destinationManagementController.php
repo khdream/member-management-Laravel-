@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Destination;
 use App\Models\UserDestination;
 use App\Models\Destinationpagenumber;
+use Auth;
 
 class destinationManagementController extends Controller
 {
@@ -28,7 +29,11 @@ class destinationManagementController extends Controller
     {
         $rowNumber = Destinationpagenumber::where('user_id', auth()->user()->id)->first();
         $users = User::where('user_role', 3)->get();
-        $user = User::where('user_role', 3)->first();
+        if (Auth::user()->user_role == 3) {
+            $user = User::find(Auth::user()->id);
+        } else {
+            $user = User::where('user_role', 3)->first();
+        }
         $datas = $user->destinations()->paginate($rowNumber->rowNumber);
         return view('destinations.shippingDestinationsManagement')
                         ->with("datas", $datas)->with("users", $users)
@@ -86,7 +91,11 @@ class destinationManagementController extends Controller
         $users = User::where('user_role', 3)->get();
         $user = User::find($id);
         // $datas = User::find($id)->destinations()->paginate(5);
-        $query = User::find($id)->destinations();
+        if (Auth::user()->user_role == 3) {
+            $query = User::find(Auth::user()->id)->destinations();
+        } else {
+            $query = User::find($id)->destinations();
+        }
         if ($value && $value != "selectedOption") {
             $query = $query ->where('destinationName', 'like', '%' . $value . '%')
                             ->where('user_id', $id);

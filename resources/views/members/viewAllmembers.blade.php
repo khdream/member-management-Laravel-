@@ -188,28 +188,28 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">住所</label>
-                            <div class="col-sm-8">
-                                <input class="form-control" value="" id="location" name="location" type="text" placeholder="shikoku" aria-label="default input example">
-                            </div>
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-4"></div>
-                                    <div class="col-8">
-                                        <small class="text-danger" id="location_Error"></small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
                             <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">郵便番号</label>
                             <div class="col-sm-8 d-flex justify-content-between">
                                 <div class="w-25">
-                                    <input class="form-control" id="post_code_prefix" value="09" name="post_code_prefix" type="text" placeholder="000">
+                                    <input 
+                                        class="form-control" 
+                                        id="post_code_prefix" 
+                                        maxlength="3" 
+                                        name="post_code_prefix" 
+                                        type="text" 
+                                        placeholder="100">
                                 </div>
                                 -
                                 <div class="w-50">
-                                    <input class="form-control" id="post_code_suffix" name="post_code_suffix" type="text" placeholder="0000">
+                                    <input 
+                                        class="form-control" 
+                                        id="post_code_suffix" 
+                                        name="post_code_suffix" 
+                                        type="text" 
+                                        maxlength="4"
+                                        placeholder="0005"
+                                        onKeyUp="AjaxZip3.zip2addr('post_code_prefix','post_code_suffix','location','location');"
+                                    >
                                 </div>
                             </div>
                             <div class="col-12">
@@ -217,6 +217,20 @@
                                     <div class="col-4"></div>
                                     <div class="col-8">
                                         <small class="text-danger" id="post_code_suffix_Error"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">住所</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" value="" id="location" name="location" type="text" placeholder="" aria-label="default input example">
+                            </div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-8">
+                                        <small class="text-danger" id="location_Error"></small>
                                     </div>
                                 </div>
                             </div>

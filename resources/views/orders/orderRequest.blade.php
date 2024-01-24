@@ -8,25 +8,29 @@
                 <div class="col-6">
                     <div class="float-end"><h3>発送依頼</h3></div>
                 </div>
+                <div class="col-6">
+                    <div class="toast align-items-center text-white border-0" id="newOrderToast" style="position: absolute; top: 100px; right: 20px">
+                        <div class="d-flex">
+                            <div class="toast-body" id="newOrderToastValue">
+                                成果的に登録されました。
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-8">
                     <div class="mb-3 row">
                         <label for="exampleFormControlInput1" class="col-sm-4 col-form-label text-end">会員</label>
-                        <div class="col-sm-8">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>client-1</option>
-                                <option value="1">client-2</option>
-                                <option value="2">client-3</option>
-                                <option value="3">client-4</option>
-                                <option value="3">client-5</option>
-                            </select>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="client_name" type="text" value="{{Auth::user()->name}}">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="exampleFormControlInput1" class="col-sm-4 col-form-label text-end">発送日</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="date">
+                            <input class="form-control" id="delivery_date" type="date">
                         </div>
                         <div class="col-sm-4"></div>
                     </div>
@@ -39,14 +43,15 @@
                             <div class="row">
                                 <label for="exampleFormControlInput1" class="col-sm-4 col-form-label text-end">CSVで一括登録</label>
                                 <div class="col-sm-8">
-                                    <button type="button" class="btn btn-primary px-lg-5">CSVアップロード</button>
+                                    <a href="/orders/orderRequest/download/" class="btn btn-outline-primary px-lg-5">CSVアップロード</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-4">
                             <div class="row">
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-primary float-end">依頼用CSVダウンロード</button>
+                                    <button class="btn btn-outline-primary btn-responsive float-end" id="tmpOrdersUploadButton">依頼用CSVダウンロード</button>
+                                    <input hidden type="file" id="ordersFormFileUpload" class="form-control btn btn-outline-primary btn-responsive">
                                 </div>
                             </div>
                         </div>
@@ -60,58 +65,48 @@
                     <tr>
                         <th class="py-3" rowspan="3" scope="col">管理ID</th>
                         <th class="py-3" rowspan="3" scope="col">本のタイトル</th>
-                        <th class="py-3" colspan="4" scope="col">配送先ID /ラベル</th>
+                        <th class="py-1 w-30" colspan="4" scope="col">配送先ID /ラベル</th>
                         <th class="py-3" rowspan="3" scope="col">出荷計</th>
                         <th class="py-3" rowspan="3" scope="col">現在の在庫</th>
                         <th class="py-3" rowspan="3" scope="col">出荷後在庫</th>
                     </tr>
                     <tr>
-                        <th>11</th>
-                        <th>13</th>
-                        <th>14</th>
-                        <th>15</th>
+                        <th><input id="des_id_0" type="text" class="form-control text-center p-0" placeholder="発送先ID" ></th>                           
+                        <th><input id="des_id_1" type="text" class="form-control text-center p-0" placeholder="発送先ID" ></th>                           
+                        <th><input id="des_id_2" type="text" class="form-control text-center p-0" placeholder="発送先ID" ></th>                           
+                        <th><input id="des_id_3" type="text" class="form-control text-center p-0" placeholder="発送先ID" ></th>
                     </tr>
                     <tr>
-                        <th>北千里</th>
-                        <th>北千里</th>
-                        <th>北千里</th>
-                        <th>北千里</th>
+                        <td><input id="des_0" type="text" class="form-control text-center p-0" placeholder="発送先" ></td>
+                        <td><input id="des_1" type="text" class="form-control text-center p-0" placeholder="発送先" ></td>
+                        <td><input id="des_2" type="text" class="form-control text-center p-0" placeholder="発送先" ></td>
+                        <td><input id="des_3" type="text" class="form-control text-center p-0" placeholder="発送先" ></td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th class="align-middle" scope="row">E-111</th>
-                        <td class="align-middle">aasdasd</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">222</td>
-                        <td class="align-middle">555</td>
-                        <td class="align-middle">333</td>
-                    </tr>
-                    <tr>
-                        <th class="align-middle" scope="row">E-111</th>
-                        <td class="align-middle">aasdasd</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">222</td>
-                        <td class="align-middle">555</td>
-                        <td class="align-middle">333</td>
-                    </tr>
-                    <tr>
-                        <th class="align-middle" scope="row">E-111</th>
-                        <td class="align-middle">aasdasd</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">11</td>
-                        <td class="align-middle">222</td>
-                        <td class="align-middle">555</td>
-                        <td class="align-middle">333</td>
-                    </tr>
+                    <input hidden type="number" id="lengthOfDatas" value="{{count($datas)}}">
+                        @foreach ($datas as $key => $data)
+                            <input hidden type="number" id="goodIdOfEachValue_{{$key}}" value="{{$data['id']}}">
+                            <tr>
+                                <th class="align-middle" key={{$key}} scope="row">{{$data['manageGoodsId']}}</th>
+                                <td class="align-middle" key={{$key}}>{{$data['goodsTitle']}}</td>
+                                <td class="align-middle">
+                                    <input value="" key={{$key}} id="fD_{{$key}}" class="orderNumber form-control text-center p-0" type="number">
+                                </td>
+                                <td class="align-middle">
+                                    <input value="" key={{$key}} id="sD_{{$key}}" class="orderNumber form-control text-center p-0" type="number">
+                                </td>
+                                <td class="align-middle">
+                                    <input value="" key={{$key}} id="tD_{{$key}}" class="orderNumber form-control text-center p-0" type="number">
+                                </td>
+                                <td class="align-middle">
+                                    <input value="" key={{$key}} id="foD_{{$key}}" class="orderNumber form-control text-center p-0" type="number">
+                                </td>
+                                <td class="align-middle" key={{$key}} id="orderSum_{{$key}}">0</td>
+                                <td class="align-middle" key={{$key}}>{{$data['goodsInventory']}}</td>
+                                <td class="align-middle" key={{$key}} id="remainOrder_{{$key}}">{{$data['goodsInventory']}}</td>
+                            </tr>
+                        @endforeach
                 </tbody>
             </table>
         </div>
@@ -119,93 +114,14 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-4"></div>
-                    <div class="col-4"><button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#confirmInputedData">依頼する</button></div>
+                    <div class="col-4"><button id="orderRequestButton" type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#confirmOrderRequestModal">依頼する</button></div>
                     <div class="col-4"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">会員情報</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">法人名</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="法人名" aria-label="default input example">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">担当者氏名</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="担当者氏名" aria-label="default input example">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">担当者ふりがな</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="担当者ふりがな" aria-label="default input example">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">メールアドレス</label>
-                        <div class="col-sm-8">
-                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="inputPassword" class="col-sm-4 col-form-label">パスワード</label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" id="inputPassword">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">電話番号</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="1234567890" aria-label="default input example">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">郵便番号</label>
-                        <div class="col-sm-8 d-flex justify-content-between">
-                            <div class="w-25"><input class="form-control" readonly type="text" placeholder="000"></div>
-                            -
-                            <div class="w-50"><input class="form-control" type="text" placeholder="0000"></div>
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">住所</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="shikoku" aria-label="default input example">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">番地</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="112" aria-label="default input example">
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">ビル名</label>
-                        <div class="col-sm-8">
-                            <input class="form-control" type="text" placeholder="123ビル名" aria-label="default input example">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取り消す</button>
-                    <button type="button" class="btn btn-primary">確認</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="confirmInputedData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmOrderRequestModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -216,8 +132,8 @@
                     内容を確認してください。
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn" data-bs-dismiss="modal">取り消す</button>
-                    <button type="button" class="btn btn-primary text-white">確認</button>
+                    <button type="button" id="cancelOrderRequest" class="btn" data-bs-dismiss="modal">取り消す</button>
+                    <button type="button" id="confirmOrderRequest" class="btn btn-primary text-white">確認</button>
                 </div>
             </div>
         </div>

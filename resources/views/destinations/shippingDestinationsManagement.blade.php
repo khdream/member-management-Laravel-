@@ -22,9 +22,9 @@
                                 <select class="form-select" id="selectUserFieldForDestinations" aria-label="Default select example">
                                     @foreach ($users as $key => $user)
                                         @if ($user->id == $selectedUser->id)
-                                            <option selected userIds = "{{$user->id}}">{{$user->company_name}}</option>
+                                            <option selected userIds = "{{$user->id}}">{{$user->name}}</option>
                                         @else
-                                            <option userIds = "{{$user->id}}">{{$user->company_name}}</option>
+                                            <option userIds = "{{$user->id}}">{{$user->name}}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -56,33 +56,33 @@
                             <select class="form-select my-2" id="showRowNumber" aria-label="Default select example">
                                 @if ($rowNumber == 10)
                                     <option selected value="10">10</option>
-                                    <option value="10">20</option>
-                                    <option value="10">30</option>
-                                    <option value="10">40</option>
-                                    <option value="10">50</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
                                 @elseif ($rowNumber == 20)
                                     <option value="10">10</option>
                                     <option selected value="20">20</option>
-                                    <option value="10">30</option>
-                                    <option value="10">40</option>
-                                    <option value="10">50</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
+                                    <option value="50">50</option>
                                 @elseif ($rowNumber == 30)
                                     <option value="10">10</option>
                                     <option value="20">20</option>
                                     <option selected value="30">30</option>
-                                    <option value="10">40</option>
-                                    <option value="10">50</option>
+                                    <option value="50">40</option>
+                                    <option value="50">50</option>
                                 @elseif ($rowNumber == 40)
                                     <option value="10">10</option>
-                                    <option value="10">20</option>
-                                    <option value="10">30</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
                                     <option selected value="40">40</option>
-                                    <option value="10">50</option>
+                                    <option value="50">50</option>
                                 @elseif ($rowNumber == 50)
                                     <option value="10">10</option>
-                                    <option value="10">20</option>
-                                    <option value="10">30</option>
-                                    <option value="10">40</option>
+                                    <option value="20">20</option>
+                                    <option value="30">30</option>
+                                    <option value="40">40</option>
                                     <option selected value="50">50</option>
                                 @endif
                             </select>
@@ -180,11 +180,25 @@
                                 <label for="post_code_prefix" class="col-sm-4 col-form-label">郵便番号</label>
                                 <div class="col-sm-8 d-flex justify-content-between">
                                     <div class="w-25">
-                                        <input class="form-control" id="post_code_prefix" value="09" name="post_code_prefix" readonly type="text" placeholder="000">
+                                        <input 
+                                            class="form-control" 
+                                            id="post_code_prefix" 
+                                            maxlength="3"
+                                            name="post_code_prefix" 
+                                            type="text" 
+                                            placeholder="100">
                                     </div>
                                     -
                                     <div class="w-50">
-                                        <input class="form-control" id="post_code_suffix" name="post_code_suffix" type="text" placeholder="0000">
+                                        <input 
+                                            class="form-control" 
+                                            id="post_code_suffix" 
+                                            name="post_code_suffix"
+                                            maxlength="4"
+                                            type="text" 
+                                            placeholder="0005"
+                                            onKeyUp="AjaxZip3.zip2addr('post_code_prefix','post_code_suffix','locationName','locationName');"
+                                        >
                                     </div>
                                 </div>
                                 <div class="col-12">

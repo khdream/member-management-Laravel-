@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Good;
 use App\Models\UserGood;
+use App\Models\Order;
+use App\Models\ManageOrder;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use League\Csv\Reader;
+
 
 class goodsManagementController extends Controller
 {
@@ -89,6 +92,16 @@ class goodsManagementController extends Controller
      */
     public function show($id, Request $request)
     {
+        $goodsQuantities = [];
+        $orders = Order::where('status', '発送前')->get();
+        foreach($orders as $order) {
+            $manage_orders = ManageOrder::where('order_id', $order->id)->get();
+            foreach($manage_orders as $manage_order) {
+                $goodsQuantities[$manage_order->good_id] ??= 0;
+                $goodsQuantities[$manage_order->good_id] += $manage_order->quantity;
+            }
+        }
+        // dd($goodsQuantities);
         $value = $request->input('value');
         $query = User::find($id)->goods();
         if ($value && $value != "selectedOption") {
@@ -99,7 +112,10 @@ class goodsManagementController extends Controller
 
         $goods = $query->paginate(10);
         $allUserInfor = User::where('user_role', 3)->get();
-        return view("goods/manageGoods")->with("goods", $goods)->with("userId", $id)->with("allUserInfor", $allUserInfor);
+        return view("goods/manageGoods")->with("goods", $goods)
+                                        ->with("userId", $id)
+                                        ->with("allUserInfor", $allUserInfor)
+                                        ->with("goodsQuantities", $goodsQuantities);
     }
 
     /**
@@ -152,8 +168,22 @@ class goodsManagementController extends Controller
             $title = ["管理ID", "本のタイトル", "在庫数", "現在の注文数","発送可能在庫数"];
             $FH = fopen('php://output', 'w');
             fputcsv($FH, $title);
+            $goodsQuantities = [];
+            $orders = Order::where('status', '発送前')->get();
+            foreach($orders as $order) {
+                $manage_orders = ManageOrder::where('order_id', $order->id)->get();
+                foreach($manage_orders as $manage_order) {
+                    $goodsQuantities[$manage_order->good_id] ??= 0;
+                    $goodsQuantities[$manage_order->good_id] += $manage_order->quantity;
+                }
+            }
             foreach ($list as $row) {
-                $tmp = [$row["manageGoodsId"], $row["goodsTitle"], $row["goodsInventory"], "AmountOfGoods", "RemainOders"];
+                $tmp = [
+                    $row["manageGoodsId"], 
+                    $row["goodsTitle"], 
+                    $row["goodsInventory"], 
+                    $goodsQuantities[$row["id"]], 
+                    $row["goodsInventory"]- $goodsQuantities[$row["id"]]];
                 fputcsv($FH, $tmp);
             }
             fclose($FH);

@@ -13,7 +13,11 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    {{-- auto fill adress when I type the post code --}}
+    <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/css/app.css')}}">
@@ -25,7 +29,7 @@
                 @if (Auth::user() && Auth::user()->name)
                     <div class="flex-fill d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
                         <div class="col-md-3 mb-md-0">
-                            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none d-lg-block d-sm-none">
+                            <a href="/orders" class="d-inline-flex link-body-emphasis text-decoration-none d-lg-block d-sm-none">
                                 イシダ印刷 在庫管理
                             </a>
                         </div>
@@ -42,7 +46,7 @@
                                 <li><a href="/destination" class="nav-link px-2">発送先一覧</a></li>
                             @endif
                             @if (Auth::user() && Auth::user()->user_role == 3)
-                                <li><a href="/orderRequest" class="nav-link px-2">依頼一覧</a></li>
+                                <li><a href="/orders" class="nav-link px-2">依頼一覧</a></li>
                                 <li><a href="/destination" class="nav-link px-2">発送先管理</a></li>
                                 <li><a class="nav-link px-2" href="/edit-member-infor">会員情報編集</a></li>
                             @endif
@@ -59,11 +63,11 @@
                                 </li>
                             @endif
 
-                            {{-- @if (Route::has('register'))
+                            @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link btn btn-primary" href="{{ route('register') }}">{{ __('登録する') }}</a>
                                 </li>
-                            @endif --}}
+                            @endif
                         @else
                             <li class="nav-item">
                                 <a class="nav-link btn me-2" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -95,6 +99,7 @@
     <script src="{{ asset('assets/js/members.js')}}"></script>
     <script src="{{ asset('assets/js/goods.js')}}"></script>
     <script src="{{ asset('assets/js/destinations.js')}}"></script>
+    <script src="{{ asset('assets/js/orders.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -18,6 +18,10 @@ small {
 .toast {
     max-width: 250px !important;
 }
+
+.w-30 {
+    width: 30%;
+}
 /* @media screen and (max-width: 1155px) {
     thead {
         font-size: 11px;

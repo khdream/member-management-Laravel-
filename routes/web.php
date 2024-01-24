@@ -6,6 +6,8 @@ use App\Http\Controllers\goodsManagementController;
 use App\Http\Controllers\memberManagementController;
 use App\Http\Controllers\orderManagementController;
 use App\Http\Controllers\orderRequestController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +20,18 @@ use App\Http\Controllers\orderRequestController;
 |
 */
 
+// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+//     $request->fulfill();
+
+//     return redirect('/orders');
+// })->middleware(['auth', 'signed'])->name('verification.verify');
+
 Route::get('/', function () {
-    return view('auth/login');
+    if (Auth::user()) {
+        return redirect('/orders');
+    } else {
+        return view('auth/login');
+    }
 });
 
 Auth::routes();
@@ -30,6 +42,12 @@ Route::get('/goods/download/{id}', [goodsManagementController::class, 'download'
 Route::post('/goods/upload/{id}', [goodsManagementController::class, 'upload'])->name('goodsupload');
 Route::get('/destination/changeRowNumber/{id}', [destinationManagementController::class, 'changeRowNumber'])->name('changeRowNumber');
 Route::get('/edit-member-infor', [memberManagementController::class, 'editMemberInfor'])->name('editMemberInfor');
+Route::get('/orders/download/{id}', [orderManagementController::class, 'ordersDownload'])->name('ordersDownload');
+Route::get('/orders/orderRequest/download/', [orderManagementController::class, 'ordersRequestDownload'])->name('ordersRequestDownload');
+Route::post('/orders/orderRequest/upload/', [orderManagementController::class, 'orderRequestUpload'])->name('orderRequestUpload');
+Route::get('/orders/{user_id}/{order_id}', [orderManagementController::class, 'showDetailOrder'])->name('showDetailOrder');
+Route::get('/orders/search', [orderManagementController::class, 'searchResult'])->name('searchResult');
+Route::get('/orders/createNewOrder', [orderManagementController::class, 'createNewOrder'])->name('createNewOrder');
 
 Route::resource('/members', memberManagementController::class);
 Route::resource('/orders', orderManagementController::class);

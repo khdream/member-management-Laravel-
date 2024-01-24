@@ -64,13 +64,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($goods as $good)
+                    @foreach ($goods as $key => $good)
                         <tr>
                             <th class="align-middle p-1" scope="row">{{$good->manageGoodsId}}</th>
                             <td class="align-middle p-1">{{$good->goodsTitle}}</td>
                             <td class="align-middle p-1">{{$good->goodsInventory}}</td>
-                            <td class="align-middle p-1">???</td>
-                            <td class="align-middle p-1">???</td>
+                            @if (!array_key_exists($good->id, $goodsQuantities))
+                                <td class="align-middle p-1">{{0}}</td>
+                                <td class="align-middle p-1">{{$good->goodsInventory}}</td>
+                            @else
+                                <td class="align-middle p-1">{{$goodsQuantities[$good->id]}}</td>
+                                <td class="align-middle p-1">{{$good->goodsInventory - $goodsQuantities[$good->id]}}</td>
+                            @endif
                             <td class="align-middle p-1"><button type="button" userIdValue = "{{$userId}}" goodsIdValue="{{$good->id}}" class="btn btn-outline-danger btn-responsive p-1 deleteGoodsForUserButton" data-bs-toggle="modal" data-bs-target="#deleteGoodsModal">削除</button></td>
                         </tr>
                     @endforeach

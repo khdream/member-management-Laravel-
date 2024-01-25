@@ -120,7 +120,7 @@
                                         <input 
                                             class="form-control" 
                                             id="post_code_prefix" 
-                                            value="{{substr(auth()->user()->post_code, 0, 2)}}" 
+                                            value="{{substr(auth()->user()->post_code, 0, 3)}}" 
                                             name="post_code_prefix"
                                             maxlength="3"
                                             type="text" 

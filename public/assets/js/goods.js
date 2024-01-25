@@ -22,12 +22,9 @@ $(document).ready(function () {
                         ),
                     },
                     success: function (res, status) {
-                        if (status == "success" && res.message == "success") {
-                            $("#cancelButton").click();
-                            location.reload();
-                        } else {
-                            console.log("error");
-                        }
+                        console.log(res);
+                        $("#goodsStoreModalCancelButton").click();
+                        location.reload();
                     },
                     error: function (xhr, status, error) {
                         console.log("error");
@@ -45,7 +42,7 @@ $(document).ready(function () {
                     },
                     success: function (res, status) {
                         console.log(res);
-                        $("#cancelButton").click();
+                        $("#goodsStoreModalCancelButton").click();
                         location.reload();
                     },
                     error: function (xhr, status, error) {

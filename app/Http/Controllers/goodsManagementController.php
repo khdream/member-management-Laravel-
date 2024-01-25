@@ -78,15 +78,24 @@ class goodsManagementController extends Controller
             "good_id" => $goodId,
         ]);
 
-        // echo $manageGoodsId;
-
         $user = User::find($id);
         $allUserInfor = User::where('user_role', 3)->get();
         $goods = $user->goods()->paginate(10);
+
+        $goodsQuantities = [];
+        $orders = Order::where('status', '発送前')->get();
+        foreach($orders as $order) {
+            $manage_orders = ManageOrder::where('order_id', $order->id)->get();
+            foreach($manage_orders as $manage_order) {
+                $goodsQuantities[$manage_order->good_id] ??= 0;
+                $goodsQuantities[$manage_order->good_id] += $manage_order->quantity;
+            }
+        }
         // return view('goods/manageGoods');
         return view('goods/manageGoods')->with("goods", $goods)
                                         ->with("userId", $id)
-                                        ->with("allUserInfor", $allUserInfor);
+                                        ->with("allUserInfor", $allUserInfor)
+                                        ->with("goodsQuantities", $goodsQuantities);
     }
 
     /**
@@ -180,13 +189,25 @@ class goodsManagementController extends Controller
                 }
             }
             foreach ($list as $row) {
-                $tmp = [
-                    $row["manageGoodsId"], 
-                    $row["goodsTitle"], 
-                    $row["goodsInventory"], 
-                    $goodsQuantities[$row["id"]], 
-                    $row["goodsInventory"]- $goodsQuantities[$row["id"]]];
-                fputcsv($FH, $tmp);
+                if (!array_key_exists($row["id"], $goodsQuantities)){
+                    $tmp = [
+                        $row["manageGoodsId"], 
+                        $row["goodsTitle"], 
+                        $row["goodsInventory"], 
+                        0, 
+                        $row["goodsInventory"]
+                    ];
+                    fputcsv($FH, $tmp);
+                }else {
+                    $tmp = [
+                        $row["manageGoodsId"], 
+                        $row["goodsTitle"], 
+                        $row["goodsInventory"], 
+                        $goodsQuantities[$row["id"]], 
+                        $row["goodsInventory"]- $goodsQuantities[$row["id"]]
+                    ];
+                    fputcsv($FH, $tmp);
+                }
             }
             fclose($FH);
         };

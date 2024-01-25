@@ -18,6 +18,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'senderEmail' => env('MAIL_FROM', "http://ishidaprint.sakura.ne.jp"),
+    'senderName' => env('MAIL_FROM_NAME', 'Testing Group'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

@@ -16,6 +16,9 @@ use League\Csv\Reader;
 use App\Mail\sendMailWhenDeliveryCompleted; 
 use Illuminate\Support\Facades\Mail;
 
+use App\Http\Controllers;
+use Illuminate\Support\Facades\Log;
+
 class orderManagementController extends Controller
 {
     /**
@@ -27,6 +30,9 @@ class orderManagementController extends Controller
      *
      * @return void
     */
+
+    public $name;
+    public $email;
 
     public function __construct()
     {
@@ -99,6 +105,16 @@ class orderManagementController extends Controller
         return view('orders/viewUserOrderDetail')->with('datas', $orders);
     }
 
+    public function sendingMail() {
+        $this->name = "codemaker"; //recipient name
+        $this->email = "personal.codemaker@gmail.com"; 
+        $emailParams = new \stdClass(); 
+        $emailParams->usersName = $this->name;
+        $emailParams->usersEmail = $this->email;
+        $emailParams->subject = "Testing Email sending feature";
+        Mail::to($emailParams->usersEmail)->send(new sendMailWhenDeliveryCompleted($emailParams));
+    }
+
     public function store(Request $request)
     {
         try {
@@ -160,6 +176,7 @@ class orderManagementController extends Controller
 
     public function update(Request $request, string $id)
     {
+        
         try {
             $datas = $request->input('datas');
             $orderStatus = $request->input('orderStatus');
@@ -186,7 +203,8 @@ class orderManagementController extends Controller
                         $good->save();
                     }
                 }
-                Mail::to("personal.matti@gmail.com")->send(new sendMailWhenDeliveryCompleted($order));
+                // Mail::to($emailParams->usersEmail)->send(new sendMailWhenDeliveryCompleted($emailParams));
+                // Mail::to("personal.matti@gmail.com")->send(new sendMailWhenDeliveryCompleted($order));
             }
             echo "success";
         }catch (\Exception $e) {

@@ -95,12 +95,12 @@ $(document).ready(function () {
         $("#post_code_prefix").val(
             $("#destinationPostCode_" + indexNum)
                 .text()
-                .slice(0, 2)
+                .slice(0, 3)
         );
         $("#post_code_suffix").val(
             $("#destinationPostCode_" + indexNum)
                 .text()
-                .slice(3, 8)
+                .slice(4, 8)
         );
     });
     $("#selectUserFieldForDestinations").change(function () {

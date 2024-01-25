@@ -8,17 +8,22 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Config;
+
 
 class SendMailWhenDeliveryCompleted extends Mailable
 {
     use Queueable, SerializesModels;
+
+    private $emailParams;
 
     /**
      * Create a new message instance.
      */
     public function __construct()
     {
-        //
+        $this->emailParams = $params;
     }
 
     /**
@@ -53,6 +58,10 @@ class SendMailWhenDeliveryCompleted extends Mailable
 
     public function build()
     {
-        return $this->view('emails.ordersWhenDeliveryCompleted'); 
+        $this->from(Config::get('app.senderEmail'),Config::get('app.senderName'))
+        ->subject($this->emailParams->subject)
+        ->view('mail.TestEmail')
+        ->with(['emailParams' => $this->emailParams]);
+        // return $this->view('emails.ordersWhenDeliveryCompleted'); 
     }
 }

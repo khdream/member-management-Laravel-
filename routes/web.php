@@ -56,4 +56,4 @@ Route::resource('/destination', destinationManagementController::class);
 Route::resource('/orderRequest', orderRequestController::class);
 
 
-Route::get('/sendemail', 'orderManagementController@sendingMail')->name('sendingMail');
+Route::get('/sendemail', [App\Http\Controllers\orderManagementController::class, 'sendingMail'])->name('sendingMail');

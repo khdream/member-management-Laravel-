@@ -29,6 +29,7 @@
                                     <div class="w-50">
                                         <input type="date" class="form-control w-100" id="periodEndDate">
                                     </div>
+                                    <a hidden href="/orders/search" id="searchWithDate"></a>
                                 </div>
                             </div>
                         </div>

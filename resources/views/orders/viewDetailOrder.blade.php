@@ -49,23 +49,27 @@
                             @if (Auth::user()->user_role == 3)
                                 <input class="form-control" id="orderStatus" type="text" readonly value="{{$date[4]}}">
                             @else
-                                <select name="orderStatus" id="orderStatus" class="form-control" id="">
-                                    @if ($date[4] == "発送前")
-                                        <option selected value="発送前">発送前</option>
-                                    @else
-                                        <option value="発送前">発送前</option>
-                                    @endif
-                                    @if ($date[4] == "発送中")
-                                        <option selected value="発送中">発送中</option>
-                                    @else
-                                        <option value="発送中">発送中</option>
-                                    @endif
-                                    @if ($date[4] == "完了")
-                                        <option selected value="完了">完了</option>
-                                    @else
-                                        <option value="完了">完了</option>
-                                    @endif
-                                </select>
+                                @if ($date[4] == "完了")
+                                    <div class="form-control" id="orderStatus">{{$date[4]}}</div>
+                                @else
+                                    <select name="orderStatus" id="orderStatus" class="form-control" id="">
+                                        @if ($date[4] == "発送前")
+                                            <option selected value="発送前">発送前</option>
+                                        @else
+                                            <option value="発送前">発送前</option>
+                                        @endif
+                                        @if ($date[4] == "発送中")
+                                            <option selected value="発送中">発送中</option>
+                                        @else
+                                            <option value="発送中">発送中</option>
+                                        @endif
+                                        @if ($date[4] == "完了")
+                                            <option selected value="完了">完了</option>
+                                        @else
+                                            <option value="完了">完了</option>
+                                        @endif
+                                    </select>
+                                @endif
                             @endif
                         </div>
                         <label for="exampleFormControlInput1" class="col-sm-2 col-form-label">発送完了日</label>
@@ -128,28 +132,44 @@
                                     @if (Auth::user()->user_role == 3)
                                         <input readonly destinationId="{{$data['destination_location'][0]['destination_id']}}"  value="{{$data['destination_location'][0]['quantity']}}" id="firstD_{{$key}}" class="form-control text-center" type="text">
                                     @else
-                                        <input destinationId="{{$data['destination_location'][0]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][0]['quantity']}}" id="firstD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
+                                        @if ($date[4] == "完了")
+                                            <div destinationId="{{$data['destination_location'][0]['destination_id']}}" k="{{$key}}" id="firstD_{{$key}}" class="updateOrderManager text-center">{{$data['destination_location'][0]['quantity']}}</div>
+                                        @else
+                                            <input destinationId="{{$data['destination_location'][0]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][0]['quantity']}}" id="firstD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
+                                        @endif
                                     @endif
                                 </td>
                                 <td class="align-middle">
                                     @if (Auth::user()->user_role == 3)
                                         <input readonly destinationId="{{$data['destination_location'][1]['destination_id']}}"  value="{{$data['destination_location'][1]['quantity']}}" id="secondD_{{$key}}" class="form-control text-center" type="text">
                                     @else
-                                        <input destinationId="{{$data['destination_location'][1]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][1]['quantity']}}" id="secondD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
+                                        @if ($date[4] == "完了")
+                                            <div destinationId="{{$data['destination_location'][1]['destination_id']}}" k="{{$key}}" id="secondD_{{$key}}" class="updateOrderManager text-center">{{$data['destination_location'][1]['quantity']}}</div>
+                                        @else
+                                            <input destinationId="{{$data['destination_location'][1]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][1]['quantity']}}" id="secondD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
+                                        @endif
                                     @endif
                                 </td>
                                 <td class="align-middle">
                                     @if (Auth::user()->user_role == 3)
-                                        <input readonly destinationId="{{$data['destination_location'][2]['destination_id']}}"  value="{{$data['destination_location'][2]['quantity']}}" id="thirdD_{{$key}}" class="form-control text-center" type="text">
+                                        <input readonly readonly destinationId="{{$data['destination_location'][2]['destination_id']}}"  value="{{$data['destination_location'][2]['quantity']}}" id="thirdD_{{$key}}" class="form-control text-center" type="text">
                                     @else
-                                        <input destinationId="{{$data['destination_location'][2]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][2]['quantity']}}" id="thirdD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
+                                        @if ($date[4] == "完了")
+                                            <div destinationId="{{$data['destination_location'][2]['destination_id']}}" k="{{$key}}" id="thirdD_{{$key}}" class="updateOrderManager text-center">{{$data['destination_location'][2]['quantity']}}</div>
+                                        @else
+                                            <input destinationId="{{$data['destination_location'][2]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][2]['quantity']}}" id="thirdD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
+                                        @endif
                                     @endif
                                 </td>
                                 <td class="align-middle">
                                     @if (Auth::user()->user_role == 3)
                                         <input readonly destinationId="{{$data['destination_location'][3]['destination_id']}}"  value="{{$data['destination_location'][3]['quantity']}}" id="fourthD_{{$key}}" class="form-control text-center" type="text">
                                     @else
-                                        <input destinationId="{{$data['destination_location'][3]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][3]['quantity']}}" id="fourthD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
+                                        @if ($date[4] == "完了")
+                                            <div destinationId="{{$data['destination_location'][3]['destination_id']}}" k="{{$key}}" id="fourthD_{{$key}}" class="updateOrderManager text-center">{{$data['destination_location'][3]['quantity']}}</div>
+                                        @else
+                                            <input destinationId="{{$data['destination_location'][3]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][3]['quantity']}}" id="fourthD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
+                                        @endif
                                     @endif
                                 </td>
                                 <td class="align-middle">{{$data['all_quantity']}}</td>

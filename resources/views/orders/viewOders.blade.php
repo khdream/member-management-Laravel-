@@ -14,9 +14,10 @@
             <div class="row">
                 <div class="col-lg-9 col-md-12 order-manage-font">
                     <div class="mb-3 row">
-                        <label for="exampleFormControlInput1" class="col-xl-2 col-lg-3 col-md-4 col-form-label">絞り込み検索</label>
-                        <div class="col-xl-6 col-lg-5 col-md-6">
-                            <input class="form-control" id="exampleFormControlInput1" type="text" placeholder="山田太郎">
+                        <label for="ordersForEveryUserField" class="col-xl-2 col-lg-3 col-md-4 col-form-label">絞り込み検索</label>
+                        <div class="col-xl-6 col-lg-5 col-md-6 d-flex">
+                            <input class="form-control" id="ordersForEveryUserField" type="text" placeholder="">
+                            <a href="/orders" id="searchOrdersForEveryUser" class="btn btn-outline-primary w-25">検索</a>
                         </div>
                     </div>
                 </div>
@@ -33,19 +34,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($datas as $data)
-                        @if ($data->orders)
-                            @foreach ($data->orders as $order)
-                                <tr>
-                                    <th class="align-middle">{{ $order->order_name }}</th>
-                                    <td class="align-middle">{{ $data->name }}</td>
-                                    <td class="align-middle">{{ $order->status }}</td>
-                                    <td class="align-middle">
-                                        <a href="/orders/{{$data->id}}/{{$order->id}}">詳細はこちら</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
+                    @foreach ($orders as $order)
+                        <tr>
+                            <th class="align-middle">{{ $order->order_name }}</th>
+                            <td class="align-middle">{{ $userNames[$order->id]['name'] }}</td>
+                            <td class="align-middle">{{ $order->status }}</td>
+                            <td class="align-middle">
+                                <a href="/orders/{{$userNames[$order->id]['user_id']}}/{{$order->id}}">詳細はこちら</a>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -53,7 +50,7 @@
         <div class="row">
             <div class="col-3"></div>
             <div class="col-6 d-flex justify-content-center">
-                {{ $datas->links() }}
+                {{ $orders->links() }}
             </div>
             <div class="col-3"></div>
         </div>

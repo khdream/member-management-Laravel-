@@ -6,6 +6,7 @@ $(document).ready(function () {
     var endDate = "";
     var ajaxData = {};
     var des_id = {};
+    var ordersForEveryUser = "";
 
     $(".updateOrderManager").change(function () {
         $(this).removeClass("is-invalid");
@@ -207,23 +208,43 @@ $(document).ready(function () {
     $("#periodStartDate").change(function () {
         flag1 = true;
         startDate = $("#periodStartDate").val();
-        let data = {
-            startDate: startDate,
-            endDate: endDate,
-        };
+        var tmpLink = $("#searchWithDate").attr("href");
         if (flag2) {
-            sendRequestWithPeriod(data);
+            $("#searchWithDate").attr(
+                "href",
+                tmpLink + "&startDate=" + startDate
+            );
+        } else {
+            $("#searchWithDate").attr(
+                "href",
+                tmpLink + "?startDate=" + startDate
+            );
+        }
+        if (flag2) {
+            var event = new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+            });
+            document.getElementById("searchWithDate").dispatchEvent(event);
         }
     });
     $("#periodEndDate").change(function () {
         flag2 = true;
         endDate = $("#periodEndDate").val();
-        let data = {
-            startDate: startDate,
-            endDate: endDate,
-        };
+        var tmpLink = $("#searchWithDate").attr("href");
         if (flag1) {
-            sendRequestWithPeriod(data);
+            $("#searchWithDate").attr("href", tmpLink + "&endDate=" + endDate);
+        } else {
+            $("#searchWithDate").attr("href", tmpLink + "?endDate=" + endDate);
+        }
+        if (flag1) {
+            var event = new MouseEvent("click", {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+            });
+            document.getElementById("searchWithDate").dispatchEvent(event);
         }
     });
     $("#tmpOrdersUploadButton").click(function () {
@@ -303,20 +324,12 @@ $(document).ready(function () {
             });
         }
     });
-
-    function sendRequestWithPeriod(data) {
-        $.ajax({
-            url: `/orders/search`,
-            method: "GET",
-            data: data,
-            headers: {
-                "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
-            },
-            success: function (res, status) {
-                // console.log("res=>", res);
-                location.reload();
-            },
-            error: function (xhr, status, error) {},
-        });
-    }
+    $("#ordersForEveryUserField").on("input", function () {
+        var value = $(this).val();
+        ordersForEveryUser = value;
+        $("#searchOrdersForEveryUser").attr(
+            "href",
+            `/orders?ordersForEveryUser=${ordersForEveryUser}`
+        );
+    });
 });

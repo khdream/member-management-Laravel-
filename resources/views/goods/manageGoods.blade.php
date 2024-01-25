@@ -154,7 +154,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取り消す</button>
+                        <button type="button" id="goodsStoreModalCancelButton" class="btn btn-secondary" data-bs-dismiss="modal">取り消す</button>
                         <button type="button" id="storeGoodsButton" class="btn btn-primary">登録</button>
                     </div>
                 </form>

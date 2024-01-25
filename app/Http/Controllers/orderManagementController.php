@@ -13,6 +13,8 @@ use Auth;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use League\Csv\Reader;
+use App\Mail\sendMailWhenDeliveryCompleted; 
+use Illuminate\Support\Facades\Mail;
 
 class orderManagementController extends Controller
 {
@@ -34,11 +36,40 @@ class orderManagementController extends Controller
     public function index(Request $request)
     {
         $value = $request->input('value');
+        $ordersForEveryUser = $request->input('ordersForEveryUser');
         $isUser = Auth::user()->user_role;
 
         if($isUser == 1 || $isUser == 2) {
-            $orders = User::with('orders')->paginate(5);
-            return view('orders/viewOders')->with('datas', $orders);
+            if($ordersForEveryUser != null) {
+                $orders = Order::whereHas('user', function($q) use ($ordersForEveryUser) {
+                    $q->where('name', 'like', '%'.$ordersForEveryUser.'%'); 
+                })
+                ->orWhere('order_name', 'like', '%'.$ordersForEveryUser.'%')
+                ->paginate(5);
+        
+                $userNames = [];
+                foreach($orders as $order) {
+                    $user = User::find($order->user_id);
+                    $userNames[$order->id] = [
+                        'name' => $user->name, 
+                        'user_id' => $user->id
+                    ];   
+                }
+                return view('orders/viewOders')
+                        ->with('orders', $orders)
+                        ->with("userNames", $userNames);
+            } else {
+                $orders = Order::paginate(5);
+                $userNames = [];
+                foreach($orders as $order) {
+                    $user = User::find($order->user_id);
+                    $userNames[$order->id] = [
+                        'name' => $user->name, 
+                        'user_id' => $user->id
+                    ];   
+                }
+                return view('orders/viewOders')->with('orders', $orders)->with("userNames", $userNames);
+            }
         }else {
             if($value != null) {
                 $orders = Order::where('user_id', Auth::user()->id)
@@ -56,19 +87,14 @@ class orderManagementController extends Controller
     }
 
     public function searchResult(Request $request) {
-        $startDate = $request->startDate;
-        $endDate = $request->endDate;
-
-        // $startDateTime = Carbon::parse($startDate)->startOfDay();
-        // $endDateTime = Carbon::parse($endDate)->endOfDay();
-        // $startDateMilliseconds = strtotime($startDate) * 1000;
-        // $endDateMilliseconds = strtotime($endDate) * 1000;
-        // $startTimeStamp = Carbon::parse($startDate);
-        // $endTimeStamp = Carbon::parse($endDate);
+        $startDate = $request->input("startDate");
+        $endDate = $request->input("endDate");
+        $startTimeStamp = Carbon::parse($startDate);
+        $endTimeStamp = Carbon::parse($endDate);
 
         $orders = Order::where('user_id', Auth::user()->id)
-                                    ->where('created_at', '>=', $startTimeStamp)
-                                    ->where('created_at', '<=', $endTimeStamp)
+                                    ->whereDate('created_at', '>=', $startTimeStamp)
+                                    ->whereDate('created_at', '<=', $endTimeStamp)
                                     ->paginate(50);
         return view('orders/viewUserOrderDetail')->with('datas', $orders);
     }
@@ -160,6 +186,7 @@ class orderManagementController extends Controller
                         $good->save();
                     }
                 }
+                Mail::to("personal.matti@gmail.com")->send(new sendMailWhenDeliveryCompleted($order));
             }
             echo "success";
         }catch (\Exception $e) {

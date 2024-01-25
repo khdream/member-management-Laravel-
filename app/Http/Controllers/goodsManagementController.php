@@ -84,7 +84,9 @@ class goodsManagementController extends Controller
         $allUserInfor = User::where('user_role', 3)->get();
         $goods = $user->goods()->paginate(10);
         // return view('goods/manageGoods');
-        return view('goods/manageGoods')->with("goods", $goods)->with("userId", $id)->with("allUserInfor", $allUserInfor);
+        return view('goods/manageGoods')->with("goods", $goods)
+                                        ->with("userId", $id)
+                                        ->with("allUserInfor", $allUserInfor);
     }
 
     /**

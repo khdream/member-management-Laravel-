@@ -186,7 +186,7 @@ class orderManagementController extends Controller
                         $good->save();
                     }
                 }
-                // Mail::to("personal.matti@gmail.com")->send(new sendMailWhenDeliveryCompleted($order));
+                Mail::to("personal.matti@gmail.com")->send(new sendMailWhenDeliveryCompleted($order));
             }
             echo "success";
         }catch (\Exception $e) {

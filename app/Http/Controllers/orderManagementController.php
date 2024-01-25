@@ -13,7 +13,7 @@ use Auth;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use League\Csv\Reader;
-use App\Mail\sendMailWhenDeliveryCompleted; 
+use App\Mail\SendMailWhenDeliveryCompleted;
 use Illuminate\Support\Facades\Mail;
 
 use App\Http\Controllers;
@@ -112,7 +112,7 @@ class orderManagementController extends Controller
         $emailParams->usersName = $this->name;
         $emailParams->usersEmail = $this->email;
         $emailParams->subject = "Testing Email sending feature";
-        Mail::to($emailParams->usersEmail)->send(new sendMailWhenDeliveryCompleted($emailParams));
+        Mail::to($emailParams->usersEmail)->send(new SendMailWhenDeliveryCompleted($emailParams));
     }
 
     public function store(Request $request)

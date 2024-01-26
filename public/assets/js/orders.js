@@ -31,6 +31,7 @@ $(document).ready(function () {
     $(".updateOrdersButtonClass").click(function () {
         var lengthOfDatas = $("#lengthOfDatas").val();
         var orderStatus = $("#orderStatus").val();
+        var estimate_delivery_date = $("#estimate_delivery_date").val();
         var orderId = $("#lengthOfDatas").attr("orderId");
         var datas = [];
         for (let i = 0; i < lengthOfDatas; i++) {
@@ -62,6 +63,7 @@ $(document).ready(function () {
         var ajaxData = {
             datas: datas,
             orderStatus: orderStatus,
+            estimate_delivery_date: estimate_delivery_date,
         };
         $.ajax({
             url: `/orders/${orderId}`,

@@ -36,7 +36,15 @@
                         </div>
                         <label for="exampleFormControlInput1" class="col-sm-2 col-form-label">発送予定日</label>
                         <div class="col-sm-2">
-                            <p class="fs-6 pt-2">{{$date[3]}}</p>
+                            @if (Auth::user()->user_role == 3)
+                                <p class="fs-6 pt-2">{{$date[3]}}</p>
+                            @else
+                                @if ($date[4] == "完了")
+                                    <p class="fs-6 pt-2">{{$date[3]}}</p>
+                                @else
+                                    <input id="estimate_delivery_date" class="form-control pt-2" value="{{$date[3]}}" type="date">
+                                @endif
+                            @endif
                         </div>
                         <label for="exampleFormControlInput1" class="col-sm-2 col-form-label px-md-0">最終更新日時</label>
                         <div class="col-sm-2">

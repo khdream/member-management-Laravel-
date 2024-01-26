@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use League\Csv\Reader;
 use App\Mail\SendMailWhenDeliveryCompleted;
+use App\Mail\SendMailWhenRequest;
 use Illuminate\Support\Facades\Mail;
 
 use App\Http\Controllers;
@@ -105,16 +106,6 @@ class orderManagementController extends Controller
         return view('orders/viewUserOrderDetail')->with('datas', $orders);
     }
 
-    public function sendingMail() {
-        $this->name = "codemaker"; //recipient name
-        $this->email = "personal.codemaker@gmail.com"; 
-        $emailParams = new \stdClass(); 
-        $emailParams->usersName = $this->name;
-        $emailParams->usersEmail = $this->email;
-        $emailParams->subject = "Testing Email sending feature";
-        Mail::to($emailParams->usersEmail)->send(new SendMailWhenDeliveryCompleted($emailParams));
-    }
-
     public function store(Request $request)
     {
         try {
@@ -164,6 +155,15 @@ class orderManagementController extends Controller
                             ]);
                     }
                 }
+                $emailParams = new \stdClass(); 
+                $emailParams->usersName = Auth::user()->company_name;
+                $emailParams->usersEmail = "info@grandwork.jp";
+                $emailParams->subject = $newOrder->id;
+                $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . Auth::user()->id . "/" . $newOrder->id;
+                $emailParams->orderDetailLink = $orderDetailLink;
+                Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
+                $emailParams->usersEmail = "s_kawaguchi@shotka.net";
+                Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
                 echo "success";
             } else {
                 echo "falid";
@@ -176,10 +176,10 @@ class orderManagementController extends Controller
 
     public function update(Request $request, string $id)
     {
-        
         try {
             $datas = $request->input('datas');
             $orderStatus = $request->input('orderStatus');
+            $estimate_delivery_date = $request->input('estimate_delivery_date');
             foreach($datas as $data) {
                 for($i = 0; $i < 4; $i++) {
                     $manageOrders = ManageOrder::where('order_id', $id)
@@ -193,8 +193,11 @@ class orderManagementController extends Controller
                 }
             }
             $orders = Order::find($id);
+            $user_id = $orders -> user_id;
             $orders->status = $orderStatus;
+            $orders->estimate_delivery_date = $estimate_delivery_date;
             $orders->save();
+            $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . $user_id . "/" . $id;
             if ($orderStatus == "完了") {
                 foreach($datas as $data) {
                     for($i = 0; $i < 4; $i++) {
@@ -203,8 +206,17 @@ class orderManagementController extends Controller
                         $good->save();
                     }
                 }
-                // Mail::to($emailParams->usersEmail)->send(new sendMailWhenDeliveryCompleted($emailParams));
-                // Mail::to("personal.matti@gmail.com")->send(new sendMailWhenDeliveryCompleted($order));
+                $user_email = User::find($user_id)->email;
+                $emailParams = new \stdClass(); 
+                $emailParams->usersName = "Ishidaprint";
+                $emailParams->usersEmail = "personal.codemaker@gmail.com";
+                // $emailParams->usersEmail = "info@grandwork.jp";
+                $emailParams->orderDetailLink = $orderDetailLink;
+                $emailParams->subject = $orders->id;
+                Mail::to($emailParams->usersEmail)->send(new SendMailWhenDeliveryCompleted($emailParams));
+                $emailParams->usersName = "Client";
+                $emailParams->usersEmail = $user_email;
+                Mail::to($emailParams->usersEmail)->send(new SendMailWhenDeliveryCompleted($emailParams));
             }
             echo "success";
         }catch (\Exception $e) {
@@ -383,13 +395,18 @@ class orderManagementController extends Controller
         
         //////////////////////////////////////////////////////////////
 
-
+        mb_convert_encoding("受注日時","UTF-8","auto");
         // $list = User::find($id)->goods()->get()->toArray();
-        $dateDatas1 = ["受注日時", $date[0]];
-        $dateDatas2 = ['最終更新日時', $date[1]];
-        $dateDatas3 = ['発送完了日', $date[2]];
-        $dateDatas4 = ['発送予定日',$date[3]];
-        $dateDatas5 = ['ステータス', $date[4]];
+        $dateDatas1 = [mb_convert_encoding("受注日時","UTF-8","auto"), mb_convert_encoding($date[0],"UTF-8","auto")];
+        $dateDatas2 = [mb_convert_encoding("最終更新日時","UTF-8","auto"), mb_convert_encoding($date[1],"UTF-8","auto")];
+        $dateDatas3 = [mb_convert_encoding("発送完了日","UTF-8","auto"), mb_convert_encoding($date[2],"UTF-8","auto")];
+        $dateDatas4 = [mb_convert_encoding("発送予定日","UTF-8","auto"), mb_convert_encoding($date[3],"UTF-8","auto")];
+        $dateDatas5 = [mb_convert_encoding("ステータス","UTF-8","auto"), mb_convert_encoding($date[4],"UTF-8","auto")];
+        // $dateDatas1 = ["受注日時", $date[0]];
+        // $dateDatas2 = ['最終更新日時', $date[1]];
+        // $dateDatas3 = ['発送完了日', $date[2]];
+        // $dateDatas4 = ['発送予定日',$date[3]];
+        // $dateDatas5 = ['ステータス', $date[4]];
         $FH = fopen('php://output', 'w');
         fputcsv($FH, $dateDatas1);
         fputcsv($FH, $dateDatas2);
@@ -402,11 +419,28 @@ class orderManagementController extends Controller
         $callback = function() use ($datas)
         {
             if(Auth::user()->user_role == 3) {
-                $title1 = ["管理ID", "本のタイトル", "", "配送先", "", "", "出荷計","在庫"] ;
+                $title1 = [
+                    mb_convert_encoding("管理ID","UTF-8","auto"),
+                    mb_convert_encoding("本のタイトル","UTF-8","auto"), "", 
+                    mb_convert_encoding("配送先","UTF-8","auto"), "", "", 
+                    mb_convert_encoding("出荷計","UTF-8","auto"),
+                    mb_convert_encoding("在庫","UTF-8","auto")
+                ] ;
                 $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "",""] ;
+                // $title1 = ["管理ID", "本のタイトル", "", "配送先", "", "", "出荷計","在庫"] ;
+                // $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "",""] ;
             } else {
-                $title1 = ["管理ID", "本のタイトル", "", "配送先", "", "", "出荷計","在庫", "出荷後在庫"] ;
+                $title1 = [
+                    mb_convert_encoding("管理ID","UTF-8","auto"),
+                    mb_convert_encoding("本のタイトル","UTF-8","auto"), "", 
+                    mb_convert_encoding("配送先","UTF-8","auto"), "", "", 
+                    mb_convert_encoding("出荷計","UTF-8","auto"),
+                    mb_convert_encoding("在庫","UTF-8","auto"),
+                    mb_convert_encoding("出荷後在庫","UTF-8","auto")
+                ] ;
                 $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "","", ""] ;
+                // $title1 = ["管理ID", "本のタイトル", "", "配送先", "", "", "出荷計","在庫", "出荷後在庫"] ;
+                // $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "","", ""] ;
             }
             $FH = fopen('php://output', 'w');
             fputcsv($FH, $title1);
@@ -414,30 +448,52 @@ class orderManagementController extends Controller
             if(Auth::user()->user_role == 3) {
                 foreach ($datas as $row) {
                     $tmp = [
-                        $row["good_manageId"], 
-                        $row["good_title"], 
-                        $row["destination_location"][0]['quantity'], 
-                        $row["destination_location"][1]['quantity'], 
-                        $row["destination_location"][2]['quantity'], 
-                        $row["destination_location"][3]['quantity'], 
-                        $row["all_quantity"],
-                        $row["good_inventory"],
+                        mb_convert_encoding($row["good_manageId"],"UTF-8","auto"), 
+                        mb_convert_encoding($row["good_title"],"UTF-8","auto"), 
+                        mb_convert_encoding($row["destination_location"][0]['quantity'],"UTF-8","auto"), 
+                        mb_convert_encoding($row["destination_location"][1]['quantity'],"UTF-8","auto"), 
+                        mb_convert_encoding($row["destination_location"][2]['quantity'],"UTF-8","auto"), 
+                        mb_convert_encoding($row["destination_location"][3]['quantity'],"UTF-8","auto"), 
+                        mb_convert_encoding($row["all_quantity"],"UTF-8","auto"), 
+                        mb_convert_encoding($row["good_inventory"],"UTF-8","auto"),
                     ];
+
+                    // $tmp = [
+                    //     $row["good_manageId"], 
+                    //     $row["good_title"], 
+                    //     $row["destination_location"][0]['quantity'], 
+                    //     $row["destination_location"][1]['quantity'], 
+                    //     $row["destination_location"][2]['quantity'], 
+                    //     $row["destination_location"][3]['quantity'], 
+                    //     $row["all_quantity"],
+                    //     $row["good_inventory"],
+                    // ];
                     fputcsv($FH, $tmp);
                 }
             } else {
                 foreach ($datas as $row) {
                     $tmp = [
-                        $row["good_manageId"], 
-                        $row["good_title"], 
-                        $row["destination_location"][0]['quantity'], 
-                        $row["destination_location"][1]['quantity'], 
-                        $row["destination_location"][2]['quantity'], 
-                        $row["destination_location"][3]['quantity'], 
-                        $row["all_quantity"],
-                        $row["good_inventory"],
-                        $row["remain_quantity"],
+                        mb_convert_encoding($row["good_manageId"],"UTF-8","auto"), 
+                        mb_convert_encoding($row["good_title"],"UTF-8","auto"), 
+                        mb_convert_encoding($row["destination_location"][0]['quantity'],"UTF-8","auto"), 
+                        mb_convert_encoding($row["destination_location"][1]['quantity'],"UTF-8","auto"), 
+                        mb_convert_encoding($row["destination_location"][2]['quantity'],"UTF-8","auto"), 
+                        mb_convert_encoding($row["destination_location"][3]['quantity'],"UTF-8","auto"), 
+                        mb_convert_encoding($row["all_quantity"],"UTF-8","auto"), 
+                        mb_convert_encoding($row["good_inventory"],"UTF-8","auto"),
+                        mb_convert_encoding($row["remain_quantity"],"UTF-8","auto"),
                     ];
+                    // $tmp = [
+                    //     $row["good_manageId"], 
+                    //     $row["good_title"], 
+                    //     $row["destination_location"][0]['quantity'], 
+                    //     $row["destination_location"][1]['quantity'], 
+                    //     $row["destination_location"][2]['quantity'], 
+                    //     $row["destination_location"][3]['quantity'], 
+                    //     $row["all_quantity"],
+                    //     $row["good_inventory"],
+                    //     $row["remain_quantity"],
+                    // ];
                     fputcsv($FH, $tmp);
                 }
             }
@@ -608,6 +664,15 @@ class orderManagementController extends Controller
                         }
                     }
                 }
+                $emailParams = new \stdClass(); 
+                $emailParams->usersName = Auth::user()->name;
+                $emailParams->usersEmail = "info@grandwork.jp";
+                $emailParams->subject = $newOrder->id;
+                $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . Auth::user()->id . "/" . $newOrder->id;
+                $emailParams->orderDetailLink = $orderDetailLink;
+                Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
+                $emailParams->usersEmail = "s_kawaguchi@shotka.net";
+                Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
                 echo "success";
             } catch (\Exception $e) {
                 throw new \Exception($e);

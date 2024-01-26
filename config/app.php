@@ -16,10 +16,10 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'InventoryManagement'),
 
-    'senderEmail' => env('MAIL_FROM', "http://ishidaprint.sakura.ne.jp"),
-    'senderName' => env('MAIL_FROM_NAME', 'Testing Group'),
+    'senderEmail' => env('MAIL_FROM', "inventory@lowcost-print.com"),
+    'senderName' => env('MAIL_FROM_NAME', 'InventoryManagement'),
 
     /*
     |--------------------------------------------------------------------------

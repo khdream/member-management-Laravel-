@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 
 
-class SendMailWhenDeliveryCompleted extends Mailable
+class SendMailWhenRequest extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,7 +32,7 @@ class SendMailWhenDeliveryCompleted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Send Mail When Delivery Completed',
+            subject: 'Send Mail When the Request was Sent',
         );
     }
 
@@ -42,7 +42,7 @@ class SendMailWhenDeliveryCompleted extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.ordersWhenDeliveryCompleted',
+            view: 'mail.sendMailWhenRequest',
         );
     }
 
@@ -60,7 +60,7 @@ class SendMailWhenDeliveryCompleted extends Mailable
     {
         $this->from(Config::get('app.senderEmail'),Config::get('app.senderName'))
         // ->subject($this->emailParams->subject)
-        ->view('mail.ordersWhenDeliveryCompleted')
+        ->view('mail.sendMailWhenRequest.blade')
         ->with(['emailParams' => $this->emailParams]);
         // return $this->view('emails.ordersWhenDeliveryCompleted'); 
     }

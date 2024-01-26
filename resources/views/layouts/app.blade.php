@@ -63,11 +63,11 @@
                                 </li>
                             @endif
 
-                            @if (Route::has('register'))
+                            {{-- @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link btn btn-primary" href="{{ route('register') }}">{{ __('登録する') }}</a>
                                 </li>
-                            @endif
+                            @endif --}}
                         @else
                             <li class="nav-item">
                                 <a class="nav-link btn me-2" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>

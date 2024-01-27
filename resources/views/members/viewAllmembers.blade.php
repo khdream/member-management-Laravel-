@@ -255,6 +255,16 @@
                                 <input class="form-control" id="building_name" name="building_name" type="text" placeholder="123ビル名" aria-label="default input example">
                             </div>
                         </div>
+                        <div class="mb-3 row">
+                            <label for="selecetPermission" class="col-sm-4 col-form-label">役割</label>
+                            <div class="col-sm-8">
+                                <select name="selecetPermission" id="selecetPermission" class="form-control">
+                                    <option value="1">管理者</option>
+                                    <option value="2">倉庫の人</option>
+                                    <option value="3" selected>会員</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="cancelButton" class="btn btn-secondary" data-bs-dismiss="modal">取り消す</button>

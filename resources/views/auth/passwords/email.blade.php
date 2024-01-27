@@ -11,7 +11,7 @@
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            正常に送信されました。
                         </div>
                     @endif
 
@@ -27,7 +27,7 @@
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>そのメール アドレスを持つユーザーが見つかりません。</strong>
                                     </span>
                                 @enderror
                             </div>

@@ -70,6 +70,7 @@ class memberManagementController extends Controller
         $location = $request->input('location');
         $street_adress = $request->input('street_adress');
         $building_name = $request->input('building_name');
+        $selecetPermission = $request->input('selecetPermission');
 
         $post_code = $post_code_prefix. "-". $post_code_suffix;
         
@@ -84,6 +85,7 @@ class memberManagementController extends Controller
             'location' => $location,
             'street_adress' => $street_adress,
             'building_name' => $building_name,
+            'user_role' => $selecetPermission,
         );
         try {
             $user = User::create($formData);
@@ -131,6 +133,7 @@ class memberManagementController extends Controller
         $location = $request->input('location');
         $street_adress = $request->input('street_adress');
         $building_name = $request->input('building_name');
+        $selecetPermission = $request->input('selecetPermission');
         
         $formData = array(
             'company_name' => $company_name,
@@ -143,6 +146,7 @@ class memberManagementController extends Controller
             'location' => $location,
             'street_adress' => $street_adress,
             'building_name' => $building_name,
+            'user_role' => $selecetPermission,
         );
         try {
             $user = User::find($id);
@@ -156,6 +160,7 @@ class memberManagementController extends Controller
             $user->location = $formData['location'];
             $user->street_adress = $formData['street_adress'];
             $user->building_name = $formData['building_name'];
+            $user->user_role = $formData['user_role'];
             $user->save();
             return response()->json(['message' => 'success']);
         } catch (\Exception $e) {

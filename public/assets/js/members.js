@@ -20,12 +20,6 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#deleteCancelButton").click();
-                // $("#toastmember").addClass("text-bg-success");
-                // $("#toastmember").show();
-                // $("#toastValue").text("削除が正常に完了しました。");
-                // setTimeout(function () {
-                //     $("#toastmember").hide();
-                // }, 2000);
                 location.reload();
             },
             error: function (xhr, status, error) {

@@ -22,7 +22,8 @@
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>メールが無効です。</strong>
+                                        {{-- <strong>{{ $message }}</strong> --}}
                                     </span>
                                 @enderror
                             </div>
@@ -37,7 +38,8 @@
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                        <strong>有効なパスワードを入力します。</strong>
+                                        {{-- <strong>{{ $message }}</strong> --}}
                                     </span>
                                 @enderror
                             </div>
@@ -48,14 +50,14 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('パスワード（確認用）') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
                             </div>
                         </div>
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
+                                    {{ __('パスワードを再設定する') }}
                                 </button>
                             </div>
                         </div>

@@ -314,7 +314,7 @@ class orderManagementController extends Controller
         $cnt = 0;
         $headers = [
             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
-            'Content-type'        => 'text/csv',
+            'Content-type'        => 'text/csv; charset=Shift_JIS',
             'Content-Disposition' => `attachment; filename=goods_${cnt}.csv`,
             'Expires'             => '0',
             'Pragma'              => 'public'
@@ -505,7 +505,7 @@ class orderManagementController extends Controller
         $cnt = 0;
         $headers = [
             'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0',
-            'Content-type'        => 'text/csv',
+            'Content-type'        => 'text/csv; charset=Shift_JIS',
             'Content-Disposition' => `attachment; filename=goods_${cnt}.csv`,
             'Expires'             => '0',
             'Pragma'              => 'public'

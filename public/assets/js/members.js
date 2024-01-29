@@ -122,25 +122,19 @@ $(document).ready(function () {
     });
     $(".editButton").click(function (event) {
         const id = this.getAttribute("memberId");
+        const member_role = this.getAttribute("member_role");
         isCreate = true;
         memberId = id;
-
+        const post_code = this.getAttribute("post_code");
+        $("#selecetPermission").val(member_role);
         $("#company_name").val($("#company_name_" + id).text());
         $("#name").val($("#name_" + id).text());
         $("#furigana_name").val($("#furigana_name_" + id).text());
         $("#email").val($("#email_" + id).text());
         // $("#password").val($("#password_" + id).text());
         $("#phone_number").val($("#phone_number_" + id).text());
-        $("#post_code_prefix").val(
-            $("#post_code_" + id)
-                .text()
-                .slice(0, 3)
-        );
-        $("#post_code_suffix").val(
-            $("#post_code_" + id)
-                .text()
-                .slice(4, 8)
-        );
+        $("#post_code_prefix").val(post_code.slice(0, 3));
+        $("#post_code_suffix").val(post_code.slice(4, 8));
         $("#location").val($("#location_" + id).text());
         $("#street_adress").val($("#street_adress_" + id).text());
         $("#building_name").val($("#building_name_" + id).text());

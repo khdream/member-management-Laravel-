@@ -80,7 +80,7 @@
                                     <p class="m-0 p-0" id="phone_number_{{$member->id}}">{{$member->phone_number}}</p>
                                 </div>
                             </td>
-                            <td class="align-middle"><button type="button" memberId="{{$member->id}}" class="btn btn-outline-primary editButton" data-bs-toggle="modal" data-bs-target="#staticBackdrop">編集</button></td>
+                            <td class="align-middle"><button type="button" memberId="{{$member->id}}" post_code="{{$member->post_code}}" member_role="{{$member->user_role}}" class="btn btn-outline-primary editButton" data-bs-toggle="modal" data-bs-target="#staticBackdrop">編集</button></td>
                             <td class="align-middle"><button type="button" memberId="{{$member->id}}" class="btn btn-outline-danger deleteButton" data-bs-toggle="modal" data-bs-target="#deleteMemberModal">削除</button></td>
                         </tr>
                     @endforeach

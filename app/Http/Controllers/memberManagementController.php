@@ -32,8 +32,7 @@ class memberManagementController extends Controller
     {
         $item = $request->input('value');
         if($item) {
-            $members = User::where('user_role', 3)
-                            ->where(function ($query) use ($item) {
+            $members = User::where(function ($query) use ($item) {
                                 $query->where('name', 'like', '%' . $item . '%')
                                     ->orWhere('email', 'like', '%' . $item . '%')
                                     ->orWhere('company_name', 'like', '%' . $item . '%');
@@ -41,7 +40,7 @@ class memberManagementController extends Controller
                             ->paginate(5);
             return view('members/viewAllmembers')->with("members", $members);
         }else {
-            $members = User::where('user_role', 3)->paginate(5);
+            $members = User::paginate(5);
             return view('members/viewAllmembers')->with("members", $members);
         }
     }

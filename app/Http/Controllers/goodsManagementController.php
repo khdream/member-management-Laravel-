@@ -176,7 +176,13 @@ class goodsManagementController extends Controller
         $list = User::find($id)->goods()->get()->toArray();
         $callback = function() use ($list)
         {
-            $title = ["管理ID", "本のタイトル", "在庫数", "現在の注文数","発送可能在庫数"];
+            $title = [
+                mb_convert_encoding("管理ID", "SJIS", "UTF-8"), 
+                mb_convert_encoding("本のタイトル", "SJIS", "UTF-8"), 
+                mb_convert_encoding("在庫数", "SJIS", "UTF-8"), 
+                mb_convert_encoding("現在の注文数", "SJIS", "UTF-8"),
+                mb_convert_encoding("発送可能在庫数", "SJIS", "UTF-8")
+            ];
             $FH = fopen('php://output', 'w');
             fputcsv($FH, $title);
             $goodsQuantities = [];
@@ -191,20 +197,20 @@ class goodsManagementController extends Controller
             foreach ($list as $row) {
                 if (!array_key_exists($row["id"], $goodsQuantities)){
                     $tmp = [
-                        $row["manageGoodsId"], 
-                        $row["goodsTitle"], 
-                        $row["goodsInventory"], 
+                        mb_convert_encoding($row["manageGoodsId"], "SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["goodsTitle"], "SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["goodsInventory"], "SJIS", "UTF-8"), 
                         0, 
-                        $row["goodsInventory"]
+                        mb_convert_encoding($row["goodsInventory"], "SJIS", "UTF-8")
                     ];
                     fputcsv($FH, $tmp);
                 }else {
                     $tmp = [
-                        $row["manageGoodsId"], 
-                        $row["goodsTitle"], 
-                        $row["goodsInventory"], 
-                        $goodsQuantities[$row["id"]], 
-                        $row["goodsInventory"]- $goodsQuantities[$row["id"]]
+                        mb_convert_encoding($row["manageGoodsId"], "SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["goodsTitle"], "SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["goodsInventory"], "SJIS", "UTF-8"),  
+                        mb_convert_encoding($goodsQuantities[$row["id"]], "SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["goodsInventory"]- $goodsQuantities[$row["id"]], "SJIS", "UTF-8")
                     ];
                     fputcsv($FH, $tmp);
                 }

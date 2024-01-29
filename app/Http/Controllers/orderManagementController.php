@@ -394,14 +394,13 @@ class orderManagementController extends Controller
         // dd($locations);
         
         //////////////////////////////////////////////////////////////
-
-        mb_convert_encoding("受注日時","UTF-8","auto");
+        // mb_convert_encoding($str, "SJIS", "UTF-8")
         // $list = User::find($id)->goods()->get()->toArray();
-        $dateDatas1 = [mb_convert_encoding("受注日時","UTF-8","auto"), mb_convert_encoding($date[0],"UTF-8","auto")];
-        $dateDatas2 = [mb_convert_encoding("最終更新日時","UTF-8","auto"), mb_convert_encoding($date[1],"UTF-8","auto")];
-        $dateDatas3 = [mb_convert_encoding("発送完了日","UTF-8","auto"), mb_convert_encoding($date[2],"UTF-8","auto")];
-        $dateDatas4 = [mb_convert_encoding("発送予定日","UTF-8","auto"), mb_convert_encoding($date[3],"UTF-8","auto")];
-        $dateDatas5 = [mb_convert_encoding("ステータス","UTF-8","auto"), mb_convert_encoding($date[4],"UTF-8","auto")];
+        $dateDatas1 = [mb_convert_encoding("受注日時","SJIS", "UTF-8"), mb_convert_encoding($date[0],"SJIS", "UTF-8")];
+        $dateDatas2 = [mb_convert_encoding("最終更新日時","SJIS", "UTF-8"), mb_convert_encoding($date[1],"SJIS", "UTF-8")];
+        $dateDatas3 = [mb_convert_encoding("発送完了日","SJIS", "UTF-8"), mb_convert_encoding($date[2],"SJIS", "UTF-8")];
+        $dateDatas4 = [mb_convert_encoding("発送予定日","SJIS", "UTF-8"), mb_convert_encoding($date[3],"SJIS", "UTF-8")];
+        $dateDatas5 = [mb_convert_encoding("ステータス","SJIS", "UTF-8"), mb_convert_encoding($date[4],"SJIS", "UTF-8")];
         // $dateDatas1 = ["受注日時", $date[0]];
         // $dateDatas2 = ['最終更新日時', $date[1]];
         // $dateDatas3 = ['発送完了日', $date[2]];
@@ -420,23 +419,23 @@ class orderManagementController extends Controller
         {
             if(Auth::user()->user_role == 3) {
                 $title1 = [
-                    mb_convert_encoding("管理ID","UTF-8","auto"),
-                    mb_convert_encoding("本のタイトル","UTF-8","auto"), "", 
-                    mb_convert_encoding("配送先","UTF-8","auto"), "", "", 
-                    mb_convert_encoding("出荷計","UTF-8","auto"),
-                    mb_convert_encoding("在庫","UTF-8","auto")
+                    mb_convert_encoding("管理ID","SJIS", "UTF-8"),
+                    mb_convert_encoding("本のタイトル","SJIS", "UTF-8"), "", 
+                    mb_convert_encoding("配送先","SJIS", "UTF-8"), "", "", 
+                    mb_convert_encoding("出荷計","SJIS", "UTF-8"),
+                    mb_convert_encoding("在庫","SJIS", "UTF-8")
                 ] ;
                 $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "",""] ;
                 // $title1 = ["管理ID", "本のタイトル", "", "配送先", "", "", "出荷計","在庫"] ;
                 // $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "",""] ;
             } else {
                 $title1 = [
-                    mb_convert_encoding("管理ID","UTF-8","auto"),
-                    mb_convert_encoding("本のタイトル","UTF-8","auto"), "", 
-                    mb_convert_encoding("配送先","UTF-8","auto"), "", "", 
-                    mb_convert_encoding("出荷計","UTF-8","auto"),
-                    mb_convert_encoding("在庫","UTF-8","auto"),
-                    mb_convert_encoding("出荷後在庫","UTF-8","auto")
+                    mb_convert_encoding("管理ID","SJIS", "UTF-8"),
+                    mb_convert_encoding("本のタイトル","SJIS", "UTF-8"), "", 
+                    mb_convert_encoding("配送先","SJIS", "UTF-8"), "", "", 
+                    mb_convert_encoding("出荷計","SJIS", "UTF-8"),
+                    mb_convert_encoding("在庫","SJIS", "UTF-8"),
+                    mb_convert_encoding("出荷後在庫","SJIS", "UTF-8")
                 ] ;
                 $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "","", ""] ;
                 // $title1 = ["管理ID", "本のタイトル", "", "配送先", "", "", "出荷計","在庫", "出荷後在庫"] ;
@@ -448,14 +447,14 @@ class orderManagementController extends Controller
             if(Auth::user()->user_role == 3) {
                 foreach ($datas as $row) {
                     $tmp = [
-                        mb_convert_encoding($row["good_manageId"],"UTF-8","auto"), 
-                        mb_convert_encoding($row["good_title"],"UTF-8","auto"), 
-                        mb_convert_encoding($row["destination_location"][0]['quantity'],"UTF-8","auto"), 
-                        mb_convert_encoding($row["destination_location"][1]['quantity'],"UTF-8","auto"), 
-                        mb_convert_encoding($row["destination_location"][2]['quantity'],"UTF-8","auto"), 
-                        mb_convert_encoding($row["destination_location"][3]['quantity'],"UTF-8","auto"), 
-                        mb_convert_encoding($row["all_quantity"],"UTF-8","auto"), 
-                        mb_convert_encoding($row["good_inventory"],"UTF-8","auto"),
+                        mb_convert_encoding($row["good_manageId"],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["good_title"],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["destination_location"][0]['quantity'],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["destination_location"][1]['quantity'],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["destination_location"][2]['quantity'],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["destination_location"][3]['quantity'],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["all_quantity"],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["good_inventory"],"SJIS", "UTF-8"),
                     ];
 
                     // $tmp = [
@@ -473,15 +472,15 @@ class orderManagementController extends Controller
             } else {
                 foreach ($datas as $row) {
                     $tmp = [
-                        mb_convert_encoding($row["good_manageId"],"UTF-8","auto"), 
-                        mb_convert_encoding($row["good_title"],"UTF-8","auto"), 
-                        mb_convert_encoding($row["destination_location"][0]['quantity'],"UTF-8","auto"), 
-                        mb_convert_encoding($row["destination_location"][1]['quantity'],"UTF-8","auto"), 
-                        mb_convert_encoding($row["destination_location"][2]['quantity'],"UTF-8","auto"), 
-                        mb_convert_encoding($row["destination_location"][3]['quantity'],"UTF-8","auto"), 
-                        mb_convert_encoding($row["all_quantity"],"UTF-8","auto"), 
-                        mb_convert_encoding($row["good_inventory"],"UTF-8","auto"),
-                        mb_convert_encoding($row["remain_quantity"],"UTF-8","auto"),
+                        mb_convert_encoding($row["good_manageId"],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["good_title"],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["destination_location"][0]['quantity'],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["destination_location"][1]['quantity'],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["destination_location"][2]['quantity'],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["destination_location"][3]['quantity'],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["all_quantity"],"SJIS", "UTF-8"), 
+                        mb_convert_encoding($row["good_inventory"],"SJIS", "UTF-8"),
+                        mb_convert_encoding($row["remain_quantity"],"SJIS", "UTF-8"),
                     ];
                     // $tmp = [
                     //     $row["good_manageId"], 
@@ -525,9 +524,18 @@ class orderManagementController extends Controller
             // $title2 = ["", "", "1", "2", "3", "4", "",""] ;
             // $title3 = ["", "", "Q1", "Q2", "Q3", "Q4", "",""];
             
-            $title1 = ["", "", "", "配送先ID /ラベル", "", "", "",""] ;
+            $title1 = ["", "", "", mb_convert_encoding("配送先ID /ラベル","SJIS", "UTF-8"), "", "", "",""] ;
             $title2 = ["", "", "1", "2", "3", "4", "",""] ;
-            $title3 = ["管理ID", "本のタイトル", "Q1", "Q2", "Q3", "Q4", "出荷計","在庫"] ;
+            $title3 = [
+                mb_convert_encoding("管理ID","SJIS", "UTF-8"), 
+                mb_convert_encoding("本のタイトル","SJIS", "UTF-8"), 
+                mb_convert_encoding("Q1","SJIS", "UTF-8"), 
+                mb_convert_encoding("Q2","SJIS", "UTF-8"),
+                mb_convert_encoding("Q3","SJIS", "UTF-8"),
+                mb_convert_encoding("Q4","SJIS", "UTF-8"),
+                mb_convert_encoding("出荷計","SJIS", "UTF-8"),
+                mb_convert_encoding("在庫","SJIS", "UTF-8"),
+            ] ;
 
             $FH = fopen('php://output', 'w');
             fputcsv($FH, $title1);
@@ -535,14 +543,14 @@ class orderManagementController extends Controller
             fputcsv($FH, $title3);
             foreach ($goods as $row) {
                 $tmp = [
-                    $row["manageGoodsId"], 
-                    $row["goodsTitle"], 
+                    mb_convert_encoding($row["manageGoodsId"],"SJIS", "UTF-8"), 
+                    mb_convert_encoding($row["goodsTitle"],"SJIS", "UTF-8"), 
                     "", 
                     "", 
                     "", 
                     "",
                     "",
-                    $row["goodsInventory"],
+                    mb_convert_encoding($row["goodsInventory"],"SJIS", "UTF-8"),
                 ];
                 fputcsv($FH, $tmp);
             }

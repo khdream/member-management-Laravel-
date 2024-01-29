@@ -20,12 +20,6 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//     $request->fulfill();
-
-//     return redirect('/orders');
-// })->middleware(['auth', 'signed'])->name('verification.verify');
-
 Route::get('/', function () {
     if (Auth::user()) {
         return redirect('/orders');

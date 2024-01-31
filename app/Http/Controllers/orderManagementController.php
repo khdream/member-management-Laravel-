@@ -220,7 +220,7 @@ class orderManagementController extends Controller
     }
 
     public function createNewOrder(Request $request) {
-        $goods = User::find(Auth::user()->id)->goods()->paginate(10);
+        $goods = User::find(Auth::user()->id)->goods()->get();
         $destinations = User::find(Auth::user()->id)->destinations()->get();
         return view('orders/orderRequest')->with('datas', $goods)->with('destinations', $destinations);
     }

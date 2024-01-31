@@ -27,7 +27,7 @@
                     <form method="POST" id="userPersonalInForForm" action="{{ url('/members') }}">
                         @csrf
                         <div class="modal-body">
-                            <input hidden type="text" id="memberIdInput" name="memberIdInput" value="{{auth()->user()->id}}">
+                            <input hidden type="text" id="memberIdInput" name="memberIdInput" value="{{Auth::id()}}">
                             <div class="mb-3 row">
                                 <label for="exampleFormControlInput1" class="col-sm-4 col-form-label">法人名</label>
                                 <div class="col-sm-8">

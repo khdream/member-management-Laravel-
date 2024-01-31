@@ -151,7 +151,11 @@
                             <div class="mb-3 row">
                                 <label for="clientId" class="col-sm-4 col-form-label">顧客ID</label>
                                 <div class="col-sm-8">
+                                    @if(auth::user()->user_role == 3)
+                                        <input class="form-control" type="text" user_role="3" name="clientId" id="clientId" value="{{ auth::id() }}" readonly>  
+                                    @else
                                     <input class="form-control" type="text" placeholder="顧客ID" name="clientId" id="clientId" value="">
+                                    @endif
                                 </div>
                                 <div class="col-12">
                                     <div class="row">

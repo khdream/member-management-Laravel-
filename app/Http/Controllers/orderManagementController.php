@@ -139,7 +139,6 @@ class orderManagementController extends Controller
                 $newOrder->save();
                 foreach($datas as $data) {
                     for($i = 0; $i < count($destinationIds); $i++) {
-                        print_r($data['goodId']);
                             $manageOrders = ManageOrder::create([
                                 'order_id' => $newOrder->id,
                                'good_id' => $data['goodId'],
@@ -560,11 +559,6 @@ class orderManagementController extends Controller
         $keys = [];
         $destinationIds = [];
         $all_quantity = 0;
-
-        // for ($i = 0; $i < count($destinations); $i++) {
-        //     $keys[$i] = "";
-        //     $destinationIds[$i] = "";
-        // }
         $delivery_date = '';
         $flag = true;
         $isOver = false;
@@ -603,7 +597,6 @@ class orderManagementController extends Controller
                 break;
             }
         }
-
         if($flag && !$isOver) {
             try{
                 $dateFormat = Carbon::createFromFormat('n/j/Y', $delivery_date)->format('Y-m-d');

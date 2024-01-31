@@ -149,50 +149,6 @@
                                         @endif
                                     </td>
                                 @endforeach
-                                {{-- <td class="align-middle">
-                                    @if (Auth::user()->user_role == 3)
-                                        <input readonly destinationId="{{$data['destination_location'][0]['destination_id']}}"  value="{{$data['destination_location'][0]['quantity']}}" id="firstD_{{$key}}" class="form-control text-center" type="text">
-                                    @else
-                                        @if ($date[4] == "完了")
-                                            <div destinationId="{{$data['destination_location'][0]['destination_id']}}" k="{{$key}}" id="firstD_{{$key}}" class="updateOrderManager text-center">{{$data['destination_location'][0]['quantity']}}</div>
-                                        @else
-                                            <input destinationId="{{$data['destination_location'][0]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][0]['quantity']}}" id="firstD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
-                                        @endif
-                                    @endif
-                                </td>
-                                <td class="align-middle">
-                                    @if (Auth::user()->user_role == 3)
-                                        <input readonly destinationId="{{$data['destination_location'][1]['destination_id']}}"  value="{{$data['destination_location'][1]['quantity']}}" id="secondD_{{$key}}" class="form-control text-center" type="text">
-                                    @else
-                                        @if ($date[4] == "完了")
-                                            <div destinationId="{{$data['destination_location'][1]['destination_id']}}" k="{{$key}}" id="secondD_{{$key}}" class="updateOrderManager text-center">{{$data['destination_location'][1]['quantity']}}</div>
-                                        @else
-                                            <input destinationId="{{$data['destination_location'][1]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][1]['quantity']}}" id="secondD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
-                                        @endif
-                                    @endif
-                                </td>
-                                <td class="align-middle">
-                                    @if (Auth::user()->user_role == 3)
-                                        <input readonly readonly destinationId="{{$data['destination_location'][2]['destination_id']}}"  value="{{$data['destination_location'][2]['quantity']}}" id="thirdD_{{$key}}" class="form-control text-center" type="text">
-                                    @else
-                                        @if ($date[4] == "完了")
-                                            <div destinationId="{{$data['destination_location'][2]['destination_id']}}" k="{{$key}}" id="thirdD_{{$key}}" class="updateOrderManager text-center">{{$data['destination_location'][2]['quantity']}}</div>
-                                        @else
-                                            <input destinationId="{{$data['destination_location'][2]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][2]['quantity']}}" id="thirdD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
-                                        @endif
-                                    @endif
-                                </td>
-                                <td class="align-middle">
-                                    @if (Auth::user()->user_role == 3)
-                                        <input readonly destinationId="{{$data['destination_location'][3]['destination_id']}}"  value="{{$data['destination_location'][3]['quantity']}}" id="fourthD_{{$key}}" class="form-control text-center" type="text">
-                                    @else
-                                        @if ($date[4] == "完了")
-                                            <div destinationId="{{$data['destination_location'][3]['destination_id']}}" k="{{$key}}" id="fourthD_{{$key}}" class="updateOrderManager text-center">{{$data['destination_location'][3]['quantity']}}</div>
-                                        @else
-                                            <input destinationId="{{$data['destination_location'][3]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][3]['quantity']}}" id="fourthD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
-                                        @endif
-                                    @endif
-                                </td> --}}
                                 <td class="align-middle" id="order_sum_m{{$key}}" style="min-width: 150px">{{$data['all_quantity']}}</td>
                                 <td class="align-middle" id="goodInventory_{{$key}}" style="min-width: 150px">{{$data['good_inventory']}}</td>
                                 <td class="align-middle" id="remain_inventory_m{{$key}}" style="min-width: 150px">{{$data['remain_quantity']}}</td>

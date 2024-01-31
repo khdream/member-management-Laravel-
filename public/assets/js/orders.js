@@ -8,54 +8,53 @@ $(document).ready(function () {
     var des_id = {};
     var ordersForEveryUser = "";
 
-    $(".updateOrderManager").change(function () {
+    $(".updateOrderManager").on("input", function () {
         $(this).removeClass("is-invalid");
         let selectedValue = $(this).val();
         if (selectedValue < 0) {
             $(this).addClass("is-invalid");
+            $(this).val(0);
         } else {
+            let len = $("#dest_len_m").attr("colspan");
             let i = $(this).attr("k");
-            var d0 = $("#firstD_" + i).val();
-            var d1 = $("#secondD_" + i).val();
-            var d2 = $("#thirdD_" + i).val();
-            var d3 = $("#fourthD_" + i).val();
-            var sum = Number(d0) + Number(d1) + Number(d2) + Number(d3);
+            var sum = 0;
+            for (let j = 0; j < len; j++) {
+                sum += Number($("#dest_val_m_" + i + "_" + j).val());
+            }
             var goodInventory = Number($("#goodInventory_" + i).text());
-            if (sum > goodInventory) {
+            var remainGoods = Number($("#remain_inventory_m" + i).text());
+            if (sum > goodInventory || remainGoods - selectedValue < 0) {
                 $(this).val(0);
                 $(this).addClass("is-invalid");
+            } else {
+                $("#order_sum_m" + i).text(sum);
+                $("#remain_inventory_m" + i).text(goodInventory - sum);
             }
         }
     });
 
     $(".updateOrdersButtonClass").click(function () {
-        var lengthOfDatas = $("#lengthOfDatas").val();
+        var lengthOfDatas = Number($("#lengthOfDatas").val());
         var orderStatus = $("#orderStatus").val();
         var estimate_delivery_date = $("#estimate_delivery_date").val();
         var orderId = $("#lengthOfDatas").attr("orderId");
+        var dest_num = Number($("#dest_len_m").attr("colspan"));
         var datas = [];
-        for (let i = 0; i < lengthOfDatas; i++) {
-            var d0 = $("#firstD_" + i).val();
-            var d1 = $("#secondD_" + i).val();
-            var d2 = $("#thirdD_" + i).val();
-            var d3 = $("#fourthD_" + i).val();
 
-            var d0Id = $("#firstD_" + i).attr("destinationId");
-            var d1Id = $("#secondD_" + i).attr("destinationId");
-            var d2Id = $("#thirdD_" + i).attr("destinationId");
-            var d3Id = $("#fourthD_" + i).attr("destinationId");
+        for (let i = 0; i < lengthOfDatas; i++) {
+            var dest_val_m = [];
+            var dest_id_m = [];
+            for (let j = 0; j < dest_num; j++) {
+                dest_val_m[j] = $("#dest_val_m_" + i + "_" + j).val();
+                dest_id_m[j] = $("#dest_val_m_" + i + "_" + j).attr(
+                    "destinationId"
+                );
+            }
 
             var goodId = $("#goodIdOfEachValue_" + i).val();
-
             var data = {
-                d0: d0,
-                d1: d1,
-                d2: d2,
-                d3: d3,
-                d0Id: d0Id,
-                d1Id: d1Id,
-                d2Id: d2Id,
-                d3Id: d3Id,
+                dest_val_m: dest_val_m,
+                dest_id_m: dest_id_m,
                 goodId: goodId,
             };
             datas.push(data);
@@ -64,7 +63,9 @@ $(document).ready(function () {
             datas: datas,
             orderStatus: orderStatus,
             estimate_delivery_date: estimate_delivery_date,
+            dest_num: dest_num,
         };
+        console.log(ajaxData);
         $.ajax({
             url: `/orders/${orderId}`,
             method: "PUT",
@@ -87,49 +88,31 @@ $(document).ready(function () {
 
     $("#orderRequestButton").click(function () {
         var delivery_date = $("#delivery_date").val();
-        console.log("deliverydate=>", delivery_date);
         if (delivery_date == "") return;
         var lengthOfDatas = $("#lengthOfDatas").val();
-        // var orderId = $("#lengthOfDatas").attr("orderId");
-        var d0Id = $("#des_id_0").val();
-        var d1Id = $("#des_id_1").val();
-        var d2Id = $("#des_id_2").val();
-        var d3Id = $("#des_id_3").val();
+        var dest_len = Number($("#dest_len").attr("colspan"));
+        var dest_id = [];
+        var dest_Loc = [];
 
-        var d0Loc = $("#des_0").val();
-        var d1Loc = $("#des_1").val();
-        var d2Loc = $("#des_2").val();
-        var d3Loc = $("#des_3").val();
-
-        des_id = {
-            d0Id: d0Id,
-            d1Id: d1Id,
-            d2Id: d2Id,
-            d3Id: d3Id,
-        };
+        for (let i = 0; i < dest_len; i++) {
+            dest_id[i] = $("#des_id_" + i).val();
+            dest_Loc[i] = $("#des_" + i).val();
+        }
 
         var datas = [];
         for (let i = 0; i < lengthOfDatas; i++) {
-            var d0 = $("#fD_" + i).val() ? $("#fD_" + i).val() : 0;
-            var d1 = $("#sD_" + i).val() ? $("#sD_" + i).val() : 0;
-            var d2 = $("#tD_" + i).val() ? $("#tD_" + i).val() : 0;
-            var d3 = $("#foD_" + i).val() ? $("#foD_" + i).val() : 0;
+            var dest_good_val = [];
+            for (let j = 0; j < dest_len; j++) {
+                dest_good_val[j] = $("#dest_val_" + i + "_" + j).val()
+                    ? $("#dest_val_" + i + "_" + j).val()
+                    : 0;
+            }
 
             var goodId = $("#goodIdOfEachValue_" + i).val();
-
             var data = {
-                d0: d0,
-                d1: d1,
-                d2: d2,
-                d3: d3,
-                d0Id: d0Id,
-                d1Id: d1Id,
-                d2Id: d2Id,
-                d3Id: d3Id,
-                d0Loc: d0Loc,
-                d1Loc: d1Loc,
-                d2Loc: d2Loc,
-                d3Loc: d3Loc,
+                dest_good_val: dest_good_val,
+                dest_id: dest_id,
+                dest_Loc: dest_Loc,
                 goodId: goodId,
             };
             datas.push(data);
@@ -137,7 +120,7 @@ $(document).ready(function () {
         ajaxData = {
             datas: datas,
             delivery_date: delivery_date,
-            des_id: des_id,
+            dest_id: dest_id,
         };
     });
     $("#confirmOrderRequest").click(function () {
@@ -149,23 +132,15 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
             },
             success: function (res, status) {
-                if (res == "success") {
-                    $("#cancelOrderRequest").click();
-                    $("#newOrderToast").addClass("bg-success");
-                    $("#newOrderToast").show();
-                    setTimeout(function () {
-                        $("#newOrderToast").fadeOut(1000);
-                    }, 2000);
-                    // location.reload();
-                } else {
-                    $("#cancelOrderRequest").click();
-                    $("#newOrderToast").addClass("bg-danger");
-                    $("#newOrderToastValue").text("登録できません。");
-                    $("#newOrderToast").show();
-                    setTimeout(function () {
-                        $("#newOrderToast").fadeOut(1000);
-                    }, 2000);
-                }
+                $("#cancelOrderRequest").click();
+                $("#newOrderToast").addClass("bg-success");
+                $("#newOrderToast").show();
+                setTimeout(function () {
+                    $("#newOrderToast").fadeOut(1000);
+                }, 2000);
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
             },
             error: function (xhr, status, error) {
                 console.log("error");
@@ -173,7 +148,7 @@ $(document).ready(function () {
         });
     });
 
-    $(".orderNumber").on("change", function () {
+    $(".orderNumber").on("input", function () {
         $(this).removeClass("is-invalid");
         var rowNumber = $(this).attr("key");
         var value = $(this).val();
@@ -182,18 +157,20 @@ $(document).ready(function () {
             $(this).val(0);
         } else {
             var remainGoods = Number($("#remainOrder_" + rowNumber).text());
-
-            var fir = $("#fD_" + rowNumber).val();
-            var sec = $("#sD_" + rowNumber).val();
-            var thr = $("#tD_" + rowNumber).val();
-            var fur = $("#foD_" + rowNumber).val();
-            var sum = Number(fir) + Number(sec) + Number(thr) + Number(fur);
+            var goodsInventory = Number(
+                $("#goodsInventory_" + rowNumber).text()
+            );
+            let len = $("#dest_len").attr("colspan");
+            var sum = 0;
+            for (let j = 0; j < len; j++) {
+                sum += Number($("#dest_val_" + rowNumber + "_" + j).val());
+            }
             if (remainGoods - value < 0) {
                 $(this).val(0);
                 $(this).addClass("is-invalid");
             } else {
                 $("#orderSum_" + rowNumber).text(sum);
-                $("#remainOrder_" + rowNumber).text(remainGoods - value);
+                $("#remainOrder_" + rowNumber).text(goodsInventory - sum);
             }
         }
     });
@@ -272,22 +249,25 @@ $(document).ready(function () {
                 },
                 success: function (res) {
                     if (res == "success") {
-                        console.log(res);
                         $("#newOrderToast").addClass("bg-success");
                         $("#newOrderToast").show();
                         setTimeout(function () {
                             $("#newOrderToast").fadeOut(1000);
                         }, 2000);
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
                     } else {
-                        console.log(res);
                         $("#newOrderToast").addClass("bg-danger");
                         $("#newOrderToastValue").text("登録できません。");
                         $("#newOrderToast").show();
                         setTimeout(function () {
                             $("#newOrderToast").fadeOut(1000);
                         }, 2000);
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
                     }
-                    // location.reload();
                 },
                 error: function (xhr, status, error) {
                     // console.log("error");

@@ -102,7 +102,7 @@
                                 @endif
                                         <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                             <div class="col-12 p-4 d-flex flex-column position-static">
-                                                <strong class="d-inline-block mb-2 text-primary" id="destinationManageLabel_{{$data->id}}">{{$data->id}}</strong>
+                                                <strong class="d-inline-block mb-2 text-primary" id="destinationManageLabel_{{$data->id}}">{{$data->destinationName}}</strong>
                                                 <p class="mb-0" id="destinationPostCode_{{$data->id}}">{{$data->destinationPostCode}}</p>
                                                 <p class="mb-0" id="destinationDetailAdress_{{$data->id}}">
                                                     {{$data->destinationName ." ". $data->destinationLocation ." ". $data->destinationStreetAdress ." ". $data->destinationBuildingName}}

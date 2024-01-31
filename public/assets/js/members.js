@@ -73,12 +73,6 @@ $(document).ready(function () {
                     success: function (res, status) {
                         if (status == "success" && res.message == "success") {
                             $("#cancelButton").click();
-                            // $("#toastmember").addClass("text-bg-success");
-                            // $("#toastmember").show();
-                            // $("#toastValue").text("正しく更新されました！");
-                            // setTimeout(function () {
-                            //     $("#toastmember").hide();
-                            // }, 2000);
                             location.reload();
                         } else {
                             console.log("error");
@@ -102,12 +96,6 @@ $(document).ready(function () {
                         console.log(res.users);
                         if (status == "success" && res.message == "success") {
                             $("#cancelButton").click();
-                            // $("#toastmember").addClass("text-bg-success");
-                            // $("#toastmember").show();
-                            // $("#toastValue").text("正常に登録されています。");
-                            // setTimeout(function () {
-                            //     $("#toastmember").hide();
-                            // }, 2000);
                             location.reload();
                         } else {
                             console.log("error");
@@ -176,7 +164,7 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
             },
             success: function (res, status) {
-                if (status == "success" && res.message == "success") {
+                if (res.message == "success") {
                     // $("#toastmember").addClass("text-bg-success");
                     $("#memberToast").show();
                     $("#toastValueContent").text("正しく更新されました！");
@@ -189,7 +177,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                console.log("error");
+                console.log(xhr);
             },
         });
     });
@@ -242,11 +230,22 @@ $(document).ready(function () {
         ) {
             errors.email = "有効な電子メール アドレスを入力してください。";
         }
-        if (password.trim() === "") {
-            errors.password = "パスワードフィールドは必須です。";
-        } else if (password.length < 8) {
-            errors.password =
-                "パスワードは少なくとも 8 文字である必要があります。";
+        if (isCreate) {
+            if (password) {
+                if (password.trim() === "") {
+                    errors.password = "パスワードフィールドは必須です。";
+                } else if (password.length < 8) {
+                    errors.password =
+                        "パスワードは少なくとも 8 文字である必要があります。";
+                }
+            }
+        } else {
+            if (password.trim() === "") {
+                errors.password = "パスワードフィールドは必須です。";
+            } else if (password.length < 8) {
+                errors.password =
+                    "パスワードは少なくとも 8 文字である必要があります。";
+            }
         }
 
         // Return the errors object

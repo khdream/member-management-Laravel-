@@ -43,15 +43,15 @@
                             <div class="row">
                                 <label for="exampleFormControlInput1" class="col-sm-4 col-form-label text-end">CSVで一括登録</label>
                                 <div class="col-sm-8">
-                                    <a href="/orders/orderRequest/download/" class="btn btn-outline-primary px-lg-5">CSVアップロード</a>
+                                    <button class="btn btn-outline-primary btn-responsive px-lg-5" id="tmpOrdersUploadButton">CSVアップロード</button>
+                                    <input hidden type="file" id="ordersFormFileUpload" class="form-control btn btn-outline-primary btn-responsive">
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-sm-4">
                             <div class="row">
                                 <div class="col-12">
-                                    <button class="btn btn-outline-primary btn-responsive float-end" id="tmpOrdersUploadButton">依頼用CSVダウンロード</button>
-                                    <input hidden type="file" id="ordersFormFileUpload" class="form-control btn btn-outline-primary btn-responsive">
+                                    <a href="/orders/orderRequest/download/" class="btn btn-outline-primary float-end">依頼用CSVダウンロード</a>
                                 </div>
                             </div>
                         </div>

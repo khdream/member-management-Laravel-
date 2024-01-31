@@ -46,14 +46,6 @@ class memberManagementController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -101,22 +93,6 @@ class memberManagementController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
@@ -153,13 +129,13 @@ class memberManagementController extends Controller
             $user->name = $formData['name'];
             $user->email = $formData['email'];
             $user->furigana_name = $formData['furigana_name'];
-            $user->password = $formData['password'];
+            if ($password) $user->password = $formData['password'];
             $user->phone_number = $formData['phone_number'];
             $user->post_code = $formData['post_code'];
             $user->location = $formData['location'];
             $user->street_adress = $formData['street_adress'];
             $user->building_name = $formData['building_name'];
-            $user->user_role = $formData['user_role'];
+            if ($selecetPermission) $user->user_role = $formData['user_role'];
             $user->save();
             return response()->json(['message' => 'success']);
         } catch (\Exception $e) {

@@ -56,8 +56,10 @@ $(document).ready(function () {
     $("#createAndEditButton").click(function (event) {
         event.preventDefault();
         var errors = validateForm();
+        var errors = {};
 
         if (Object.keys(errors).length > 0) {
+            console.log(errors);
             validationHandle(errors);
         } else {
             if (isCreate) {
@@ -192,7 +194,7 @@ $(document).ready(function () {
         var location = $("#location").val();
         var streetAddress = $("#street_adress").val();
         var email = $("#email").val();
-        var password = $("#password").val();
+        // var password = $("#password").val();
 
         // Initialize an errors object
         var errors = {};
@@ -230,11 +232,9 @@ $(document).ready(function () {
         ) {
             errors.email = "有効な電子メール アドレスを入力してください。";
         }
-        if (isCreate) {
+        if (isCreate == true) {
             if (password) {
-                if (password.trim() === "") {
-                    errors.password = "パスワードフィールドは必須です。";
-                } else if (password.length < 8) {
+                if (password.length < 8) {
                     errors.password =
                         "パスワードは少なくとも 8 文字である必要があります。";
                 }

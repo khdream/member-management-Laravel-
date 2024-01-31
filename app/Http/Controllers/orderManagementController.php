@@ -390,22 +390,13 @@ class orderManagementController extends Controller
             }
         }
         $locations = array_unique($locations);
-
-        // dd($locations);
         
         //////////////////////////////////////////////////////////////
-        // mb_convert_encoding($str, "SJIS", "UTF-8")
-        // $list = User::find($id)->goods()->get()->toArray();
         $dateDatas1 = [mb_convert_encoding("受注日時","SJIS", "UTF-8"), mb_convert_encoding($date[0],"SJIS", "UTF-8")];
         $dateDatas2 = [mb_convert_encoding("最終更新日時","SJIS", "UTF-8"), mb_convert_encoding($date[1],"SJIS", "UTF-8")];
         $dateDatas3 = [mb_convert_encoding("発送完了日","SJIS", "UTF-8"), mb_convert_encoding($date[2],"SJIS", "UTF-8")];
         $dateDatas4 = [mb_convert_encoding("発送予定日","SJIS", "UTF-8"), mb_convert_encoding($date[3],"SJIS", "UTF-8")];
         $dateDatas5 = [mb_convert_encoding("ステータス","SJIS", "UTF-8"), mb_convert_encoding($date[4],"SJIS", "UTF-8")];
-        // $dateDatas1 = ["受注日時", $date[0]];
-        // $dateDatas2 = ['最終更新日時', $date[1]];
-        // $dateDatas3 = ['発送完了日', $date[2]];
-        // $dateDatas4 = ['発送予定日',$date[3]];
-        // $dateDatas5 = ['ステータス', $date[4]];
         $FH = fopen('php://output', 'w');
         fputcsv($FH, $dateDatas1);
         fputcsv($FH, $dateDatas2);
@@ -426,8 +417,6 @@ class orderManagementController extends Controller
                     mb_convert_encoding("在庫","SJIS", "UTF-8")
                 ] ;
                 $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "",""] ;
-                // $title1 = ["管理ID", "本のタイトル", "", "配送先", "", "", "出荷計","在庫"] ;
-                // $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "",""] ;
             } else {
                 $title1 = [
                     mb_convert_encoding("管理ID","SJIS", "UTF-8"),
@@ -438,8 +427,6 @@ class orderManagementController extends Controller
                     mb_convert_encoding("出荷後在庫","SJIS", "UTF-8")
                 ] ;
                 $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "","", ""] ;
-                // $title1 = ["管理ID", "本のタイトル", "", "配送先", "", "", "出荷計","在庫", "出荷後在庫"] ;
-                // $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "","", ""] ;
             }
             $FH = fopen('php://output', 'w');
             fputcsv($FH, $title1);
@@ -456,17 +443,6 @@ class orderManagementController extends Controller
                         mb_convert_encoding($row["all_quantity"],"SJIS", "UTF-8"), 
                         mb_convert_encoding($row["good_inventory"],"SJIS", "UTF-8"),
                     ];
-
-                    // $tmp = [
-                    //     $row["good_manageId"], 
-                    //     $row["good_title"], 
-                    //     $row["destination_location"][0]['quantity'], 
-                    //     $row["destination_location"][1]['quantity'], 
-                    //     $row["destination_location"][2]['quantity'], 
-                    //     $row["destination_location"][3]['quantity'], 
-                    //     $row["all_quantity"],
-                    //     $row["good_inventory"],
-                    // ];
                     fputcsv($FH, $tmp);
                 }
             } else {
@@ -482,17 +458,6 @@ class orderManagementController extends Controller
                         mb_convert_encoding($row["good_inventory"],"SJIS", "UTF-8"),
                         mb_convert_encoding($row["remain_quantity"],"SJIS", "UTF-8"),
                     ];
-                    // $tmp = [
-                    //     $row["good_manageId"], 
-                    //     $row["good_title"], 
-                    //     $row["destination_location"][0]['quantity'], 
-                    //     $row["destination_location"][1]['quantity'], 
-                    //     $row["destination_location"][2]['quantity'], 
-                    //     $row["destination_location"][3]['quantity'], 
-                    //     $row["all_quantity"],
-                    //     $row["good_inventory"],
-                    //     $row["remain_quantity"],
-                    // ];
                     fputcsv($FH, $tmp);
                 }
             }
@@ -512,7 +477,7 @@ class orderManagementController extends Controller
         ];
 
         $goods = User::find(Auth::user()->id)->goods;
-        $dateDatas = ["発送日", '2024-02-22'];
+        $dateDatas = [ mb_convert_encoding("発送日","SJIS", "UTF-8"), '2024-02-22'];
         $FH = fopen('php://output', 'w');
         fputcsv($FH, $dateDatas);
         fputcsv($FH, []);

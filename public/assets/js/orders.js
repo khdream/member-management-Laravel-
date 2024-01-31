@@ -73,11 +73,11 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
             },
             success: function (res, status) {
-                $("#orderToast").show();
-                setTimeout(function () {
-                    $("#orderToast").fadeOut(1000);
-                }, 2000);
-                // location.reload();
+                // $("#orderToast").show();
+                // setTimeout(function () {
+                //     $("#orderToast").fadeOut(1000);
+                // }, 2000);
+                location.reload();
             },
             error: function (xhr, status, error) {
                 console.log("error");
@@ -256,31 +256,6 @@ $(document).ready(function () {
     $("#ordersFormFileUpload").change(function () {
         var form = new FormData();
         var files = $("#ordersFormFileUpload")[0].files;
-        // var rows = [];
-        // const reader = new FileReader();
-        // reader.onload = function (e) {
-        //     const text = e.target.result;
-        //     Papa.parse(text, {
-        //         headers: true,
-        //         complete: function (results) {
-        //             rows = results.data;
-        //         },
-        //     });
-        //     const keys = rows[4].map((cell) => cell.trim());
-        //     const data = rows.slice(4).reduce((acc, row) => {
-        //         const obj = {};
-        //         keys.forEach((key, i) => {
-        //             obj[key] = row[i];
-        //         });
-
-        //         acc.push(obj);
-        //         return acc;
-        //     }, []);
-        //     for (let i = 0; i < data.length; i++) {
-        //         console.log(data[i]);
-        //     }
-        // };
-        // reader.readAsText(files[0]);
 
         if (files.length > 0) {
             form.append("file", files[0]);

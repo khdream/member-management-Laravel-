@@ -6,12 +6,12 @@ $(document).ready(function () {
     var deleteDestinationId = null;
 
     $("#addDestinationButton").click(function () {
-        isNew = false;
-        $("#clientId").val("");
+        // $("#clientId").val("");
         $("#destinationName").val("");
         $("#destinationBuildingName").val("");
         $("#streetAddressName").val("");
         $("#locationName").val("");
+        $("#post_code_prefix").val("");
         $("#post_code_suffix").val("");
 
         $("#clientId_Error").text("");
@@ -19,6 +19,7 @@ $(document).ready(function () {
         $("#streetAddressName_Error").text("");
         $("#locationName_Error").text("");
         $("#post_code_suffix_Error").text("");
+        isNew = false;
     });
     $("#addAndEditDestinationConfirmButton").click(function () {
         var errors = validateForm();

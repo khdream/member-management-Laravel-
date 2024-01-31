@@ -65,22 +65,20 @@
                     <tr>
                         <th class="py-3" rowspan="3" scope="col">管理ID</th>
                         <th class="py-3" rowspan="3" scope="col">本のタイトル</th>
-                        <th class="py-1 w-30" colspan="4" scope="col">配送先ID /ラベル</th>
+                        <th class="py-1 w-30" id="dest_len" colspan="{{count($destinations)}}" scope="col">配送先ID /ラベル</th>
                         <th class="py-3" rowspan="3" scope="col">出荷計</th>
                         <th class="py-3" rowspan="3" scope="col">現在の在庫</th>
                         <th class="py-3" rowspan="3" scope="col">出荷後在庫</th>
                     </tr>
                     <tr>
-                        <th><input id="des_id_0" type="text" class="form-control text-center p-0" placeholder="発送先ID" ></th>                           
-                        <th><input id="des_id_1" type="text" class="form-control text-center p-0" placeholder="発送先ID" ></th>                           
-                        <th><input id="des_id_2" type="text" class="form-control text-center p-0" placeholder="発送先ID" ></th>                           
-                        <th><input id="des_id_3" type="text" class="form-control text-center p-0" placeholder="発送先ID" ></th>
+                        @foreach ($destinations as $k1 => $destination)
+                            <th><input id="des_id_{{$k1}}" type="text" class="form-control text-center p-0" value="{{$destination->id}}"></th>
+                        @endforeach
                     </tr>
                     <tr>
-                        <td><input id="des_0" type="text" class="form-control text-center p-0" placeholder="発送先" ></td>
-                        <td><input id="des_1" type="text" class="form-control text-center p-0" placeholder="発送先" ></td>
-                        <td><input id="des_2" type="text" class="form-control text-center p-0" placeholder="発送先" ></td>
-                        <td><input id="des_3" type="text" class="form-control text-center p-0" placeholder="発送先" ></td>
+                        @foreach ($destinations as $k2 => $destination)
+                            <td><input id="des_{{$k2}}" type="text" class="form-control text-center p-0" value="{{$destination->destinationLocation}}"></td>
+                        @endforeach
                     </tr>
                 </thead>
                 <tbody>
@@ -90,20 +88,13 @@
                             <tr>
                                 <th class="align-middle" key={{$key}} scope="row">{{$data['manageGoodsId']}}</th>
                                 <td class="align-middle" key={{$key}}>{{$data['goodsTitle']}}</td>
-                                <td class="align-middle">
-                                    <input value="" key={{$key}} id="fD_{{$key}}" class="orderNumber form-control text-center p-0" type="number">
-                                </td>
-                                <td class="align-middle">
-                                    <input value="" key={{$key}} id="sD_{{$key}}" class="orderNumber form-control text-center p-0" type="number">
-                                </td>
-                                <td class="align-middle">
-                                    <input value="" key={{$key}} id="tD_{{$key}}" class="orderNumber form-control text-center p-0" type="number">
-                                </td>
-                                <td class="align-middle">
-                                    <input value="" key={{$key}} id="foD_{{$key}}" class="orderNumber form-control text-center p-0" type="number">
-                                </td>
+                                @foreach ($destinations as $k3 => $destination)
+                                    <td class="align-middle">
+                                        <input value="" key={{$key}} id="dest_val_{{$key}}_{{$k3}}" class="orderNumber form-control text-center p-0" type="number">
+                                    </td>
+                                @endforeach
                                 <td class="align-middle" key={{$key}} id="orderSum_{{$key}}">0</td>
-                                <td class="align-middle" key={{$key}}>{{$data['goodsInventory']}}</td>
+                                <td class="align-middle" key={{$key}} id="goodsInventory_{{$key}}">{{$data['goodsInventory']}}</td>
                                 <td class="align-middle" key={{$key}} id="remainOrder_{{$key}}">{{$data['goodsInventory']}}</td>
                             </tr>
                         @endforeach

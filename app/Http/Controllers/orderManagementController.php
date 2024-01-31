@@ -111,18 +111,10 @@ class orderManagementController extends Controller
         try {
             $datas = $request->input('datas');
             $delivery_date = $request->input('delivery_date');
-            $des_id = $request->input('des_id');
+            $destinationIds = $request->input('dest_id');
             $flag = true;
-            // $order_name = 'AAB-' . Auth::user()->id;
 
             $user = User::find(Auth::user()->id);
-
-            $destinationIds = [
-                $des_id['d0Id'],
-                $des_id['d1Id'], 
-                $des_id['d2Id'],
-                $des_id['d3Id'], 
-            ];
 
             foreach ($destinationIds as $destinationId) {
                 if($user->destinations()->whereHas('user_destinations', function($q) use ($destinationId) {
@@ -146,12 +138,13 @@ class orderManagementController extends Controller
                 $newOrder->order_name = 'AAD-' . $newOrder->id;
                 $newOrder->save();
                 foreach($datas as $data) {
-                    for($i = 0; $i < 4; $i++) {
+                    for($i = 0; $i < count($destinationIds); $i++) {
+                        print_r($data['goodId']);
                             $manageOrders = ManageOrder::create([
                                 'order_id' => $newOrder->id,
                                'good_id' => $data['goodId'],
-                               'destination_id' => $data['d' . $i . 'Id'],
-                                'quantity' => $data['d' . $i],
+                               'destination_id' => $data['dest_id'][$i],
+                                'quantity' => $data['dest_good_val'][$i],
                             ]);
                     }
                 }
@@ -180,14 +173,15 @@ class orderManagementController extends Controller
             $datas = $request->input('datas');
             $orderStatus = $request->input('orderStatus');
             $estimate_delivery_date = $request->input('estimate_delivery_date');
+            $dest_num = $request->input('dest_num');
             foreach($datas as $data) {
-                for($i = 0; $i < 4; $i++) {
+                for($i = 0; $i < $dest_num; $i++) {
                     $manageOrders = ManageOrder::where('order_id', $id)
                                             ->where('good_id', $data['goodId'])
-                                            ->where('destination_id', $data['d'.$i.'Id'])
+                                            ->where('destination_id', $data['dest_id_m'][$i])
                                             ->first();
                     if($manageOrders) {
-                        $manageOrders->quantity = $data['d' . $i];
+                        $manageOrders->quantity = $data['dest_val_m'][$i];
                         $isUpdated = $manageOrders->save();
                     }
                 }
@@ -200,9 +194,9 @@ class orderManagementController extends Controller
             $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . $user_id . "/" . $id;
             if ($orderStatus == "完了") {
                 foreach($datas as $data) {
-                    for($i = 0; $i < 4; $i++) {
+                    for($i = 0; $i < $dest_num; $i++) {
                         $good = Good::find($data['goodId']);
-                        $good->goodsInventory -= $data['d'. $i];
+                        $good->goodsInventory -= $data['dest_val_m'][$i];
                         $good->save();
                     }
                 }
@@ -227,7 +221,8 @@ class orderManagementController extends Controller
 
     public function createNewOrder(Request $request) {
         $goods = User::find(Auth::user()->id)->goods()->paginate(10);
-        return view('orders/orderRequest')->with('datas', $goods);
+        $destinations = User::find(Auth::user()->id)->destinations()->get();
+        return view('orders/orderRequest')->with('datas', $goods)->with('destinations', $destinations);
     }
 
     public function showDetailOrder($user_id, $order_id) {
@@ -260,7 +255,7 @@ class orderManagementController extends Controller
             $order_id,
             $company_name
         ];
-
+        $destinations = User::find($user_id)->destinations()->get();
         $manage_orders = ManageOrder::where('order_id', $order_id)->get();
         foreach ($manage_orders as $manage_order) {
             $count++;
@@ -295,7 +290,8 @@ class orderManagementController extends Controller
             if($isSame != $good_id) {
                 $isSame = $good_id;
             }
-            if($count == 4) {
+
+            if($count == count($destinations)) {
                 array_push($datas, $data);
                 $data = [];
                 $tmp = [];
@@ -347,7 +343,7 @@ class orderManagementController extends Controller
             $user_name,
             $order_id
         ];
-
+        $destinations = User::find($user_id)->destinations()->get();
         $manage_orders = ManageOrder::where('order_id', $order_id)->get();
         foreach ($manage_orders as $manage_order) {
             $count++;
@@ -381,7 +377,7 @@ class orderManagementController extends Controller
             if($isSame != $good_id) {
                 $isSame = $good_id;
             }
-            if($count == 4) {
+            if($count == count($destinations)) {
                 array_push($datas, $data);
                 $data = [];
                 $tmp = [];
@@ -390,7 +386,6 @@ class orderManagementController extends Controller
             }
         }
         $locations = array_unique($locations);
-        
         //////////////////////////////////////////////////////////////
         $dateDatas1 = [mb_convert_encoding("受注日時","SJIS", "UTF-8"), mb_convert_encoding($date[0],"SJIS", "UTF-8")];
         $dateDatas2 = [mb_convert_encoding("最終更新日時","SJIS", "UTF-8"), mb_convert_encoding($date[1],"SJIS", "UTF-8")];
@@ -406,58 +401,75 @@ class orderManagementController extends Controller
         fputcsv($FH, []);
         fputcsv($FH, []);
         fclose($FH);
-        $callback = function() use ($datas)
+        $callback = function() use ($datas, $destinations)
         {
             if(Auth::user()->user_role == 3) {
-                $title1 = [
-                    mb_convert_encoding("管理ID","SJIS", "UTF-8"),
-                    mb_convert_encoding("本のタイトル","SJIS", "UTF-8"), "", 
-                    mb_convert_encoding("配送先","SJIS", "UTF-8"), "", "", 
-                    mb_convert_encoding("出荷計","SJIS", "UTF-8"),
-                    mb_convert_encoding("在庫","SJIS", "UTF-8")
-                ] ;
-                $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "",""] ;
+                $title1[0] = mb_convert_encoding("管理ID","SJIS", "UTF-8");
+                $title1[1] = mb_convert_encoding("本のタイトル","SJIS", "UTF-8");
+                for ($i = 0; $i < count($destinations)/2-1; $i++) {
+                    $title1[$i + 2] = "";
+                }
+                array_push($title1, mb_convert_encoding("配送先","SJIS", "UTF-8"));
+                for ($i = 0; $i < count($destinations) - count($destinations)/2-1; $i++) {
+                    array_push($title1, "");
+                }
+                array_push($title1, mb_convert_encoding("出荷計","SJIS", "UTF-8"));
+                array_push($title1, mb_convert_encoding("在庫","SJIS", "UTF-8"));
+                $title2[0] = "";
+                $title2[1] = "";
+                for ($i = 0; $i < count($destinations); $i++) {
+                    $title2[$i + 2] = mb_convert_encoding($destinations[$i]->destinationLocation,"SJIS", "UTF-8");
+                }
+                array_push($title2, "");
+                array_push($title2, "");
             } else {
-                $title1 = [
-                    mb_convert_encoding("管理ID","SJIS", "UTF-8"),
-                    mb_convert_encoding("本のタイトル","SJIS", "UTF-8"), "", 
-                    mb_convert_encoding("配送先","SJIS", "UTF-8"), "", "", 
-                    mb_convert_encoding("出荷計","SJIS", "UTF-8"),
-                    mb_convert_encoding("在庫","SJIS", "UTF-8"),
-                    mb_convert_encoding("出荷後在庫","SJIS", "UTF-8")
-                ] ;
-                $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "","", ""] ;
+                $title1[0] = mb_convert_encoding("管理ID","SJIS", "UTF-8");
+                $title1[1] = mb_convert_encoding("本のタイトル","SJIS", "UTF-8");
+                for ($i = 0; $i < count($destinations)/2-1; $i++) {
+                    $title1[$i + 2] = "";
+                }
+                array_push($title1, mb_convert_encoding("配送先","SJIS", "UTF-8"));
+                for ($i = 0; $i < count($destinations) - count($destinations)/2-1; $i++) {
+                    array_push($title1, "");
+                }
+                array_push($title1, mb_convert_encoding("出荷計","SJIS", "UTF-8"));
+                array_push($title1, mb_convert_encoding("在庫","SJIS", "UTF-8"));
+                array_push($title1, mb_convert_encoding("出荷後在庫","SJIS", "UTF-8"));
+                $title2[0] = "";
+                $title2[1] = "";
+                for ($i = 0; $i < count($destinations); $i++) {
+                    $title2[$i + 2] = mb_convert_encoding($destinations[$i]->destinationLocation,"SJIS", "UTF-8");
+                }
+                array_push($title2, "");
+                array_push($title2, "");
+                // $title2 = ["", "", "QQQ1", "QQQ2", "QQQ3", "QQQ4", "","", ""] ;
             }
             $FH = fopen('php://output', 'w');
             fputcsv($FH, $title1);
             fputcsv($FH, $title2);
             if(Auth::user()->user_role == 3) {
                 foreach ($datas as $row) {
-                    $tmp = [
-                        mb_convert_encoding($row["good_manageId"],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["good_title"],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["destination_location"][0]['quantity'],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["destination_location"][1]['quantity'],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["destination_location"][2]['quantity'],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["destination_location"][3]['quantity'],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["all_quantity"],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["good_inventory"],"SJIS", "UTF-8"),
-                    ];
+                    $tmp = [];
+                    $tmp[0] = mb_convert_encoding($row["good_manageId"],"SJIS", "UTF-8");
+                    $tmp[1] = mb_convert_encoding($row["good_title"],"SJIS", "UTF-8");
+                    for ($i = 0; $i < count($destinations); $i++) {
+                        $tmp[$i + 2] = mb_convert_encoding($row["destination_location"][$i]['quantity'],"SJIS", "UTF-8");
+                    }
+                    array_push($tmp, mb_convert_encoding($row["all_quantity"],"SJIS", "UTF-8"));
+                    array_push($tmp, mb_convert_encoding($row["good_inventory"],"SJIS", "UTF-8"));
                     fputcsv($FH, $tmp);
                 }
             } else {
                 foreach ($datas as $row) {
-                    $tmp = [
-                        mb_convert_encoding($row["good_manageId"],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["good_title"],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["destination_location"][0]['quantity'],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["destination_location"][1]['quantity'],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["destination_location"][2]['quantity'],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["destination_location"][3]['quantity'],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["all_quantity"],"SJIS", "UTF-8"), 
-                        mb_convert_encoding($row["good_inventory"],"SJIS", "UTF-8"),
-                        mb_convert_encoding($row["remain_quantity"],"SJIS", "UTF-8"),
-                    ];
+                    $tmp = [];
+                    $tmp[0] = mb_convert_encoding($row["good_manageId"],"SJIS", "UTF-8");
+                    $tmp[1] = mb_convert_encoding($row["good_title"],"SJIS", "UTF-8");
+                    for ($i = 0; $i < count($destinations); $i++) {
+                        $tmp[$i + 2] = mb_convert_encoding($row["destination_location"][$i]['quantity'],"SJIS", "UTF-8");
+                    }
+                    array_push($tmp, mb_convert_encoding($row["all_quantity"],"SJIS", "UTF-8"));
+                    array_push($tmp, mb_convert_encoding($row["good_inventory"],"SJIS", "UTF-8"));
+                    array_push($tmp, mb_convert_encoding($row["remain_quantity"],"SJIS", "UTF-8"));
                     fputcsv($FH, $tmp);
                 }
             }
@@ -477,46 +489,55 @@ class orderManagementController extends Controller
         ];
 
         $goods = User::find(Auth::user()->id)->goods;
+        $destinations = User::find(Auth::id())->destinations()->get();
         $dateDatas = [ mb_convert_encoding("発送日","SJIS", "UTF-8"), '2024-02-22'];
         $FH = fopen('php://output', 'w');
         fputcsv($FH, $dateDatas);
         fputcsv($FH, []);
         fclose($FH);
-        $callback = function() use ($goods)
+        $callback = function() use ($goods, $destinations)
         {
-            // $title1 = ["管理ID", "本のタイトル", "配送先ID /ラベル", "出荷計","在庫"] ;
-            // $title1 = ["管理ID", "本のタイトル", "", "配送先ID /ラベル", "", "", "出荷計","在庫"] ;
-            // $title2 = ["", "", "1", "2", "3", "4", "",""] ;
-            // $title3 = ["", "", "Q1", "Q2", "Q3", "Q4", "",""];
-            
-            $title1 = ["", "", "", mb_convert_encoding("配送先ID /ラベル","SJIS", "UTF-8"), "", "", "",""] ;
-            $title2 = ["", "", "1", "2", "3", "4", "",""] ;
-            $title3 = [
-                mb_convert_encoding("管理ID","SJIS", "UTF-8"), 
-                mb_convert_encoding("本のタイトル","SJIS", "UTF-8"), 
-                mb_convert_encoding("Q1","SJIS", "UTF-8"), 
-                mb_convert_encoding("Q2","SJIS", "UTF-8"),
-                mb_convert_encoding("Q3","SJIS", "UTF-8"),
-                mb_convert_encoding("Q4","SJIS", "UTF-8"),
-                mb_convert_encoding("出荷計","SJIS", "UTF-8"),
-                mb_convert_encoding("在庫","SJIS", "UTF-8"),
-            ] ;
+            $title1[0] = "";
+            $title1[1] = "";
+            $title2[0] = "";
+            $title2[1] = "";
+            for ($i = 0; $i < count($destinations)/2-1; $i++) {
+                $title1[$i + 2] = "";
+            }
+            array_push($title1, mb_convert_encoding("配送先ID /ラベル","SJIS", "UTF-8"));
+            for ($i = 0; $i < count($destinations) - count($destinations)/2-1; $i++) {
+                array_push($title1, "");
+            }
+            array_push($title1, "");
+            array_push($title1, "");
+
+            for ($i = 0; $i < count($destinations); $i++) {
+                $title2[$i + 2] = mb_convert_encoding($destinations[$i]->id,"SJIS", "UTF-8");
+            }
+            array_push($title2, "");
+            array_push($title2, "");
+
+            $title3[0] = mb_convert_encoding("管理ID","SJIS", "UTF-8");
+            $title3[1] = mb_convert_encoding("本のタイトル","SJIS", "UTF-8");
+            for ($i = 0; $i < count($destinations); $i++) {
+                $title3[$i + 2] = mb_convert_encoding($destinations[$i]->destinationLocation,"SJIS", "UTF-8");
+            }
+            array_push($title3, mb_convert_encoding("出荷計","SJIS", "UTF-8"));
+            array_push($title3, mb_convert_encoding("在庫","SJIS", "UTF-8"));
 
             $FH = fopen('php://output', 'w');
             fputcsv($FH, $title1);
             fputcsv($FH, $title2);
             fputcsv($FH, $title3);
             foreach ($goods as $row) {
-                $tmp = [
-                    mb_convert_encoding($row["manageGoodsId"],"SJIS", "UTF-8"), 
-                    mb_convert_encoding($row["goodsTitle"],"SJIS", "UTF-8"), 
-                    "", 
-                    "", 
-                    "", 
-                    "",
-                    "",
-                    mb_convert_encoding($row["goodsInventory"],"SJIS", "UTF-8"),
-                ];
+                $tmp = [];
+                $tmp[0] = mb_convert_encoding($row["manageGoodsId"],"SJIS", "UTF-8");
+                $tmp[1] = mb_convert_encoding($row["goodsTitle"],"SJIS", "UTF-8");
+                for ($i = 0; $i < count($destinations); $i++) {
+                    $tmp[$i+2] = "";
+                }
+                array_push($tmp, "");
+                array_push($tmp, mb_convert_encoding($row["goodsInventory"],"SJIS", "UTF-8"));
                 fputcsv($FH, $tmp);
             }
             fclose($FH);
@@ -534,15 +555,16 @@ class orderManagementController extends Controller
         $csv = Reader::createFromPath($file->getRealPath(), 'r');
         $csv->setHeaderOffset(4);
         $datas = $csv->getRecords();
+        $destinations = User::find(Auth::id())->destinations()->get();
 
-        $key_0 = '';
-        $key_1 = '';
-        $key_2 = '';
-        $key_3 = '';
-        $des_id_0 = '';
-        $des_id_1 = '';
-        $des_id_2 = '';
-        $des_id_3 = '';
+        $keys = [];
+        $destinationIds = [];
+        $all_quantity = 0;
+
+        // for ($i = 0; $i < count($destinations); $i++) {
+        //     $keys[$i] = "";
+        //     $destinationIds[$i] = "";
+        // }
         $delivery_date = '';
         $flag = true;
         $isOver = false;
@@ -553,25 +575,16 @@ class orderManagementController extends Controller
             }else if($key == 3) {
                 $cnt = -2;
                 foreach ($data as $k => $d) {
-                    $key_value = "key_$cnt"; 
-                    $$key_value = $k;
-                    $des_id_value = "des_id_$cnt"; 
-                    $$des_id_value = $d;
+                    $keys[$cnt] = $k;
+                    $destinationIds[$cnt] = $d;
                     $cnt++;
+                    if ($cnt >= count($destinations)) break;
                 }
             }else if ($key > 3) {
+                for ($i = 0; $i < count($destinations); $i++) {
+                    $all_quantity += (int)$data[$keys[$i]];
+                }
                 $goodsInventory = $data['在庫'];
-                $d_0_quantity = $data[$key_0];
-                $d_1_quantity = $data[$key_1];
-                $d_2_quantity = $data[$key_2];
-                $d_3_quantity = $data[$key_3];
-
-                $all_quantity = (int)$d_0_quantity + (int)$d_1_quantity + (int)$d_2_quantity +(int)$d_3_quantity;
-                echo(var_dump((int) $goodsInventory));
-                echo("=>");
-                echo(var_dump($all_quantity));
-                echo(" , ");
-
                 if((int) $goodsInventory < $all_quantity) {
                     $isOver = true;
                     break;
@@ -579,12 +592,7 @@ class orderManagementController extends Controller
             }
         }
         $user = User::find(Auth::user()->id);
-        $destinationIds = [
-            $des_id_0,
-            $des_id_1, 
-            $des_id_2, 
-            $des_id_3, 
-        ];
+        array_splice($destinationIds, 0, 2);
         foreach ($destinationIds as $destinationId) {
             if($user->destinations()->whereHas('user_destinations', function($q) use ($destinationId) {
                 $q->where('destination_id', $destinationId); 
@@ -598,12 +606,13 @@ class orderManagementController extends Controller
 
         if($flag && !$isOver) {
             try{
+                $dateFormat = Carbon::createFromFormat('n/j/Y', $delivery_date)->format('Y-m-d');
                 $newOrder = Order::create([
                     'order_name' => 'AA-3',
                     'user_id' => Auth::user()->id,
                     'status' => '発送前',
-                    'delivery_date' => $delivery_date,
-                    'estimate_delivery_date' => $delivery_date,
+                    'delivery_date' => $dateFormat,
+                    'estimate_delivery_date' => $dateFormat,
                 ]);
                 $newOrder->order_name = 'AAD-' . $newOrder->id;
                 $newOrder->save();
@@ -611,23 +620,17 @@ class orderManagementController extends Controller
                 $getDataCnt = 0;
                 foreach ($datas as $key => $data) {
                     $getDataCnt++;
-                    if($getDataCnt > 3) {
+                    if($getDataCnt > 4) {
                         $manageGoodsId = $data['管理ID'];
                         $goodsTitle = $data['本のタイトル'];
                         $goodsInventory = $data['在庫'];
-                        $d_0_quantity = $data[$key_0];
-                        $d_1_quantity = $data[$key_1];
-                        $d_2_quantity = $data[$key_2];
-                        $d_3_quantity = $data[$key_3];
 
-                        // $all_quantity = (int)$d_0_quantity + (int)$d_1_quantity + (int)$d_2_quantity +(int)$d_3_quantity;
-                        $dQuantities = [$d_0_quantity, $d_1_quantity, $d_2_quantity, $d_3_quantity];
-                        // if($goodsInventory < $all_quantity) {
-                        //     $isOver = true;
-                        //     break;
-                        // }
+                        $dQuantities = [];
+                        for ($i = 0; $i < count($destinations); $i++) {
+                            $dQuantities[$i]= $data[$keys[$i]] ? $data[$keys[$i]] : 0;
+                        }
                         $good_id = Good::where('manageGoodsId', $manageGoodsId)->first()->id;
-                        for($i = 0; $i < 4; $i++) {
+                        for($i = 0; $i < count($destinations); $i++) {
                             $manageOrders = ManageOrder::create([
                                 'order_id' => $newOrder->id,
                                 'good_id' => $good_id,

@@ -113,19 +113,19 @@
             </div>
         </div>
         <div class="col-12 table-responsive">
-            <table class="table table-hover text-center table-responsive-width" title="{{$date[7]}}">
+            <table class="table table-hover text-center table-responsive-width" style="min-width: 1800px" title="{{$date[7]}}">
                 <thead class="table-dark align-middle">
                     <tr>
                         <th rowspan="2">管理ID</th>
                         <th rowspan="2">本のタイトル</th>
-                        <th colspan="4" class="w-30">配送先</th>
+                        <th id="dest_len_m"  style="min-width: 400px" colspan="{{count($locations)}}" class="w-30">配送先</th>
                         <th rowspan="2">出荷計</th>
                         <th rowspan="2">在庫</th>
                         <th rowspan="2">出荷後在庫</th>
                     </tr>
                     <tr>
-                        @foreach ($locations as $location)
-                            <th>{{$location}}</th>                            
+                        @foreach ($locations as $key => $location)
+                            <th id="dest_id_header_{{$key}}"  style="min-width: 100px">{{$location}}</th>
                         @endforeach
                     </tr>
                 </thead>
@@ -134,9 +134,22 @@
                         @foreach ($datas as $key => $data)
                             <input hidden type="number" id="goodIdOfEachValue_{{$key}}" value="{{$data['good_id']}}">
                             <tr>
-                                <th class="align-middle" scope="row">{{$data['good_manageId']}}</th>
-                                <td class="align-middle">{{$data['good_title']}}</td>
-                                <td class="align-middle">
+                                <th class="align-middle" scope="row" style="min-width: 150px">{{$data['good_manageId']}}</th>
+                                <td class="align-middle" style="min-width: 150px">{{$data['good_title']}}</td>
+                                @foreach ($locations as $k => $location)
+                                    <td class="align-middle" style="min-width: 100px">
+                                        @if (Auth::user()->user_role == 3)
+                                            <input readonly destinationId="{{$data['destination_location'][$k]['destination_id']}}"  value="{{$data['destination_location'][$k]['quantity']}}" id="dest_val_m_{{$key}}_{{$k}}" class="form-control text-center" type="text">
+                                        @else
+                                            @if ($date[4] == "完了")
+                                                <div destinationId="{{$data['destination_location'][$k]['destination_id']}}" k="{{$key}}" id="dest_val_m_{{$key}}_{{$k}}" class="updateOrderManager text-center">{{$data['destination_location'][$k]['quantity']}}</div>
+                                            @else   
+                                                <input destinationId="{{$data['destination_location'][$k]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][$k]['quantity']}}" id="dest_val_m_{{$key}}_{{$k}}" class="updateOrderManager form-control text-center" type="number">
+                                            @endif
+                                        @endif
+                                    </td>
+                                @endforeach
+                                {{-- <td class="align-middle">
                                     @if (Auth::user()->user_role == 3)
                                         <input readonly destinationId="{{$data['destination_location'][0]['destination_id']}}"  value="{{$data['destination_location'][0]['quantity']}}" id="firstD_{{$key}}" class="form-control text-center" type="text">
                                     @else
@@ -179,10 +192,10 @@
                                             <input destinationId="{{$data['destination_location'][3]['destination_id']}}" k="{{$key}}" value="{{$data['destination_location'][3]['quantity']}}" id="fourthD_{{$key}}" class="updateOrderManager form-control text-center" type="number">
                                         @endif
                                     @endif
-                                </td>
-                                <td class="align-middle">{{$data['all_quantity']}}</td>
-                                <td class="align-middle" id="goodInventory_{{$key}}">{{$data['good_inventory']}}</td>
-                                <td class="align-middle">{{$data['remain_quantity']}}</td>
+                                </td> --}}
+                                <td class="align-middle" id="order_sum_m{{$key}}" style="min-width: 150px">{{$data['all_quantity']}}</td>
+                                <td class="align-middle" id="goodInventory_{{$key}}" style="min-width: 150px">{{$data['good_inventory']}}</td>
+                                <td class="align-middle" id="remain_inventory_m{{$key}}" style="min-width: 150px">{{$data['remain_quantity']}}</td>
                             </tr>
                         @endforeach
                 </tbody>

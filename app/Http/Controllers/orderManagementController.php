@@ -514,14 +514,14 @@ class orderManagementController extends Controller
                 $title2[$i + 2] = mb_convert_encoding($destinations[$i]->id,"SJIS", "UTF-8");
             }
             array_push($title2, "");
-            array_push($title2, "");
+            // array_push($title2, "");
 
             $title3[0] = mb_convert_encoding("管理ID","SJIS", "UTF-8");
             $title3[1] = mb_convert_encoding("本のタイトル","SJIS", "UTF-8");
             for ($i = 0; $i < count($destinations); $i++) {
                 $title3[$i + 2] = mb_convert_encoding($destinations[$i]->destinationLocation,"SJIS", "UTF-8");
             }
-            array_push($title3, mb_convert_encoding("出荷計","SJIS", "UTF-8"));
+            // array_push($title3, mb_convert_encoding("出荷計","SJIS", "UTF-8"));
             array_push($title3, mb_convert_encoding("在庫","SJIS", "UTF-8"));
 
             $FH = fopen('php://output', 'w');
@@ -535,7 +535,7 @@ class orderManagementController extends Controller
                 for ($i = 0; $i < count($destinations); $i++) {
                     $tmp[$i+2] = "";
                 }
-                array_push($tmp, "");
+                // array_push($tmp, "");
                 array_push($tmp, mb_convert_encoding($row["goodsInventory"],"SJIS", "UTF-8"));
                 fputcsv($FH, $tmp);
             }

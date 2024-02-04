@@ -82,7 +82,12 @@
                         </div>
                         <label for="exampleFormControlInput1" class="col-sm-2 col-form-label">発送完了日</label>
                         <div class="col-sm-2">
-                            <p class="fs-6 pt-2">{{$date[2]}}</p>
+                            @if ($date[4] == "完了")
+                                <p class="fs-6 pt-2">{{$date[2]}}</p>
+                            @else
+                            <p class="fs-6 pt-2"></p>
+                            @endif
+                            {{-- <p class="fs-6 pt-2">{{$date[2]}}</p> --}}
                         </div>
                         <div class="col-md-4  d-lg-none d-sm-block">
                             @if (Auth::user()->user_role == 3)

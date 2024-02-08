@@ -192,6 +192,9 @@ class orderManagementController extends Controller
             $orders->save();
             $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . $user_id . "/" . $id;
             if ($orderStatus == "完了") {
+                $orders = Order::find($id);
+                $orders->estimate_delivery_date = now();
+                $orders->save();
                 foreach($datas as $data) {
                     for($i = 0; $i < $dest_num; $i++) {
                         $good = Good::find($data['goodId']);
@@ -236,7 +239,11 @@ class orderManagementController extends Controller
         $all_quantity = 0;
 
         $order_date = Order::find($order_id);
-        $created_at = $order_date->created_at->format('Y/m/d');
+        if ($order_date->status == "完了") {
+            $created_at = $order_date->created_at->format('Y/m/d');
+        } else {
+            $created_at = "";
+        }
         $updated_at = $order_date->updated_at->format('Y/m/d');
         $delivery_date = $order_date->delivery_date;
         $estimate_delivery_date = $order_date->estimate_delivery_date;
@@ -409,7 +416,7 @@ class orderManagementController extends Controller
                     $title1[$i + 2] = "";
                 }
                 array_push($title1, mb_convert_encoding("配送先","SJIS", "UTF-8"));
-                for ($i = 0; $i < count($destinations) - count($destinations)/2-1; $i++) {
+                for ($i = 0; $i < count($destinations) - count($destinations)/2; $i++) {
                     array_push($title1, "");
                 }
                 // array_push($title1, mb_convert_encoding("出荷計","SJIS", "UTF-8"));

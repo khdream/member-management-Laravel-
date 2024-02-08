@@ -181,7 +181,6 @@ $(document).ready(function () {
 			`/orders?value=${searchOrderValue}`
 		);
 	});
-
     $("#periodStartDate").change(function () {
         flag1 = true;
         startDate = $("#periodStartDate").val();

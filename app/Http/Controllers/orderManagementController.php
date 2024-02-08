@@ -151,7 +151,7 @@ class orderManagementController extends Controller
                 $emailParams->usersName = Auth::user()->company_name;
                 $emailParams->usersEmail = "personal.codemaker@gmail.com";
                 // $emailParams->usersEmail = "info@grandwork.jp";
-                $emailParams->subject = $newOrder->id;
+                $emailParams->subject = $newOrder->order_name;
                 $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . Auth::user()->id . "/" . $newOrder->id;
                 $emailParams->orderDetailLink = $orderDetailLink;
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
@@ -210,7 +210,7 @@ class orderManagementController extends Controller
                 $emailParams->usersEmail = "personal.codemaker@gmail.com";
                 // $emailParams->usersEmail = "info@grandwork.jp";
                 $emailParams->orderDetailLink = $orderDetailLink;
-                $emailParams->subject = $orders->id;
+                $emailParams->subject = $orders->order_name;
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenDeliveryCompleted($emailParams));
                 $emailParams->usersName = "Client";
                 $emailParams->usersEmail = "personal.weitan@gmail.com";
@@ -242,13 +242,13 @@ class orderManagementController extends Controller
         $all_quantity = 0;
 
         $order_date = Order::find($order_id);
-        if ($order_date->status == "完了") {
-            $created_at = $order_date->created_at->format('Y/m/d');
-        } else {
-            $created_at = "";
-        }
+        $created_at = $order_date->created_at->format('Y/m/d');
         $updated_at = $order_date->updated_at->format('Y/m/d');
-        $delivery_date = $order_date->delivery_date;
+        if ($order_date->status == "完了") {
+            $delivery_date = Carbon::parse($order_date->delivery_date)->format('Y-m-d');
+        } else {
+            $delivery_date = "";
+        }
         $estimate_delivery_date = $order_date->estimate_delivery_date;
         $status = $order_date->status;
         $user_name = User::find($user_id)->name;
@@ -619,7 +619,7 @@ class orderManagementController extends Controller
                 ]);
                 $newOrder->order_name = 'AAD-' . $newOrder->id;
                 $newOrder->save();
-                
+
                 $getDataCnt = 0;
                 foreach ($datas as $key => $data) {
                     $getDataCnt++;
@@ -644,10 +644,10 @@ class orderManagementController extends Controller
                     }
                 }
                 $emailParams = new \stdClass(); 
-                $emailParams->usersName = Auth::user()->name;
+                $emailParams->usersName = Auth::user()->company_name;
                 // $emailParams->usersEmail = "info@grandwork.jp";
                 $emailParams->usersEmail = "personal.codemaker@gmail.com";
-                $emailParams->subject = $newOrder->id;
+                $emailParams->subject = $newOrder->order_name;
                 $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . Auth::user()->id . "/" . $newOrder->id;
                 $emailParams->orderDetailLink = $orderDetailLink;
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));

@@ -557,6 +557,7 @@ class orderManagementController extends Controller
 
     public function orderRequestUpload(Request $request)
     {
+        
         $request->validate([
             'file' => 'required|file|mimes:csv,txt',
         ]);
@@ -648,7 +649,7 @@ class orderManagementController extends Controller
                 // $emailParams->usersEmail = "info@grandwork.jp";
                 $emailParams->usersEmail = "personal.codemaker@gmail.com";
                 $emailParams->subject = $newOrder->order_name;
-                $orderDetailLink = "https://inventory-dev.lowcost-print.com/order/" . Auth::user()->id . "/" . $newOrder->id;
+                $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . Auth::user()->id . "/" . $newOrder->id;
                 $emailParams->orderDetailLink = $orderDetailLink;
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
                 // $emailParams->usersEmail = "s_kawaguchi@shotka.net";
@@ -656,10 +657,12 @@ class orderManagementController extends Controller
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
                 return "success";
             } catch (\Exception $e) {
-                throw new \Exception($e);
+                // throw new \Exception($e);
+                return $e->getMessage();
             }
+            // return redirect()->back()->with('success', 'CSV file uploaded and processed successfully.');
         } else {
-            return "falid";
+            return "falid errorororororor";
         }
     }
 }

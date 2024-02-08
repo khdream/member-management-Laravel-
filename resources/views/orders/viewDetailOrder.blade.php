@@ -7,7 +7,7 @@
             <div class="row mb-3 border-bottom">
                 <div class="col-5"></div>
                 <div class="col-3">
-                    <div class=""><h3 class="tab-title">受注詳細{{$created_at}}</h3></div>
+                    <div class=""><h3 class="tab-title">受注詳細</h3></div>
                 </div>
                 <div class="col-4">
                     <div class="toast align-items-center text-white bg-success border-0" id="orderToast" style="position: absolute; top: 100px; right: 20px">

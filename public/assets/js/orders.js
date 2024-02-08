@@ -65,7 +65,6 @@ $(document).ready(function () {
             estimate_delivery_date: estimate_delivery_date,
             dest_num: dest_num,
         };
-        console.log(ajaxData);
         $.ajax({
             url: `/orders/${orderId}`,
             method: "PUT",
@@ -74,11 +73,13 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
             },
             success: function (res, status) {
-                // $("#orderToast").show();
-                // setTimeout(function () {
-                //     $("#orderToast").fadeOut(1000);
-                // }, 2000);
-                location.reload();
+                $("#orderToast").show();
+                setTimeout(function () {
+                    $("#orderToast").fadeOut(1000);
+                }, 2000);
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
             },
             error: function (xhr, status, error) {
                 console.log("error");
@@ -124,6 +125,7 @@ $(document).ready(function () {
         };
     });
     $("#confirmOrderRequest").click(function () {
+        $("#cancelOrderRequest").click();
         $.ajax({
             url: `/orders`,
             method: "POST",
@@ -132,7 +134,7 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
             },
             success: function (res, status) {
-                $("#cancelOrderRequest").click();
+                // $("#cancelOrderRequest").click();
                 $("#newOrderToast").addClass("bg-success");
                 $("#newOrderToast").show();
                 setTimeout(function () {

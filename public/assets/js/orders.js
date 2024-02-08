@@ -225,60 +225,61 @@ $(document).ready(function () {
 	$("#ordersFormFileUpload").change(function () {
 		var form = new FormData();
 		var files = $("#ordersFormFileUpload")[0].files;
-
-		if (files.length > 0) {
-			form.append("file", files[0]);
-			$.ajax({
-				url: `/orders/orderRequest/upload/`,
-				method: "POST",
-				data: form,
-				contentType: false,
-				processData: false,
-				headers: {
-					"X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content"),
-				},
-				success: function (res) {
-					if (res == "success") {
-						$("#newOrderToast").addClass("bg-success");
-						$("#newOrderToast").show();
-						setTimeout(function () {
-							$("#newOrderToast").fadeOut(1000);
-						}, 2000);
-						setTimeout(function () {
-							location.reload();
-						}, 3000);
-					} else {
-						$("#newOrderToast").addClass("bg-danger");
-						$("#newOrderToastValue").text("登録できません。");
-						$("#newOrderToast").show();
-						setTimeout(function () {
-							$("#newOrderToast").fadeOut(1000);
-						}, 2000);
-						setTimeout(function () {
-							location.reload();
-						}, 3000);
-					}
-				},
-				error: function (xhr, status, error) {
-					$("#newOrderToast").addClass("bg-danger");
-					$("#newOrderToastValue").text("登録できません。");
-					$("#newOrderToast").show();
-					setTimeout(function () {
-						$("#newOrderToast").fadeOut(1000);
-					}, 2000);
-					setTimeout(function () {
-						location.reload();
-					}, 3000);
-				},
-			});
-		}
-	});
-	$("#ordersForEveryUserField").on("input", function () {
-		var value = $(this).val();
-		ordersForEveryUser = value;
-		$("#searchOrdersForEveryUser").attr(
-			"href",
-			`/orders?ordersForEveryUser=${ordersForEveryUser}`
-		);
-	});
+      if (files.length > 0) {
+          form.append("file", files[0]);
+          $.ajax({
+              url: `/orders/orderRequest/upload/`,
+              method: "POST",
+              data: form,
+              contentType: false,
+              processData: false,
+              headers: {
+                  "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr(
+                      "content"
+                  ),
+              },
+              success: function (res) {
+                  if (res == "success") {
+                      $("#newOrderToast").addClass("bg-success");
+                      $("#newOrderToast").show();
+                      setTimeout(function () {
+                          $("#newOrderToast").fadeOut(1000);
+                      }, 2000);
+                      // setTimeout(function () {
+                      //     location.reload();
+                      // }, 3000);
+                  } else {
+                      $("#newOrderToast").addClass("bg-danger");
+                      $("#newOrderToastValue").text("登録できません。");
+                      $("#newOrderToast").show();
+                      setTimeout(function () {
+                          $("#newOrderToast").fadeOut(1000);
+                      }, 2000);
+                      // setTimeout(function () {
+                      //     location.reload();
+                      // }, 3000);
+                  }
+              },
+              error: function (xhr, status, error) {
+                  $("#newOrderToast").addClass("bg-danger");
+                  $("#newOrderToastValue").text("登録できません。");
+                  $("#newOrderToast").show();
+                  setTimeout(function () {
+                      $("#newOrderToast").fadeOut(1000);
+                  }, 2000);
+                  // setTimeout(function () {
+                  //     location.reload();
+                  // }, 3000);
+              },
+          });
+      }
+  });
+  $("#ordersForEveryUserField").on("input", function () {
+      var value = $(this).val();
+      ordersForEveryUser = value;
+      $("#searchOrdersForEveryUser").attr(
+          "href",
+          `/orders?ordersForEveryUser=${ordersForEveryUser}`
+      );
+  });
 });

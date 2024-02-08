@@ -419,7 +419,7 @@ class orderManagementController extends Controller
                     $title1[$i + 2] = "";
                 }
                 array_push($title1, mb_convert_encoding("配送先","SJIS", "UTF-8"));
-                for ($i = 0; $i < count($destinations) - count($destinations)/2; $i++) {
+                for ($i = 0; $i < count($destinations) - count($destinations)/2-1; $i++) {
                     array_push($title1, "");
                 }
                 // array_push($title1, mb_convert_encoding("出荷計","SJIS", "UTF-8"));
@@ -557,110 +557,112 @@ class orderManagementController extends Controller
 
     public function orderRequestUpload(Request $request)
     {
-        $request->validate([
-            'file' => 'required|file|mimes:csv,txt',
-        ]);
-        $file = $request->file('file');
-        $csv = Reader::createFromPath($file->getRealPath(), 'r');
-        $csv->setHeaderOffset(4);
-        $datas = $csv->getRecords();
-        $destinations = User::find(Auth::id())->destinations()->get();
+        return $request;
+        // $request->validate([
+        //     'file' => 'required|file|mimes:csv,txt',
+        // ]);
+        // $file = $request->file('file');
+        // $csv = Reader::createFromPath($file->getRealPath(), 'r');
+        // $csv->setHeaderOffset(4);
+        // $datas = $csv->getRecords();
+        // $destinations = User::find(Auth::id())->destinations()->get();
 
-        $keys = [];
-        $destinationIds = [];
-        $all_quantity = 0;
-        $delivery_date = '';
-        $flag = true;
-        $isOver = false;
+        // $keys = [];
+        // $destinationIds = [];
+        // $all_quantity = 0;
+        // $delivery_date = '';
+        // $flag = true;
+        // $isOver = false;
 
-        foreach ($datas as $key => $data) {
-            if ($key == 0) {
-                $delivery_date = $data['本のタイトル'];
-            }else if($key == 3) {
-                $cnt = -2;
-                foreach ($data as $k => $d) {
-                    $keys[$cnt] = $k;
-                    $destinationIds[$cnt] = $d;
-                    $cnt++;
-                    if ($cnt >= count($destinations)) break;
-                }
-            }else if ($key > 3) {
-                for ($i = 0; $i < count($destinations); $i++) {
-                    $all_quantity += (int)$data[$keys[$i]];
-                }
-                $goodsInventory = $data['在庫'];
-                if((int) $goodsInventory < $all_quantity) {
-                    $isOver = true;
-                    break;
-                }
-            }
-        }
-        $user = User::find(Auth::user()->id);
-        array_splice($destinationIds, 0, 2);
-        foreach ($destinationIds as $destinationId) {
-            if($user->destinations()->whereHas('user_destinations', function($q) use ($destinationId) {
-                $q->where('destination_id', $destinationId); 
-            })->exists()) {
-                continue;
-            } else {
-                $flag = false;
-                break;
-            }
-        }
-        if($flag && !$isOver) {
-            try{
-                $dateFormat = Carbon::createFromFormat('n/j/Y', $delivery_date)->format('Y-m-d');
-                $newOrder = Order::create([
-                    'order_name' => 'AA-3',
-                    'user_id' => Auth::user()->id,
-                    'status' => '発送前',
-                    'delivery_date' => '',
-                    'estimate_delivery_date' => $dateFormat,
-                ]);
-                $newOrder->order_name = 'AAD-' . $newOrder->id;
-                $newOrder->save();
+        // foreach ($datas as $key => $data) {
+        //     if ($key == 0) {
+        //         $delivery_date = $data['本のタイトル'];
+        //     }else if($key == 3) {
+        //         $cnt = -2;
+        //         foreach ($data as $k => $d) {
+        //             $keys[$cnt] = $k;
+        //             $destinationIds[$cnt] = $d;
+        //             $cnt++;
+        //             if ($cnt >= count($destinations)) break;
+        //         }
+        //     }else if ($key > 3) {
+        //         for ($i = 0; $i < count($destinations); $i++) {
+        //             $all_quantity += (int)$data[$keys[$i]];
+        //         }
+        //         $goodsInventory = $data['在庫'];
+        //         if((int) $goodsInventory < $all_quantity) {
+        //             $isOver = true;
+        //             break;
+        //         }
+        //     }
+        // }
+        // $user = User::find(Auth::user()->id);
+        // array_splice($destinationIds, 0, 2);
+        // foreach ($destinationIds as $destinationId) {
+        //     if($user->destinations()->whereHas('user_destinations', function($q) use ($destinationId) {
+        //         $q->where('destination_id', $destinationId); 
+        //     })->exists()) {
+        //         continue;
+        //     } else {
+        //         $flag = false;
+        //         break;
+        //     }
+        // }
+        // if($flag && !$isOver) {
+        //     try{
+        //         $dateFormat = Carbon::createFromFormat('n/j/Y', $delivery_date)->format('Y-m-d');
+        //         $newOrder = Order::create([
+        //             'order_name' => 'AA-3',
+        //             'user_id' => Auth::user()->id,
+        //             'status' => '発送前',
+        //             'delivery_date' => '',
+        //             'estimate_delivery_date' => $dateFormat,
+        //         ]);
+        //         $newOrder->order_name = 'AAD-' . $newOrder->id;
+        //         $newOrder->save();
 
-                $getDataCnt = 0;
-                foreach ($datas as $key => $data) {
-                    $getDataCnt++;
-                    if($getDataCnt > 4) {
-                        $manageGoodsId = $data['管理ID'];
-                        $goodsTitle = $data['本のタイトル'];
-                        $goodsInventory = $data['在庫'];
+        //         $getDataCnt = 0;
+        //         foreach ($datas as $key => $data) {
+        //             $getDataCnt++;
+        //             if($getDataCnt > 4) {
+        //                 $manageGoodsId = $data['管理ID'];
+        //                 $goodsTitle = $data['本のタイトル'];
+        //                 $goodsInventory = $data['在庫'];
 
-                        $dQuantities = [];
-                        for ($i = 0; $i < count($destinations); $i++) {
-                            $dQuantities[$i]= $data[$keys[$i]] ? $data[$keys[$i]] : 0;
-                        }
-                        $good_id = Good::where('manageGoodsId', $manageGoodsId)->first()->id;
-                        for($i = 0; $i < count($destinations); $i++) {
-                            $manageOrders = ManageOrder::create([
-                                'order_id' => $newOrder->id,
-                                'good_id' => $good_id,
-                                'destination_id' => $destinationIds[$i],
-                                'quantity' => $dQuantities[$i],
-                            ]);
-                        }
-                    }
-                }
-                // $emailParams = new \stdClass(); 
-                // $emailParams->usersName = Auth::user()->company_name;
-                // // $emailParams->usersEmail = "info@grandwork.jp";
-                // $emailParams->usersEmail = "personal.codemaker@gmail.com";
-                // $emailParams->subject = $newOrder->order_name;
-                // $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . Auth::user()->id . "/" . $newOrder->id;
-                // $emailParams->orderDetailLink = $orderDetailLink;
-                // Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
-                // // $emailParams->usersEmail = "s_kawaguchi@shotka.net";
-                // $emailParams->usersEmail = "personal.weitan@gmail.com";
-                // Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
-                echo "success";
-            } catch (\Exception $e) {
-                throw new \Exception($e);
-            }
-            // return redirect()->back()->with('success', 'CSV file uploaded and processed successfully.');
-        } else {
-            echo "falid errorororororor";
-        }
+        //                 $dQuantities = [];
+        //                 for ($i = 0; $i < count($destinations); $i++) {
+        //                     $dQuantities[$i]= $data[$keys[$i]] ? $data[$keys[$i]] : 0;
+        //                 }
+        //                 $good_id = Good::where('manageGoodsId', $manageGoodsId)->first()->id;
+        //                 for($i = 0; $i < count($destinations); $i++) {
+        //                     $manageOrders = ManageOrder::create([
+        //                         'order_id' => $newOrder->id,
+        //                         'good_id' => $good_id,
+        //                         'destination_id' => $destinationIds[$i],
+        //                         'quantity' => $dQuantities[$i],
+        //                     ]);
+        //                 }
+        //             }
+        //         }
+        //         // $emailParams = new \stdClass(); 
+        //         // $emailParams->usersName = Auth::user()->company_name;
+        //         // // $emailParams->usersEmail = "info@grandwork.jp";
+        //         // $emailParams->usersEmail = "personal.codemaker@gmail.com";
+        //         // $emailParams->subject = $newOrder->order_name;
+        //         // $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . Auth::user()->id . "/" . $newOrder->id;
+        //         // $emailParams->orderDetailLink = $orderDetailLink;
+        //         // Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
+        //         // // $emailParams->usersEmail = "s_kawaguchi@shotka.net";
+        //         // $emailParams->usersEmail = "personal.weitan@gmail.com";
+        //         // Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
+        //         return "success";
+        //     } catch (\Exception $e) {
+        //         // throw new \Exception($e);
+        //         return $e->getMessage();
+        //     }
+        //     // return redirect()->back()->with('success', 'CSV file uploaded and processed successfully.');
+        // } else {
+        //     return "falid errorororororor";
+        // }
     }
 }

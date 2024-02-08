@@ -645,12 +645,14 @@ class orderManagementController extends Controller
                 }
                 $emailParams = new \stdClass(); 
                 $emailParams->usersName = Auth::user()->name;
-                $emailParams->usersEmail = "info@grandwork.jp";
+                // $emailParams->usersEmail = "info@grandwork.jp";
+                $emailParams->usersEmail = "personal.codemaker@gmail.com";
                 $emailParams->subject = $newOrder->id;
                 $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . Auth::user()->id . "/" . $newOrder->id;
                 $emailParams->orderDetailLink = $orderDetailLink;
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
-                $emailParams->usersEmail = "s_kawaguchi@shotka.net";
+                // $emailParams->usersEmail = "s_kawaguchi@shotka.net";
+                $emailParams->usersEmail = "personal.weitan@gmail.com";
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
                 echo "success";
             } catch (\Exception $e) {

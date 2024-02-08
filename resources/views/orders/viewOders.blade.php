@@ -40,7 +40,7 @@
                             <td class="align-middle">{{ $userNames[$order->id]['name'] }}</td>
                             <td class="align-middle">{{ $order->status }}</td>
                             <td class="align-middle">
-                                <a href="/orders/{{$userNames[$order->id]['user_id']}}/{{$order->id}}">詳細はこちら</a>
+                                <a href="/order/{{$userNames[$order->id]['user_id']}}/{{$order->id}}">詳細はこちら</a>
                             </td>
                         </tr>
                     @endforeach

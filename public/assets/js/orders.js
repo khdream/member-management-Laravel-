@@ -260,6 +260,7 @@ $(document).ready(function () {
                             location.reload();
                         }, 3000);
                     } else {
+                        
                         $("#newOrderToast").addClass("bg-danger");
                         $("#newOrderToastValue").text("登録できません。");
                         $("#newOrderToast").show();
@@ -272,13 +273,15 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xhr, status, error) {
-                    // console.log("error");
                     $("#newOrderToast").addClass("bg-danger");
                     $("#newOrderToastValue").text("登録できません。");
                     $("#newOrderToast").show();
                     setTimeout(function () {
                         $("#newOrderToast").fadeOut(1000);
                     }, 2000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 3000);
                 },
             });
         }

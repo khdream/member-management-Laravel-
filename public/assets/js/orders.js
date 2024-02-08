@@ -250,27 +250,26 @@ $(document).ready(function () {
                     ),
                 },
                 success: function (res) {
-                    // if (res == "success") {
-                    //     $("#newOrderToast").addClass("bg-success");
-                    //     $("#newOrderToast").show();
-                    //     setTimeout(function () {
-                    //         $("#newOrderToast").fadeOut(1000);
-                    //     }, 2000);
-                    //     setTimeout(function () {
-                    //         location.reload();
-                    //     }, 3000);
-                    // } else {
-                    //     $("#newOrderToast").addClass("bg-danger");
-                    //     $("#newOrderToastValue").text("登録できません。");
-                    //     $("#newOrderToast").show();
-                    //     setTimeout(function () {
-                    //         $("#newOrderToast").fadeOut(1000);
-                    //     }, 2000);
-                    //     setTimeout(function () {
-                    //         location.reload();
-                    //     }, 3000);
-                    // }
-                    console.log(res);
+                    if (res == "success") {
+                        $("#newOrderToast").addClass("bg-success");
+                        $("#newOrderToast").show();
+                        setTimeout(function () {
+                            $("#newOrderToast").fadeOut(1000);
+                        }, 2000);
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+                    } else {
+                        $("#newOrderToast").addClass("bg-danger");
+                        $("#newOrderToastValue").text("登録できません。");
+                        $("#newOrderToast").show();
+                        setTimeout(function () {
+                            $("#newOrderToast").fadeOut(1000);
+                        }, 2000);
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+                    }
                 },
                 error: function (xhr, status, error) {
                     // console.log("error");

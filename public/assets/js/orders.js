@@ -239,7 +239,7 @@ $(document).ready(function () {
         if (files.length > 0) {
             form.append("file", files[0]);
             $.ajax({
-                url: `/orders/orderRequest/upload/`,
+                url: `/orders/orderRequestUpload/`,
                 method: "POST",
                 data: form,
                 contentType: false,

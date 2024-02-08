@@ -38,8 +38,8 @@ Route::get('/destination/changeRowNumber/{id}', [destinationManagementController
 Route::get('/edit-member-infor', [memberManagementController::class, 'editMemberInfor'])->name('editMemberInfor');
 Route::get('/orders/download/{id}', [orderManagementController::class, 'ordersDownload'])->name('ordersDownload');
 Route::get('/ordersd/orderRequest/download/', [orderManagementController::class, 'ordersRequestDownload'])->name('ordersRequestDownload');
-Route::post('/orders/orderRequest/upload/', [orderManagementController::class, 'orderRequestUpload'])->name('orderRequestUpload');
-Route::get('/order/{user_id}/{order_id}', [orderManagementController::class, 'showDetailOrder'])->name('showDetailOrder');
+Route::post('/orders/orderRequestUpload/', [orderManagementController::class, 'orderRequestUpload'])->name('orderRequestUpload');
+Route::get('/orders/{user_id}/{order_id}', [orderManagementController::class, 'showDetailOrder'])->name('showDetailOrder');
 Route::get('/orders/search', [orderManagementController::class, 'searchResult'])->name('searchResult');
 Route::get('/orders/createNewOrder', [orderManagementController::class, 'createNewOrder'])->name('createNewOrder');
 

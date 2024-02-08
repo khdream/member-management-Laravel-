@@ -61,7 +61,7 @@
                             <td class="align-middle">{{ $data->delivery_date }}</td>
                             <td class="align-middle">{{ $data->status }}</td>
                             <td class="align-middle">
-                                <a href="/order/{{$data->user_id}}/{{$data->id}}">依頼内容確認</a>
+                                <a href="/orders/{{$data->user_id}}/{{$data->id}}">依頼内容確認</a>
                             </td>
                         </tr>
                     @endforeach

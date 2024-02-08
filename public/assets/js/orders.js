@@ -256,20 +256,19 @@ $(document).ready(function () {
                         setTimeout(function () {
                             $("#newOrderToast").fadeOut(1000);
                         }, 2000);
-                        setTimeout(function () {
-                            location.reload();
-                        }, 3000);
+                        // setTimeout(function () {
+                        //     location.reload();
+                        // }, 3000);
                     } else {
-                        
                         $("#newOrderToast").addClass("bg-danger");
                         $("#newOrderToastValue").text("登録できません。");
                         $("#newOrderToast").show();
                         setTimeout(function () {
                             $("#newOrderToast").fadeOut(1000);
                         }, 2000);
-                        setTimeout(function () {
-                            location.reload();
-                        }, 3000);
+                        // setTimeout(function () {
+                        //     location.reload();
+                        // }, 3000);
                     }
                 },
                 error: function (xhr, status, error) {
@@ -279,9 +278,9 @@ $(document).ready(function () {
                     setTimeout(function () {
                         $("#newOrderToast").fadeOut(1000);
                     }, 2000);
-                    setTimeout(function () {
-                        location.reload();
-                    }, 3000);
+                    // setTimeout(function () {
+                    //     location.reload();
+                    // }, 3000);
                 },
             });
         }

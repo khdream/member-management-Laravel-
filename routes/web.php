@@ -37,7 +37,7 @@ Route::post('/goods/upload/{id}', [goodsManagementController::class, 'upload'])-
 Route::get('/destination/changeRowNumber/{id}', [destinationManagementController::class, 'changeRowNumber'])->name('changeRowNumber');
 Route::get('/edit-member-infor', [memberManagementController::class, 'editMemberInfor'])->name('editMemberInfor');
 Route::get('/orders/download/{id}', [orderManagementController::class, 'ordersDownload'])->name('ordersDownload');
-Route::get('/orders/orderRequest/download/', [orderManagementController::class, 'ordersRequestDownload'])->name('ordersRequestDownload');
+Route::get('/ordersd/orderRequest/download/', [orderManagementController::class, 'ordersRequestDownload'])->name('ordersRequestDownload');
 Route::post('/orders/orderRequest/upload/', [orderManagementController::class, 'orderRequestUpload'])->name('orderRequestUpload');
 Route::get('/order/{user_id}/{order_id}', [orderManagementController::class, 'showDetailOrder'])->name('showDetailOrder');
 Route::get('/orders/search', [orderManagementController::class, 'searchResult'])->name('searchResult');

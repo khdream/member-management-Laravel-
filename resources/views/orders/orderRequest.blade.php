@@ -51,7 +51,7 @@
                         <div class="col-lg-4 col-sm-4">
                             <div class="row">
                                 <div class="col-12">
-                                    <a href="/orders/orderRequest/download/" class="btn btn-outline-primary float-end">依頼用CSVダウンロード</a>
+                                    <a href="/ordersd/orderRequest/download/" class="btn btn-outline-primary float-end">依頼用CSVダウンロード</a>
                                 </div>
                             </div>
                         </div>

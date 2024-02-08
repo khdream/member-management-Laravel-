@@ -152,7 +152,7 @@ class orderManagementController extends Controller
                 $emailParams->usersEmail = "personal.codemaker@gmail.com";
                 // $emailParams->usersEmail = "info@grandwork.jp";
                 $emailParams->subject = $newOrder->order_name;
-                $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . Auth::user()->id . "/" . $newOrder->id;
+                $orderDetailLink = "https://inventory-dev.lowcost-print.com/order/" . Auth::user()->id . "/" . $newOrder->id;
                 $emailParams->orderDetailLink = $orderDetailLink;
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
                 $emailParams->usersEmail = "personal.weitan@gmail.com";
@@ -192,7 +192,7 @@ class orderManagementController extends Controller
             $orders->status = $orderStatus;
             $orders->estimate_delivery_date = $estimate_delivery_date;
             $orders->save();
-            $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . $user_id . "/" . $id;
+            $orderDetailLink = "https://inventory-dev.lowcost-print.com/order/" . $user_id . "/" . $id;
             if ($orderStatus == "完了") {
                 $orders = Order::find($id);
                 $orders->delivery_date = Carbon::now()->format('Y-m-d');
@@ -629,6 +629,7 @@ class orderManagementController extends Controller
         //                 $goodsTitle = $data['本のタイトル'];
         //                 $goodsInventory = $data['在庫'];
 
+<<<<<<< HEAD
         //                 $dQuantities = [];
         //                 for ($i = 0; $i < count($destinations); $i++) {
         //                     $dQuantities[$i]= $data[$keys[$i]] ? $data[$keys[$i]] : 0;
@@ -664,5 +665,40 @@ class orderManagementController extends Controller
         // } else {
         //     return "falid errorororororor";
         // }
+=======
+                        $dQuantities = [];
+                        for ($i = 0; $i < count($destinations); $i++) {
+                            $dQuantities[$i]= $data[$keys[$i]] ? $data[$keys[$i]] : 0;
+                        }
+                        $good_id = Good::where('manageGoodsId', $manageGoodsId)->first()->id;
+                        for($i = 0; $i < count($destinations); $i++) {
+                            $manageOrders = ManageOrder::create([
+                                'order_id' => $newOrder->id,
+                                'good_id' => $good_id,
+                                'destination_id' => $destinationIds[$i],
+                                'quantity' => $dQuantities[$i],
+                            ]);
+                        }
+                    }
+                }
+                $emailParams = new \stdClass(); 
+                $emailParams->usersName = Auth::user()->company_name;
+                // $emailParams->usersEmail = "info@grandwork.jp";
+                $emailParams->usersEmail = "personal.codemaker@gmail.com";
+                $emailParams->subject = $newOrder->order_name;
+                $orderDetailLink = "https://inventory-dev.lowcost-print.com/order/" . Auth::user()->id . "/" . $newOrder->id;
+                $emailParams->orderDetailLink = $orderDetailLink;
+                Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
+                // $emailParams->usersEmail = "s_kawaguchi@shotka.net";
+                $emailParams->usersEmail = "personal.weitan@gmail.com";
+                Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
+                return "success";
+            } catch (\Exception $e) {
+                throw new \Exception($e);
+            }
+        } else {
+            return "falid";
+        }
+>>>>>>> 56fe20b082a3820f2d057fe0622a18710271d288
     }
 }

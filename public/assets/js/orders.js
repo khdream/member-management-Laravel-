@@ -260,6 +260,7 @@ $(document).ready(function () {
                             location.reload();
                         }, 3000);
                     } else {
+                        
                         $("#newOrderToast").addClass("bg-danger");
                         $("#newOrderToastValue").text("登録できません。");
                         $("#newOrderToast").show();
@@ -272,16 +273,25 @@ $(document).ready(function () {
                     }
                 },
                 error: function (xhr, status, error) {
+<<<<<<< HEAD
                     console.log("tst", error);
+=======
+>>>>>>> 56fe20b082a3820f2d057fe0622a18710271d288
                     $("#newOrderToast").addClass("bg-danger");
                     $("#newOrderToastValue").text("登録できません。");
                     $("#newOrderToast").show();
                     setTimeout(function () {
                         $("#newOrderToast").fadeOut(1000);
                     }, 2000);
+<<<<<<< HEAD
                     // setTimeout(function () {
                     //     location.reload();
                     // }, 3000);
+=======
+                    setTimeout(function () {
+                        location.reload();
+                    }, 3000);
+>>>>>>> 56fe20b082a3820f2d057fe0622a18710271d288
                 },
             });
         }

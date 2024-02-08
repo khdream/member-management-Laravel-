@@ -60,7 +60,7 @@ class SendMailWhenRequest extends Mailable
     {
         $this->from(Config::get('app.senderEmail'),Config::get('app.senderName'))
         // ->subject($this->emailParams->subject)
-        ->view('mail.sendMailWhenRequest.blade')
+        ->view('mail.sendMailWhenRequest')
         ->with(['emailParams' => $this->emailParams]);
         // return $this->view('emails.ordersWhenDeliveryCompleted'); 
     }

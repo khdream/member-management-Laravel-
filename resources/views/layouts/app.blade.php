@@ -70,17 +70,16 @@
                             @endif --}}
                         @else
                             <li class="nav-item">
-                                <a class="nav-link btn me-2" href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <form action="POST" class="nav-link btn me-2" href="/" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
-                                </a>
-
+                                </form>
+                                
                                 <li class="nav-item">
                                     <a class="btn me-2" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('ログアウト') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>

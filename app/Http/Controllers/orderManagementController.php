@@ -132,7 +132,7 @@ class orderManagementController extends Controller
                     'order_name' => 'AA-3',
                     'user_id' => Auth::user()->id,
                     'status' => '発送前',
-                    'delivery_date' => $delivery_date,
+                    'delivery_date' => '',
                     'estimate_delivery_date' => $delivery_date,
                 ]);
                 $newOrder->order_name = 'AAD-' . $newOrder->id;
@@ -149,12 +149,14 @@ class orderManagementController extends Controller
                 }
                 $emailParams = new \stdClass(); 
                 $emailParams->usersName = Auth::user()->company_name;
-                $emailParams->usersEmail = "info@grandwork.jp";
+                $emailParams->usersEmail = "personal.codemaker@gmail.com";
+                // $emailParams->usersEmail = "info@grandwork.jp";
                 $emailParams->subject = $newOrder->id;
                 $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . Auth::user()->id . "/" . $newOrder->id;
                 $emailParams->orderDetailLink = $orderDetailLink;
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
-                $emailParams->usersEmail = "s_kawaguchi@shotka.net";
+                $emailParams->usersEmail = "personal.weitan@gmail.com";
+                // $emailParams->usersEmail = "s_kawaguchi@shotka.net";
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenRequest($emailParams));
                 echo "success";
             } else {
@@ -193,7 +195,7 @@ class orderManagementController extends Controller
             $orderDetailLink = "https://inventory-dev.lowcost-print.com/orders/" . $user_id . "/" . $id;
             if ($orderStatus == "完了") {
                 $orders = Order::find($id);
-                $orders->estimate_delivery_date = now();
+                $orders->delivery_date = Carbon::now()->format('Y-m-d');
                 $orders->save();
                 foreach($datas as $data) {
                     for($i = 0; $i < $dest_num; $i++) {
@@ -211,7 +213,8 @@ class orderManagementController extends Controller
                 $emailParams->subject = $orders->id;
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenDeliveryCompleted($emailParams));
                 $emailParams->usersName = "Client";
-                $emailParams->usersEmail = $user_email;
+                $emailParams->usersEmail = "personal.weitan@gmail.com";
+                // $emailParams->usersEmail = $user_email;
                 Mail::to($emailParams->usersEmail)->send(new SendMailWhenDeliveryCompleted($emailParams));
             }
             echo "success";
@@ -611,7 +614,7 @@ class orderManagementController extends Controller
                     'order_name' => 'AA-3',
                     'user_id' => Auth::user()->id,
                     'status' => '発送前',
-                    'delivery_date' => $dateFormat,
+                    'delivery_date' => '',
                     'estimate_delivery_date' => $dateFormat,
                 ]);
                 $newOrder->order_name = 'AAD-' . $newOrder->id;
